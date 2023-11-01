@@ -2,3 +2,14 @@
 @import "modern-normalize/modern-normalize.css";
 @import "app/styles/form-elements";
 @import "app/styles/button";
+
+body {
+  height: 100vh;
+  width: 100%;
+  background: radial-gradient(
+    circle,
+    rgba(55, 5, 120, 1) 0%,
+    rgba(55, 5, 120, 1) 50%,
+    rgba(85, 85, 92, 1) 100%
+  );
+}

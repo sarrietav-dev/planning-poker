@@ -7,7 +7,8 @@ input {
   font-size: 14px;
   font-weight: 400;
   line-height: 1.42857143;
-  color: #555;
+  color: #fff;
+  background-color: transparent;
 
   &:focus {
     outline: #bb65ff auto 5px;
@@ -23,7 +24,7 @@ label {
   font-size: 14px;
   font-weight: 700;
   line-height: 1.42857143;
-  color: #555;
+  color: #fff;
 
   & + input {
     margin-top: 10px;
