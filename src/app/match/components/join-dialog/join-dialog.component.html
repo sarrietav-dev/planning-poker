@@ -1,0 +1,64 @@
+<div class="dialog-container">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div>
+      <div>
+        <label for="name" class="label label--bold">Tu nombre</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          class="text-input"
+          formControlName="name"
+          minlength="5"
+          maxlength="20"
+          pattern="^[a-zA-Z0-9]+$"
+          required
+        />
+        <div *ngIf="name.invalid && (name.dirty || name.touched)" class="error">
+          <div *ngIf="name.errors?.['required']">El nombre es requerido</div>
+          <div *ngIf="name.errors?.['minlength']">
+            El nombre debe tener al menos 5 caracteres
+          </div>
+          <div *ngIf="name.errors?.['maxlength']">
+            El nombre debe tener menos de 20 caracteres
+          </div>
+          <div *ngIf="name.errors?.['pattern']">
+            El nombre solo puede contener letras y números
+          </div>
+        </div>
+      </div>
+      <div class="mode-container">
+        <div class="radio-field">
+          <label for="player-mode" class="label">
+            Jugador
+            <input
+              type="radio"
+              name="mode"
+              id="player-mode"
+              value="player"
+              formControlName="mode"
+            />
+            <span> </span>
+          </label>
+        </div>
+        <div class="radio-field">
+          <label for="spectador-mode" class="label">
+            Espectador
+            <input
+              type="radio"
+              name="mode"
+              id="spectador-mode"
+              value="spectator"
+              formControlName="mode"
+            />
+            <span> </span>
+          </label>
+        </div>
+      </div>
+      <div *ngIf="mode.invalid && (mode.dirty || mode.touched)" class="error">
+        <div *ngIf="mode.errors?.['required']">Eliga un modo</div>
+      </div>
+    </div>
+    <button type="submit">Continuar</button>
+  </form>
+</div>

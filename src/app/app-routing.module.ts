@@ -12,6 +12,11 @@ const routes: Routes = [
     redirectTo: '/create',
     pathMatch: 'full',
   },
+  {
+    path: 'match/:id',
+    loadChildren: () =>
+      import('./match/match.module').then((m) => m.MatchModule),
+  },
 ];
 
 @NgModule({
