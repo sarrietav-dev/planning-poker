@@ -2,7 +2,10 @@
 @import "modern-normalize/modern-normalize.css";
 @import "app/styles/form-elements";
 @import "app/styles/button";
-@import "app/styles/variables";
+
+:root {
+  --accent-color: #bb65ff;
+}
 
 body {
   height: 100vh;
