@@ -1,5 +1,5 @@
 .text-input {
-  border: 1px solid #bb65ff;
+  border: 1px solid $primary-border-color;
   border-radius: 1rem;
   padding: 6px 12px;
   width: 100%;
@@ -11,7 +11,7 @@
   background-color: transparent;
 
   &:focus {
-    outline: #bb65ff auto 5px;
+    outline: $primary-border-color auto 5px;
     box-shadow: none;
   }
 
