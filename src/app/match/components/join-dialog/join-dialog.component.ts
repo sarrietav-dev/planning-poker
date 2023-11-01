@@ -6,5 +6,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./join-dialog.component.scss']
 })
 export class JoinDialogComponent {
-
 }
