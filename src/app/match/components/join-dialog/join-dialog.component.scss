@@ -25,43 +25,10 @@ form {
 .mode-container {
   display: flex;
   justify-content: space-evenly;
-  margin-top: 0.25rem;
+  margin-top: 0.5rem;
 }
 
-.radio-field {
-  position: relative;
-
-  input[type="radio"] {
-    display: none;
-  }
-
-  label {
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-  }
-
-  span {
-    margin-left: 0.5rem;
-    width: 20px;
-    height: 20px;
-    border: 1px solid var(--accent-color);
-    border-radius: 100%;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-
-    &::after {
-      content: "";
-      width: 10px;
-      height: 10px;
-      border-radius: 100%;
-      background-color: var(--accent-color);
-      display: none;
-    }
-  }
-
-  input[type="radio"]:checked + span::after {
-    display: block;
-  }
+.error {
+  background-color: red;
+  margin-top: 0.5rem;
 }
