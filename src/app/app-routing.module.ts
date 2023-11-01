@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CreateMatchFormComponent } from './create-match-form/create-match-form.component';
 
 const routes: Routes = [
   {
     path: 'create',
-    loadChildren: () =>
-      import('./create-match/create-match.module').then(
-        (m) => m.CreateMatchModule
-      ),
+    component: CreateMatchFormComponent,
   },
   {
     path: '',
