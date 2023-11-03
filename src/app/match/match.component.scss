@@ -1,0 +1,122 @@
+@import "/src/styles.scss";
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  @include lg {
+    flex-direction: row;
+  }
+}
+
+.match-table {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  grid-template-rows: repeat(5, 1fr);
+
+  justify-items: center;
+  align-items: center;
+
+
+  @include lg {
+    grid-template-columns: repeat(5, 0.4fr);
+    grid-template-rows: repeat(3, 0.7fr);
+  }
+}
+
+.desk {
+  grid-column: 2;
+  grid-row: 2 / 5;
+
+  @include lg {
+    grid-column: 2 / 5;
+    grid-row: 2;
+  }
+}
+
+.seat {
+  &--1 {
+    grid-column: 2;
+    grid-row: 1;
+
+    @include lg {
+      grid-column: 1;
+      grid-row: 2;
+    }
+  }
+
+  &--2 {
+    grid-column: 1;
+    grid-row: 2;
+
+    @include lg {
+      grid-column: 2;
+      grid-row: 1;
+    }
+  }
+
+  &--3 {
+    grid-column: 1;
+    grid-row: 3;
+
+    @include lg {
+      grid-column: 3;
+      grid-row: 1;
+    }
+  }
+
+  &--4 {
+    grid-column: 1;
+    grid-row: 4;
+
+    @include lg {
+      grid-column: 4;
+      grid-row: 1;
+    }
+  }
+
+  &--5 {
+    grid-column: -2;
+    grid-row: 2;
+
+    @include lg {
+      grid-column: 2;
+      grid-row: -2;
+    }
+  }
+
+  &--6 {
+    grid-column: -2;
+    grid-row: 3;
+
+    @include lg {
+      grid-column: 3;
+      grid-row: -2;
+    }
+  }
+
+  &--7 {
+    grid-column: -2;
+    grid-row: 4;
+
+    @include lg {
+      grid-column: 4;
+      grid-row: -2;
+    }
+  }
+
+  &--8 {
+    grid-column: 2;
+    grid-row: -2;
+
+    @include lg {
+      grid-column: -2;
+      grid-row: 2;
+    }
+  }
+}
