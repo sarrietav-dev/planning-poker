@@ -10,6 +10,12 @@ form {
   justify-content: center;
 
   button {
+    margin-top: 2rem;
     align-self: center;
   }
+}
+
+.error {
+  background-color: red;
+  margin-top: 0.5rem;
 }

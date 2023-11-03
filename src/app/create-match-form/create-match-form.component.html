@@ -1,5 +1,25 @@
-<form>
-  <label for="match-name">Nombra la partida</label>
-  <input type="text" id="match-name" name="match-name" />
-  <button type="submit">Submit</button>
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <div>
+    <label class="label" for="match-name">Nombra la partida</label>
+    <input
+      class="text-input"
+      type="text"
+      id="match-name"
+      name="match-name"
+      formControlName="name"
+    />
+    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="error">
+      <div *ngIf="name.errors?.['required']">El nombre es requerido</div>
+      <div *ngIf="name.errors?.['minlength']">
+        El nombre debe tener al menos 5 caracteres
+      </div>
+      <div *ngIf="name.errors?.['maxlength']">
+        El nombre debe tener menos de 20 caracteres
+      </div>
+      <div *ngIf="name.errors?.['pattern']">
+        El nombre solo puede contener letras y números
+      </div>
+    </div>
+  </div>
+  <button [disabled]="formGroup.invalid" type="submit">Submit</button>
 </form>
