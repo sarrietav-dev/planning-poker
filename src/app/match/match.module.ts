@@ -7,9 +7,10 @@ import { MatchComponent } from './match.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DeskComponent } from './components/desk/desk.component';
 import { CardComponent } from './components/card/card.component';
+import { AvatarComponent } from './components/avatar/avatar.component';
 
 @NgModule({
-  declarations: [JoinDialogComponent, MatchComponent, DeskComponent, CardComponent],
+  declarations: [JoinDialogComponent, MatchComponent, DeskComponent, CardComponent, AvatarComponent],
   imports: [CommonModule, MatchRoutingModule, ReactiveFormsModule],
 })
 export class MatchModule {}
