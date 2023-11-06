@@ -1,9 +1,14 @@
 @import "/src/styles.scss";
 
 .page-container {
-  padding: 1rem 0;
-  display: grid;
-
+  @include lg {
+    display: grid;
+    grid-template-columns: 250px 1fr 250px;
+    grid-template-rows: 100px 1fr;
+    width: 90%;
+    height: 100%;
+    margin: 0 auto;
+  }
 }
 
 main {
@@ -15,9 +20,8 @@ main {
   height: 100%;
 
   @include lg {
-    display: grid;
-    grid-template-columns: repeat(1, 0.25fr);
-    grid-template-rows: 1fr 10rem;
+    grid-column: 1 / span 3;
+    grid-row: 2 / 3;
   }
 }
 
@@ -29,19 +33,22 @@ nav {
   width: 100%;
   padding: 1rem 0;
   background-color: var(--primary-color);
-  width: 90%;
   margin: 0 auto;
 
   @include lg {
-    grid-column: 1;
+    grid-column: 1 / -1;
     grid-row: 1;
     padding: 0;
+
+    display: grid;
+    grid-template-columns: subgrid;
   }
 
   .match__title {
     color: #fff;
     font-size: 1.5rem;
     font-weight: 700;
+    text-align: center;
   }
 
   .right {
@@ -58,6 +65,7 @@ nav {
 
 .match-table {
   display: grid;
+  margin-top: 4rem;
 
   grid-template-columns: repeat(3, 1fr);
 
@@ -181,7 +189,7 @@ nav {
     align-items: center;
     gap: 2rem;
     min-height: 7rem;
-    padding-bottom: 3rem;
-    align-self: flex-end;
+    padding-bottom: 4rem;
+    margin-top: auto;
   }
 }
