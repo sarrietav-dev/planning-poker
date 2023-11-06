@@ -1,5 +1,11 @@
 @import "/src/styles.scss";
 
+.page-container {
+  padding: 1rem 0;
+  display: grid;
+
+}
+
 main {
   display: flex;
   flex-direction: column;
@@ -12,6 +18,41 @@ main {
     display: grid;
     grid-template-columns: repeat(1, 0.25fr);
     grid-template-rows: 1fr 10rem;
+  }
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 1rem 0;
+  background-color: var(--primary-color);
+  width: 90%;
+  margin: 0 auto;
+
+  @include lg {
+    grid-column: 1;
+    grid-row: 1;
+    padding: 0;
+  }
+
+  .match__title {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    @include lg {
+      gap: 2rem;
+    }
   }
 }
 

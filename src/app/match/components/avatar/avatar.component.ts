@@ -7,6 +7,8 @@ import { Component, Input } from '@angular/core';
 })
 export class AvatarComponent {
   @Input() public name!: string;
+  @Input() public size: 'small' | 'medium' | 'large' = 'medium';
+  @Input() public showLabel: boolean = true;
 
   get namePrefix(): string {
     return this.name.substring(0, 2);
