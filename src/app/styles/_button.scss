@@ -19,6 +19,17 @@ button,
     background-color: #fff;
   }
 
+  &--outlined {
+    border-color: #fff;
+    background-color: transparent;
+    color: #fff;
+
+    &:hover {
+      background-color: #fff;
+      color: var(--dark-purple);
+    }
+  }
+
   &:hover {
     opacity: 0.8;
   }
