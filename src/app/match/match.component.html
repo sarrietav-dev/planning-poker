@@ -1,47 +1,70 @@
-<main>
-  <div class="match-table">
-    <match-desk class="desk">
-      <button class="btn btn--primary">
-        Nueva votación
-      </button>
-    </match-desk>
-    <div class="seat seat--1">
-      <match-avatar name="David"></match-avatar>
+<div class="page-container">
+  <nav>
+    <div class="logo">
+      <img src="assets/pragma.png" alt="Logo" />
     </div>
-    <div class="seat seat--2">
-      <match-card>2</match-card>
+    <p class="match__title">Match</p>
+    <div class="right">
+      <div class="user">
+        <match-avatar
+          [showLabel]="false"
+          size="small"
+          name="David"
+        ></match-avatar>
+      </div>
+      <div class="menu">
+        <button class="btn btn--outlined">Invitar jugadores</button>
+      </div>
     </div>
-    <div class="seat seat--3">
-      <match-card>3</match-card>
+  </nav>
+  <main>
+    <div class="match-table">
+      <match-desk class="desk">
+        <button class="btn btn--primary">Nueva votación</button>
+      </match-desk>
+      <div class="seat seat--1">
+        <match-avatar name="David"></match-avatar>
+      </div>
+      <div class="seat seat--2">
+        <match-card>2</match-card>
+      </div>
+      <div class="seat seat--3">
+        <match-card>3</match-card>
+      </div>
+      <div class="seat seat--4">
+        <match-card>4</match-card>
+      </div>
+      <div class="seat seat--5">
+        <match-card>5</match-card>
+      </div>
+      <div class="seat seat--6">
+        <match-card>6</match-card>
+      </div>
+      <div class="seat seat--7">
+        <match-card>7</match-card>
+      </div>
+      <div class="seat seat--8">
+        <match-card>8</match-card>
+      </div>
     </div>
-    <div class="seat seat--4">
-      <match-card>4</match-card>
+    <div class="card-deck-container">
+      <p>
+        <strong>Elige una carta 👇</strong>
+      </p>
+      <div class="card-deck">
+        <match-card>1</match-card>
+        <match-card>2</match-card>
+        <match-card>3</match-card>
+        <match-card>4</match-card>
+        <match-card>5</match-card>
+        <match-card>6</match-card>
+        <match-card>7</match-card>
+        <match-card>8</match-card>
+        <match-card>9</match-card>
+        <match-card>10</match-card>
+        <match-card>11</match-card>
+        <match-card>12</match-card>
+      </div>
     </div>
-    <div class="seat seat--5">
-      <match-card>5</match-card>
-    </div>
-    <div class="seat seat--6">
-      <match-card>6</match-card>
-    </div>
-    <div class="seat seat--7">
-      <match-card>7</match-card>
-    </div>
-    <div class="seat seat--8">
-      <match-card>8</match-card>
-    </div>
-  </div>
-  <div class="card-deck">
-    <match-card>1</match-card>
-    <match-card>2</match-card>
-    <match-card>3</match-card>
-    <match-card>4</match-card>
-    <match-card>5</match-card>
-    <match-card>6</match-card>
-    <match-card>7</match-card>
-    <match-card>8</match-card>
-    <match-card>9</match-card>
-    <match-card>10</match-card>
-    <match-card>11</match-card>
-    <match-card>12</match-card>
-  </div>
-</main>
+  </main>
+</div>
