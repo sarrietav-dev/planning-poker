@@ -80,7 +80,6 @@ nav {
 
 .match-table {
   display: grid;
-  margin-top: 4rem;
 
   grid-template-columns: repeat(3, 1fr);
 
@@ -195,16 +194,31 @@ nav {
   }
 }
 
-.card-deck {
+.card-deck-container {
   display: none;
 
   @include lg {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 2rem;
-    min-height: 7rem;
-    padding-bottom: 4rem;
-    margin-top: auto;
+    color: white;
+    gap: 1rem;
+
+    p {
+      font-size: 1.25rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .card-deck {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      min-height: 7rem;
+      padding-bottom: 2rem;
+      margin-top: auto;
+    }
   }
 }
