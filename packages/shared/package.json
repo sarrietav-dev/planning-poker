@@ -1,0 +1,11 @@
+{
+  "name": "@pragma-poker/shared",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "author": "",
+  "license": "ISC"
+}
