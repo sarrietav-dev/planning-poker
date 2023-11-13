@@ -6,7 +6,7 @@ import { JoinMatchCommand } from "@pragma-poker/shared/events";
 
 const app = Express();
 const server = createServer(app);
-const io = new Server(server);
+const io = new Server(server, { cors: { origin: "*" } });
 
 app.post("/api/match", (_, res) => {
   const matchId = nanoid();
@@ -16,11 +16,16 @@ app.post("/api/match", (_, res) => {
 });
 
 io.on("connection", onConnection);
+io.on("disconnect", () => console.log("Client disconnected"));
 
 function onConnection(socket: Socket) {
+  console.log("New connection");
+  
   socket.on(JoinMatchCommand, (matchId: string) => {
+    console.log("Joining match", matchId);
+    
     socket.join(matchId);
-    socket.emit("joined-match", matchId);
+    socket.send("joined-match", matchId);
   });
 }
 

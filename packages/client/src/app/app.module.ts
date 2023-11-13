@@ -17,7 +17,7 @@ import { JoinMatchInterceptor } from './core/interceptors/join-match/join-match.
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    SocketIoModule.forRoot({ url: environment.api }),
+    SocketIoModule.forRoot({ url: environment.baseUrl }),
   ],
   providers: [
     {

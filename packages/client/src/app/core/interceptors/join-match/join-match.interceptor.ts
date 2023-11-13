@@ -21,6 +21,7 @@ export class JoinMatchInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
+    console.log('JoinMatchInterceptor');
     const matchId = this.currentRoute.snapshot.paramMap.get('id');
     const playerId = this.currentRoute.snapshot.queryParamMap.get('playerId');
 

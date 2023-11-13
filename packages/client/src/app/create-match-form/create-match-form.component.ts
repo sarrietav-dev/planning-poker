@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MatchService } from '../core/services/match/match.service';
 
 @Component({
   selector: 'app-create-match-form',
@@ -7,7 +8,7 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./create-match-form.component.scss'],
 })
 export class CreateMatchFormComponent {
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private matchService: MatchService) {}
 
   formGroup = this.fb.group({
     name: this.fb.control('', {
@@ -27,7 +28,11 @@ export class CreateMatchFormComponent {
 
   onSubmit() {
     if (this.formGroup.valid) {
-      console.log(this.formGroup.value);
+      this.matchService
+        .createMatch(this.name.value!)
+        .subscribe(({ id, adminId }) => {
+          console.log(id, adminId);
+        });
     }
 
     this.formGroup.markAllAsTouched();

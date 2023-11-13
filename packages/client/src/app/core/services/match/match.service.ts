@@ -8,11 +8,17 @@ import { JoinMatchCommand } from '@pragma-poker/shared/events';
   providedIn: 'root',
 })
 export class MatchService {
-  constructor(private http: HttpClient, private io: Socket) {}
+  constructor(private http: HttpClient, private io: Socket) {
+    this.io.on('joined-match', (matchId: string) => {
+      console.log('connected', matchId);
+    });
+  }
+
+  private url = `${environment.baseUrl}/api`;
 
   createMatch(name: string) {
     return this.http.post<{ id: string; adminId: string }>(
-      `${environment.api}/match`,
+      `${this.url}/match`,
       { name }
     );
   }
@@ -23,4 +29,6 @@ export class MatchService {
       playerId,
     });
   }
+
+  handleConnect() {}
 }
