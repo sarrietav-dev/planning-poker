@@ -1,1 +1,1 @@
-export const JoinMatchCommand = "join-match";
+export const JoinMatchCommand = "join-match" as const;

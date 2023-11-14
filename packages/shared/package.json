@@ -6,5 +6,8 @@
     "build": "tsc -b"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "exports": {
+    "./events": "./dist/events/index.js"
+  }
 }
