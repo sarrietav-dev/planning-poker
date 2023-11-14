@@ -27,8 +27,7 @@ export class MatchGuard implements CanActivate {
     const playerId = route.queryParamMap.get('playerId');
 
     if (!matchId || !playerId) {
-      this.router.navigate(['/']);
-      return false;
+      return this.router.navigate(['/']);
     }
 
     this.matchService.joinMatch(matchId, playerId);

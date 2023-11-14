@@ -8,7 +8,6 @@ import { CreateMatchFormComponent } from './create-match-form/create-match-form.
 import { ReactiveFormsModule } from '@angular/forms';
 import { SocketIoModule } from 'ngx-socket-io';
 import { environment } from 'src/environments/environment';
-import { JoinMatchInterceptor } from './core/interceptors/join-match/join-match.interceptor';
 
 @NgModule({
   declarations: [AppComponent, CreateMatchFormComponent],
@@ -19,13 +18,7 @@ import { JoinMatchInterceptor } from './core/interceptors/join-match/join-match.
     ReactiveFormsModule,
     SocketIoModule.forRoot({ url: environment.baseUrl }),
   ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: JoinMatchInterceptor,
-      multi: true,
-    },
-  ],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
