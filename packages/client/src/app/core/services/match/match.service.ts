@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { environment } from 'src/environments/environment';
-import { JoinMatchCommand } from '@pragma-poker/shared/events';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +23,7 @@ export class MatchService {
   }
 
   joinMatch(matchId: string, playerId: string) {
-    this.io.emit(JoinMatchCommand, {
+    this.io.emit('join-match', {
       matchId,
       playerId,
     });
