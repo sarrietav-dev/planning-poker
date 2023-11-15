@@ -1,0 +1,10 @@
+{
+  "name": "@pragma-poker/events",
+  "version": "1.0.0",
+  "description": "Events for Pragma Poker",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  }
+}
