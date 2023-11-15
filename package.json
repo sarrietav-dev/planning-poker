@@ -4,6 +4,9 @@
   "description": "A simple web application to play poker with your friends.",
   "author": "Sebastian Arrieta Villarreal",
   "license": "ISC",
+  "scripts": {
+    "build:packages": "pnpm --filter './libs/*' build"
+  },
   "devDependencies": {
     "@types/node": "^20.9.0",
     "ts-node": "^10.9.1",
