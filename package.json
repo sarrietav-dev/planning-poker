@@ -5,7 +5,8 @@
   "author": "Sebastian Arrieta Villarreal",
   "license": "ISC",
   "scripts": {
-    "build:packages": "pnpm --filter './libs/*' build"
+    "build:packages": "pnpm --filter './libs/*' build",
+    "build:apps": "pnpm --filter './apps/*' build"
   },
   "devDependencies": {
     "@types/node": "^20.9.0",
