@@ -2,7 +2,7 @@ import Express from "express";
 import { Server, Socket } from "socket.io";
 import { createServer } from "http";
 import { nanoid } from "nanoid";
-import { JoinMatchCommand } from "@pragma-poker/events";
+import { JoinMatchCommand } from "@planning-poker/events";
 
 const app = Express();
 const server = createServer(app);
