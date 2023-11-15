@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "@planning-poker/server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@pragma-poker/events": "workspace:*",
+    "@planning-poker/events": "workspace:*",
     "express": "^4.18.2",
     "nanoid": "^3.0.0",
     "socket.io": "^4.7.2"

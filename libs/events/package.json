@@ -1,5 +1,5 @@
 {
-  "name": "@pragma-poker/events",
+  "name": "@planning-poker/events",
   "version": "1.0.0",
   "description": "Events for Pragma Poker",
   "main": "dist/index.js",

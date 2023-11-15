@@ -44,7 +44,7 @@ importers:
       '@angular/router':
         specifier: ^17.0.0
         version: 17.0.2(@angular/common@17.0.2)(@angular/core@17.0.2)(@angular/platform-browser@17.0.2)(rxjs@7.8.1)
-      '@pragma-poker/events':
+      '@planning-poker/events':
         specifier: workspace:*
         version: link:../../libs/events
       modern-normalize:
@@ -99,7 +99,7 @@ importers:
 
   apps/server:
     dependencies:
-      '@pragma-poker/events':
+      '@planning-poker/events':
         specifier: workspace:*
         version: link:../../libs/events
       express:
