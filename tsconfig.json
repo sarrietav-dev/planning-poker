@@ -1,15 +1,20 @@
 {
   "compilerOptions": {
     "incremental": true,
-    "target": "es2016",
-    "module": "commonjs",
-    "declaration": true,
-    "sourceMap": true,
-    "strict": true,
+    "target": "ESNext",
+    "module": "ESNext",
     "moduleResolution": "node",
+    "useDefineForClassFields": true,
+    "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "lib": ["ESNext", "DOM"],
+    "noEmit": true,
+    "isolatedModules": true
   },
-  "references": [{ "path": "./packages/shared" }]
+  "references": [
+    { "path": "apps/client" },
+    { "path": "apps/server" },
+    { "path": "packages/shared" }
+  ]
 }
