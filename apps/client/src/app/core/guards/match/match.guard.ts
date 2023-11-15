@@ -24,7 +24,7 @@ export class MatchGuard implements CanActivate {
     | boolean
     | UrlTree {
     const matchId = route.paramMap.get('id');
-    const playerId = route.queryParamMap.get('playerId');
+    const playerId = route.queryParamMap.get('player_id');
 
     if (!matchId || !playerId) {
       return this.router.navigate(['/']);
