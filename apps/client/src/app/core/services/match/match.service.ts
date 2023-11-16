@@ -1,7 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import { environment } from 'src/environments/environment';
 import {
   JoinMatchCommand,
   CreateMatchCommand,
@@ -13,7 +11,9 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class MatchService {
-  constructor(private io: Socket, private router: Router) {}
+  constructor(private io: Socket, private router: Router) {
+    this.handleMatchCreated();
+  }
 
   createMatch(name: string) {
     this.io.emit(CreateMatchCommand, { name });
@@ -27,6 +27,7 @@ export class MatchService {
 
   handleMatchCreated() {
     this.io.on(MatchCreated, (matchId: string) => {
+      console.log('Match created', matchId);
       this.router.navigate(['/match', matchId]);
     });
   }

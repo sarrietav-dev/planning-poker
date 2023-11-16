@@ -21,11 +21,13 @@ function onConnection(socket: Socket) {
   socket.on(JoinMatchCommand, (matchId: string) => {
     socket.join(matchId);
     socket.emit("joined-match", matchId);
+    console.log("Joined match", matchId, socket.id);
   });
 
   socket.on(CreateMatchCommand, () => {
     const matchId = nanoid();
     socket.emit(MatchCreated, matchId);
+    console.log("Match created", matchId);
   });
 }
 
