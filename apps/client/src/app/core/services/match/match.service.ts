@@ -1,34 +1,34 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import { environment } from 'src/environments/environment';
-import { JoinMatchCommand } from '@planning-poker/events';
+import {
+  JoinMatchCommand,
+  CreateMatchCommand,
+  MatchCreated,
+} from '@planning-poker/events';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MatchService {
-  constructor(private http: HttpClient, private io: Socket) {
-    this.io.on('joined-match', (matchId: string) => {
-      console.log('connected', matchId);
-    });
+  constructor(private io: Socket, private router: Router) {
+    this.handleMatchCreated();
   }
-
-  private url = `${environment.baseUrl}/api`;
 
   createMatch(name: string) {
-    return this.http.post<{ id: string; adminId: string }>(
-      `${this.url}/match`,
-      { name }
-    );
+    this.io.emit(CreateMatchCommand, name);
   }
 
-  joinMatch(matchId: string, playerId: string) {
+  joinMatch(matchId: string) {
     this.io.emit(JoinMatchCommand, {
       matchId,
-      playerId,
     });
   }
 
-  handleConnect() {}
+  handleMatchCreated() {
+    this.io.on(MatchCreated, (matchId: string) => {
+      console.log('Match created', matchId);
+      this.router.navigate(['/match', matchId]);
+    });
+  }
 }

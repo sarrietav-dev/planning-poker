@@ -30,9 +30,7 @@ export class CreateMatchFormComponent {
     if (this.formGroup.valid) {
       this.matchService
         .createMatch(this.name.value!)
-        .subscribe(({ id, adminId }) => {
-          console.log(id, adminId);
-        });
+        ;
     }
 
     this.formGroup.markAllAsTouched();
