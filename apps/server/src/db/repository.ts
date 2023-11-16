@@ -8,6 +8,7 @@ export async function createMatch(
   await redis.hSet(`match:${matchId}`, {
     name,
     owner,
+    players: 0,
   });
 }
 
