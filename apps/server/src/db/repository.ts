@@ -14,3 +14,7 @@ export async function createMatch(
 export async function deleteMatch(matchId: string) {
   await redis.del(`match:${matchId}`);
 }
+
+export async function doesMatchExist(matchId: string) {
+  return await redis.exists(`match:${matchId}`);
+}
