@@ -16,7 +16,7 @@ export class MatchService {
   }
 
   createMatch(name: string) {
-    this.io.emit(CreateMatchCommand, { name });
+    this.io.emit(CreateMatchCommand, name);
   }
 
   joinMatch(matchId: string) {
