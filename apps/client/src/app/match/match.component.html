@@ -1,6 +1,6 @@
 @if (!isUserChosed) {
-  <div class="backdrop"></div>
-  <match-join-dialog class="dialog-wrapper"></match-join-dialog>
+<div class="backdrop"></div>
+<match-join-dialog class="dialog-wrapper"></match-join-dialog>
 }
 <div class="page-container">
   <nav>
@@ -26,29 +26,20 @@
       <match-desk class="desk">
         <button class="btn btn--primary">Nueva votación</button>
       </match-desk>
-      <div class="seat seat--1">
-        <match-avatar name="David"></match-avatar>
-      </div>
-      <div class="seat seat--2">
-        <match-card>2</match-card>
-      </div>
-      <div class="seat seat--3">
-        <match-card>3</match-card>
-      </div>
-      <div class="seat seat--4">
-        <match-card>4</match-card>
-      </div>
-      <div class="seat seat--5">
-        <match-card>5</match-card>
-      </div>
-      <div class="seat seat--6">
-        <match-card>6</match-card>
-      </div>
-      <div class="seat seat--7">
-        <match-card>7</match-card>
-      </div>
-      <div class="seat seat--8">
-        <match-card>8</match-card>
+
+      <div
+        *ngFor="let player of players; let i = index"
+        [class]="getSeatClass(i)"
+      >
+        <match-avatar
+          *ngIf="i === currentUserIndex; else normalCard"
+          name="David"
+        ></match-avatar>
+        <ng-template #normalCard>
+          <match-card>
+            {{ player.name }}
+          </match-card>
+        </ng-template>
       </div>
     </div>
     <div class="card-deck-container">
