@@ -37,4 +37,8 @@ export class MatchComponent {
   getSeatClass(index: number) {
     return `seat seat--${index + 1}`
   }
+
+  handleUserChoose(data: { name: string; mode: string }) {
+    this.isUserChosed = true;
+  }
 }
