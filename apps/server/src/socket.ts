@@ -4,10 +4,24 @@ import * as repo from "./db/repository";
 import * as events from "@planning-poker/events";
 
 export default (socket: Socket) => {
-  async function joinMatch(matchId: string) {
+  async function joinMatch({
+    matchId,
+    mode,
+    name,
+  }: {
+    matchId: string;
+    mode: "spectator" | "player";
+    name: string;
+  }) {
     if (!(await repo.doesMatchExist(matchId))) {
       socket.emit(events.MatchNotFound);
       return;
+    }
+
+    if (mode === "player") {
+      await repo.addPlayer(matchId, socket.id, name);
+    } else {
+      await repo.addSpectator(matchId, socket.id, name);
     }
 
     socket.join(matchId);
