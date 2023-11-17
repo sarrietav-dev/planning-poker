@@ -12,6 +12,54 @@ export async function createMatch(
   });
 }
 
+interface Match {
+  id: string;
+  name: string;
+  players: { name: string; card?: number }[];
+  spectators: { name: string }[];
+  cardDeck: number[];
+}
+
+export async function getMatch(matchId: string): Promise<Match> {
+  const [name, deck] = await Promise.all([
+    redis.hGet(`match:${matchId}`, "name"),
+    redis.hGet(`match:${matchId}`, "cards"),
+  ]);
+  const players: {
+    name: string;
+    card?: number;
+  }[] = [];
+  for await (const playerId of redis.scanIterator({
+    MATCH: `match:${matchId}:player:*`,
+  })) {
+    const player = await redis.hGetAll(playerId);
+    players.push({
+      name: player.name,
+      card: Number(player.card),
+    });
+  }
+  const spectators: { name: string }[] = [];
+
+  for await (const spectatorId of redis.scanIterator({
+    MATCH: `match:${matchId}:spectator:*`,
+  })) {
+    const spectator = await redis.hGetAll(spectatorId);
+    spectators.push({
+      name: spectator.name,
+    });
+  }
+
+  const cardDeck = JSON.parse(deck!) as number[];
+
+  return {
+    id: matchId,
+    name: name!,
+    players,
+    spectators,
+    cardDeck,
+  };
+}
+
 export async function deleteMatch(matchId: string) {
   await redis.del(`match:${matchId}`);
 }
@@ -23,7 +71,7 @@ export async function doesMatchExist(matchId: string) {
 export async function addPlayer(
   matchId: string,
   playerId: string,
-  playerName: string
+  name: string
 ) {
   const playerCount = await redis.hGet(`match:${matchId}`, "players");
 
@@ -32,9 +80,8 @@ export async function addPlayer(
   }
 
   await redis.hIncrBy(`match:${matchId}`, "players", 1);
-  await redis.hSet(`player:${playerId}`, {
-    matchId,
-    name: playerName,
+  await redis.hSet(`match:${matchId}:player:${playerId}`, {
+    name,
   });
 }
 
@@ -43,8 +90,13 @@ export async function addSpectator(
   spectatorId: string,
   name: string
 ) {
-  await redis.hSet(`spectator:${spectatorId}`, {
-    matchId,
-    name,
+  await redis.hSet(`match:${matchId}:player:${spectatorId}`, {
+    name: name,
+  });
+}
+
+export async function setCardDeck(matchId: string, cards: number[]) {
+  await redis.hSet(`match:${matchId}`, {
+    cards: JSON.stringify(cards),
   });
 }
