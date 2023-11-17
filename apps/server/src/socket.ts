@@ -4,15 +4,7 @@ import * as repo from "./db/repository";
 import * as events from "@planning-poker/events";
 
 export default (socket: Socket) => {
-  async function joinMatch({
-    matchId,
-    mode,
-    name,
-  }: {
-    matchId: string;
-    mode: "spectator" | "player";
-    name: string;
-  }) {
+  async function joinMatch({ matchId, mode, name }: JoinMatchProps) {
     if (!(await repo.doesMatchExist(matchId))) {
       socket.emit(events.MatchNotFound);
       return;
@@ -20,12 +12,13 @@ export default (socket: Socket) => {
 
     if (mode === "player") {
       await repo.addPlayer(matchId, socket.id, name);
+      socket.emit(events.PlayerJoined, { matchId, name });
     } else {
       await repo.addSpectator(matchId, socket.id, name);
+      socket.emit(events.SpectatorJoined, { matchId, name });
     }
 
     socket.join(matchId);
-    socket.emit(events.UserJoined, matchId);
   }
 
   async function createMatch(name: string) {
@@ -36,4 +29,10 @@ export default (socket: Socket) => {
 
   socket.on(events.JoinMatchCommand, joinMatch);
   socket.on(events.CreateMatchCommand, createMatch);
+};
+
+type JoinMatchProps = {
+  matchId: string;
+  mode: "spectator" | "player";
+  name: string;
 };
