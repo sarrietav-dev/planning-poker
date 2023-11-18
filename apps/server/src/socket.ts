@@ -24,7 +24,7 @@ export default (socket: Socket) => {
   async function createMatch(name: string) {
     const matchId = nanoid();
     await repo.createMatch(matchId, name, socket.id);
-    socket.emit(events.MatchCreated, matchId);
+    socket.emit(events.MatchCreated, matchId); // TODO: Use awknowledgement
   }
 
   socket.on(events.JoinMatchCommand, joinMatch);
