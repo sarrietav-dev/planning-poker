@@ -47,6 +47,9 @@ importers:
       '@planning-poker/events':
         specifier: workspace:*
         version: link:../../libs/events
+      '@planning-poker/models':
+        specifier: workspace:*
+        version: link:../../libs/models
       modern-normalize:
         specifier: ^2.0.0
         version: 2.0.0
@@ -102,6 +105,9 @@ importers:
       '@planning-poker/events':
         specifier: workspace:*
         version: link:../../libs/events
+      '@planning-poker/models':
+        specifier: workspace:*
+        version: link:../../libs/models
       express:
         specifier: ^4.18.2
         version: 4.18.2
@@ -123,6 +129,8 @@ importers:
         version: 3.0.1
 
   libs/events: {}
+
+  libs/models: {}
 
 packages:
 

@@ -1,3 +1,4 @@
+import { Match } from "@planning-poker/models";
 import redis from "./redis";
 
 export async function createMatch(
@@ -10,14 +11,6 @@ export async function createMatch(
     owner,
     players: 0,
   });
-}
-
-interface Match {
-  id: string;
-  name: string;
-  players: { name: string; card?: number }[];
-  spectators: { name: string }[];
-  cardDeck: number[];
 }
 
 export async function getMatch(matchId: string): Promise<Match> {

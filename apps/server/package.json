@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@planning-poker/events": "workspace:*",
+    "@planning-poker/models": "workspace:*",
     "express": "^4.18.2",
     "nanoid": "^3.0.0",
     "redis": "^4.6.10",

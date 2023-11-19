@@ -1,0 +1,10 @@
+{
+    "name": "@planning-poker/models",
+    "version": "1.0.0",
+    "description": "Planning Poker Models",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc"
+    }
+}
