@@ -1,10 +1,17 @@
 import { Component } from '@angular/core';
+import { MatchService } from '../core/services/match/match.service';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 @Component({
   templateUrl: './match.component.html',
   styleUrls: ['./match.component.scss'],
 })
 export class MatchComponent {
+  constructor(
+    private matchService: MatchService,
+    private route: ActivatedRouteSnapshot
+  ) {}
+
   isUserChosed: boolean = false;
   currentUserIndex: number = 6;
   players = [
@@ -35,10 +42,14 @@ export class MatchComponent {
   ];
 
   getSeatClass(index: number) {
-    return `seat seat--${index + 1}`
+    return `seat seat--${index + 1}`;
   }
 
   handleUserChoose(data: { name: string; mode: string }) {
-    this.isUserChosed = true;
+    this.matchService.joinMatch(
+      this.route.paramMap.get('id')!,
+      data.name,
+      data.mode
+    );
   }
 }

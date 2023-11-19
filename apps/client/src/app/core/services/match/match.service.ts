@@ -16,19 +16,31 @@ export class MatchService {
   }
 
   createMatch(name: string) {
-    this.io.emit(CreateMatchCommand, name);
+    const handleMatchCreated = ({ matchId }: { matchId: string }) => {
+      console.log('Match created', matchId);
+      this.router.navigate(['/match', matchId]);
+    };
+
+    this.io.emit(CreateMatchCommand, name, handleMatchCreated);
   }
 
-  joinMatch(matchId: string) {
-    this.io.emit(JoinMatchCommand, {
+  joinMatch(matchId: string, name: string, mode: string) {
+    const data = {
       matchId,
-    });
+      name,
+      mode,
+    };
+
+    function handleJoinMatch(_: string, error: { message: string }) {
+      if (error) {
+        alert(error.message);
+      }
+    }
+
+    this.io.emit(JoinMatchCommand, data, handleJoinMatch);
   }
 
   handleMatchCreated() {
-    this.io.on(MatchCreated, (matchId: string) => {
-      console.log('Match created', matchId);
-      this.router.navigate(['/match', matchId]);
-    });
+    this.io.on(MatchCreated, (matchId: string) => {});
   }
 }
