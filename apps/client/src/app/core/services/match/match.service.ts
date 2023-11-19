@@ -1,18 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import {
-  JoinMatchCommand,
-  CreateMatchCommand,
-} from '@planning-poker/events';
+import { JoinMatchCommand, CreateMatchCommand } from '@planning-poker/events';
 import { Router } from '@angular/router';
+import { Match } from '@planning-poker/models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MatchService {
-  constructor(private io: Socket, private router: Router) {
-    this.handleMatchCreated();
-  }
+  constructor(private io: Socket, private router: Router) {}
 
   createMatch(name: string) {
     const handleMatchCreated = ({ matchId }: { matchId: string }) => {
@@ -30,16 +26,14 @@ export class MatchService {
       mode,
     };
 
-    function handleJoinMatch(_: string, error: { message: string }) {
+    function handleJoinMatch(match: Match, error: { message: string }) {
       if (error) {
-        alert(error.message);
+        return alert(error.message);
       }
+
+      console.log('Match joined', match);
     }
 
     this.io.emit(JoinMatchCommand, data, handleJoinMatch);
-  }
-
-  handleMatchCreated() {
-    this.io.on(MatchCreated, (matchId: string) => {});
   }
 }
