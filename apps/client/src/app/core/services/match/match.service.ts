@@ -3,7 +3,6 @@ import { Socket } from 'ngx-socket-io';
 import {
   JoinMatchCommand,
   CreateMatchCommand,
-  MatchCreated,
 } from '@planning-poker/events';
 import { Router } from '@angular/router';
 
