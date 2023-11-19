@@ -2,13 +2,14 @@ import { nanoid } from "nanoid";
 import { Socket } from "socket.io";
 import * as repo from "./db/repository";
 import * as events from "@planning-poker/events";
+import { Match } from "@planning-poker/models";
 
 type Awk<T> = (response?: T, error?: { message: string }) => void;
 
 export default (socket: Socket) => {
   async function joinMatch(
     { matchId, mode, name }: JoinMatchProps,
-    callback: Awk<string>
+    callback: Awk<Match>
   ) {
     if (!(await repo.doesMatchExist(matchId))) {
       callback(undefined, {
@@ -20,12 +21,14 @@ export default (socket: Socket) => {
     if (mode === "player") {
       await repo.addPlayer(matchId, socket.id, name);
       socket.to(matchId).emit(events.PlayerJoined, { matchId, name });
-      socket.join(matchId);
     } else {
       await repo.addSpectator(matchId, socket.id, name);
       socket.to(matchId).emit(events.SpectatorJoined, { matchId, name });
-      socket.join(matchId);
     }
+
+    socket.join(matchId);
+    const match = await repo.getMatch(matchId);
+    callback(match);
   }
 
   async function createMatch(name: string, callback: Awk<{ matchId: string }>) {
