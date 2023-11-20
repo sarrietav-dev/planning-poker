@@ -83,7 +83,7 @@ export async function addSpectator(
   spectatorId: string,
   name: string
 ) {
-  await redis.hSet(`match:${matchId}:player:${spectatorId}`, {
+  await redis.hSet(`match:${matchId}:spectator:${spectatorId}`, {
     name: name,
   });
 }
