@@ -28,9 +28,7 @@ export class CreateMatchFormComponent {
 
   onSubmit() {
     if (this.formGroup.valid) {
-      this.matchService
-        .createMatch(this.name.value!)
-        ;
+      this.matchService.createMatch(this.name.value!);
     }
 
     this.formGroup.markAllAsTouched();

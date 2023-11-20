@@ -10,7 +10,13 @@ import { CardComponent } from './components/card/card.component';
 import { AvatarComponent } from './components/avatar/avatar.component';
 
 @NgModule({
-  declarations: [JoinDialogComponent, MatchComponent, DeskComponent, CardComponent, AvatarComponent],
+  declarations: [
+    JoinDialogComponent,
+    MatchComponent,
+    DeskComponent,
+    CardComponent,
+    AvatarComponent,
+  ],
   imports: [CommonModule, MatchRoutingModule, ReactiveFormsModule],
 })
 export class MatchModule {}
