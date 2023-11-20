@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatchService } from '../core/services/match/match.service';
-import { ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 
 @Component({
   templateUrl: './match.component.html',
@@ -9,7 +9,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 export class MatchComponent {
   constructor(
     private matchService: MatchService,
-    private route: ActivatedRouteSnapshot
+    private route: ActivatedRoute
   ) {}
 
   isUserChosed: boolean = false;
@@ -46,8 +46,9 @@ export class MatchComponent {
   }
 
   handleUserChoose(data: { name: string; mode: string }) {
+    this.isUserChosed = true;
     this.matchService.joinMatch(
-      this.route.paramMap.get('id')!,
+      this.route.snapshot.paramMap.get('id')!,
       data.name,
       data.mode
     );
