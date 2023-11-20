@@ -13,7 +13,7 @@ import { MatchService } from '../../services/match/match.service';
   providedIn: 'root',
 })
 export class MatchGuard implements CanActivate {
-  constructor(private matchService: MatchService, private router: Router) {}
+  constructor(private router: Router) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -28,8 +28,6 @@ export class MatchGuard implements CanActivate {
     if (!matchId) {
       return this.router.navigate(['/']);
     }
-
-    this.matchService.joinMatch(matchId);
 
     return true;
   }
