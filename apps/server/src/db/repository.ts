@@ -1,16 +1,21 @@
 import { Match } from "@planning-poker/models";
 import redis from "./redis";
+import log from "../lib/logger";
 
 export async function createMatch(
   matchId: string,
   name: string,
   owner: string
 ) {
-  await redis.hSet(`match:${matchId}`, {
+  const rows = await redis.hSet(`match:${matchId}`, {
     name,
     owner,
     players: 0,
   });
+
+  if (rows !== 3) {
+    log.error(`Could not create match: ${matchId} ${name} ${owner}`);
+  }
 }
 
 export async function getMatch(matchId: string): Promise<Match> {
@@ -18,6 +23,14 @@ export async function getMatch(matchId: string): Promise<Match> {
     redis.hGet(`match:${matchId}`, "name"),
     redis.hGet(`match:${matchId}`, "cards"),
   ]);
+
+  if (!name) {
+    log.error(`Could not find match: ${matchId}`);
+  }
+  if (!deck) {
+    log.error(`Could not find deck: ${matchId}`);
+  }
+
   const players: {
     name: string;
     card?: number;
@@ -54,7 +67,10 @@ export async function getMatch(matchId: string): Promise<Match> {
 }
 
 export async function deleteMatch(matchId: string) {
-  await redis.del(`match:${matchId}`);
+  const number = await redis.del(`match:${matchId}`);
+  if (number !== 1) {
+    log.error(`Could not delete match: ${matchId}`);
+  }
 }
 
 export async function doesMatchExist(matchId: string) {
@@ -69,6 +85,7 @@ export async function addPlayer(
   const playerCount = await redis.hGet(`match:${matchId}`, "players");
 
   if (Number(playerCount) >= 10) {
+    log.warn(`Match is full: ${matchId}`);
     throw new Error("Match is full");
   }
 
