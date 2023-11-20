@@ -13,7 +13,6 @@ const io = new Server(server, { cors: { origin: "*" } });
 connectRedisClient();
 
 io.on("connection", initializeMethods);
-io.on("disconnect", () => log.info("Client disconnected"));
 
 server.listen(3000, () => {
   log.info("Server listening on port 3000");
