@@ -4,6 +4,12 @@
   (onSubmit)="handleUserChoose($event)"
   class="dialog-wrapper"
 ></match-join-dialog>
+} @if (isInviteModalOpen) {
+<div class="backdrop"></div>
+<match-invite-dialog
+  (close)="handleInviteModalClose()"
+  class="dialog-wrapper"
+></match-invite-dialog>
 }
 <div class="page-container">
   <nav>
@@ -30,7 +36,7 @@
         ></match-avatar>
       </div>
       <div class="menu">
-        <button class="btn btn--outlined">Invitar jugadores</button>
+        <button (click)="handleInviteModalOpen()" class="btn btn--outlined">Invitar jugadores</button>
       </div>
     </div>
   </nav>

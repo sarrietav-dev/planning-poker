@@ -9,6 +9,7 @@ import { DeskComponent } from './components/desk/desk.component';
 import { CardComponent } from './components/card/card.component';
 import { AvatarComponent } from './components/avatar/avatar.component';
 import { DialogComponent } from './components/dialog/dialog.component';
+import { InviteDialogComponent } from './components/invite-dialog/invite-dialog.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { DialogComponent } from './components/dialog/dialog.component';
     DeskComponent,
     CardComponent,
     AvatarComponent,
-    DialogComponent
+    DialogComponent,
+    InviteDialogComponent,
   ],
   imports: [CommonModule, MatchRoutingModule, ReactiveFormsModule],
 })

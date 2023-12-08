@@ -22,6 +22,7 @@ export class MatchComponent implements OnInit {
   currentUserIndex: number = 6;
   match$ = this.store.select('match');
   isAdmin$ = this.store.select(selectIsAdmin);
+  isInviteModalOpen = false;
 
   players$ = this.store.select(selectPlayers);
 
@@ -49,7 +50,7 @@ export class MatchComponent implements OnInit {
   }
 
   get spectatorCountLabel() {
-    return `${this.spectatorsCount - 3}+`
+    return `${this.spectatorsCount - 3}+`;
   }
 
   handleUserChoose(data: { name: string; mode: string }) {
@@ -59,5 +60,13 @@ export class MatchComponent implements OnInit {
       data.name,
       data.mode
     );
+  }
+
+  handleInviteModalOpen() {
+    this.isInviteModalOpen = true;
+  }
+
+  handleInviteModalClose() {
+    this.isInviteModalOpen = false;
   }
 }

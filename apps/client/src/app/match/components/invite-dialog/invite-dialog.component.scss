@@ -1,0 +1,18 @@
+.invite-dialog {
+  &__title {
+    width: 100%;
+    background-color: var(--accent-color);
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-top-left-radius: 1.5rem;
+    border-top-right-radius: 1.5rem;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 1rem;
+  }
+}
