@@ -1,5 +1,8 @@
 .card {
-  display: inline;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   &__body {
     width: 40px;
