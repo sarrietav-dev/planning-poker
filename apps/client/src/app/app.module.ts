@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
@@ -8,6 +8,9 @@ import { CreateMatchFormComponent } from './create-match-form/create-match-form.
 import { ReactiveFormsModule } from '@angular/forms';
 import { SocketIoModule } from 'ngx-socket-io';
 import { environment } from 'src/environments/environment';
+import { StoreModule } from '@ngrx/store';
+import { matchReducer } from './store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [AppComponent, CreateMatchFormComponent],
@@ -17,6 +20,8 @@ import { environment } from 'src/environments/environment';
     HttpClientModule,
     ReactiveFormsModule,
     SocketIoModule.forRoot({ url: environment.baseUrl }),
+    StoreModule.forRoot({match: matchReducer}),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
   providers: [],
   bootstrap: [AppComponent],

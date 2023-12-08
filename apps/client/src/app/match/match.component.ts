@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { MatchService } from '../core/services/match/match.service';
 import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Match } from '@planning-poker/models';
+import { selectPlayers } from '../store';
+import { map } from 'rxjs';
 
 @Component({
   templateUrl: './match.component.html',
@@ -9,37 +13,19 @@ import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 export class MatchComponent {
   constructor(
     private matchService: MatchService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private store: Store<{ match: Match }>
   ) {}
 
   isUserChosed: boolean = false;
   currentUserIndex: number = 6;
-  players = [
-    {
-      name: 'Player 1',
-    },
-    {
-      name: 'Player 2',
-    },
-    {
-      name: 'Player 3',
-    },
-    {
-      name: 'Player 4',
-    },
-    {
-      name: 'Player 5',
-    },
-    {
-      name: 'Player 6',
-    },
-    {
-      name: 'Player 7',
-    },
-    {
-      name: 'Player 8',
-    },
-  ];
+  match$ = this.store.select('match');
+
+  players$ = this.store.select(selectPlayers);
+
+  get name$() {
+    return this.match$.pipe(map((match) => match.name));
+  }
 
   getSeatClass(index: number) {
     return `seat seat--${index + 1}`;

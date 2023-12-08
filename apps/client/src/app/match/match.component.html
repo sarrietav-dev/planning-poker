@@ -1,13 +1,18 @@
 @if (!isUserChosed) {
 <div class="backdrop"></div>
-<match-join-dialog (onSubmit)="handleUserChoose($event)" class="dialog-wrapper"></match-join-dialog>
+<match-join-dialog
+  (onSubmit)="handleUserChoose($event)"
+  class="dialog-wrapper"
+></match-join-dialog>
 }
 <div class="page-container">
   <nav>
     <div class="logo">
       <img src="assets/pragma.png" alt="Logo" />
     </div>
-    <p class="match__title">Match</p>
+    <p class="match__title">
+      {{ name$ | async | json }}
+    </p>
     <div class="right">
       <div class="user">
         <match-avatar
@@ -28,7 +33,7 @@
       </match-desk>
 
       <div
-        *ngFor="let player of players; let i = index"
+        *ngFor="let player of players$ | async; let i = index"
         [class]="getSeatClass(i)"
       >
         <match-avatar
