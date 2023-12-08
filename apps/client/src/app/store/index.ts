@@ -12,7 +12,11 @@ const initialState: Match = {
 
 export const matchReducer = createReducer(
   initialState,
-  on(MatchActions.setMatch, (state, { match }) => match)
+  on(MatchActions.setMatch, (state, { match }) => match),
+  on(MatchActions.playerJoined, (state, { name }) => ({
+    ...state,
+    players: [...state.players, { name }],
+  }))
 );
 
 export const selectPlayers = (state: { match: Match }) => state.match.players;

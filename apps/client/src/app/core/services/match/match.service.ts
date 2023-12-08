@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import { JoinMatchCommand, CreateMatchCommand } from '@planning-poker/events';
+import * as events from '@planning-poker/events';
 import { Router } from '@angular/router';
 import { Match } from '@planning-poker/models';
 import { Store } from '@ngrx/store';
-import { setMatch } from 'src/app/store/match.actions';
+import { playerJoined, setMatch } from 'src/app/store/match.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +14,11 @@ export class MatchService {
     private io: Socket,
     private router: Router,
     private store: Store<{ match: Match }>
-  ) {}
+  ) {
+    this.playerJoined$.subscribe(({ name }) => {
+      this.store.dispatch(playerJoined({ name }));
+    });
+  }
 
   match$ = this.store.select('match');
 
@@ -24,7 +28,7 @@ export class MatchService {
       this.router.navigate(['/match', matchId]);
     };
 
-    this.io.emit(CreateMatchCommand, name, handleMatchCreated);
+    this.io.emit(events.CreateMatchCommand, name, handleMatchCreated);
   }
 
   joinMatch(matchId: string, name: string, mode: string) {
@@ -42,6 +46,10 @@ export class MatchService {
       this.store.dispatch(setMatch({ match }));
     };
 
-    this.io.emit(JoinMatchCommand, data, handleJoinMatch);
+    this.io.emit(events.JoinMatchCommand, data, handleJoinMatch);
+  }
+
+  get playerJoined$() {
+    return this.io.fromEvent<{ name: string }>(events.PlayerJoined);
   }
 }

@@ -5,3 +5,8 @@ export const setMatch = createAction(
   '[Match] Set Match',
   props<{ match: Match }>()
 );
+
+export const playerJoined = createAction(
+  '[Match] Player Joined',
+  props<{ name: string }>()
+);
