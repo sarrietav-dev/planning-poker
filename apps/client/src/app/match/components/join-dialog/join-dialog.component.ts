@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -7,6 +7,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./join-dialog.component.scss'],
 })
 export class JoinDialogComponent {
+  @Output() onSubmit = new EventEmitter<{ name: string; mode: string }>();
+
   form = new FormGroup({
     name: new FormControl('', {
       nonNullable: true,
@@ -24,9 +26,9 @@ export class JoinDialogComponent {
     }),
   });
 
-  onSubmit() {
+  handleSubmit() {
     if (this.form.valid) {
-      console.log(this.form.value);
+      this.onSubmit.emit(this.form.value as { name: string; mode: string });
     }
 
     this.form.markAllAsTouched();
