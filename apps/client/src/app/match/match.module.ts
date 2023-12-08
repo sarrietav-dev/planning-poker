@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DeskComponent } from './components/desk/desk.component';
 import { CardComponent } from './components/card/card.component';
 import { AvatarComponent } from './components/avatar/avatar.component';
+import { DialogComponent } from './components/dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { AvatarComponent } from './components/avatar/avatar.component';
     DeskComponent,
     CardComponent,
     AvatarComponent,
+    DialogComponent
   ],
   imports: [CommonModule, MatchRoutingModule, ReactiveFormsModule],
 })
