@@ -4,7 +4,12 @@ import * as events from '@planning-poker/events';
 import { Router } from '@angular/router';
 import { Match } from '@planning-poker/models';
 import { Store } from '@ngrx/store';
-import { playerJoined, playerLeft, setMatch } from 'src/app/store/match.actions';
+import {
+  playerJoined,
+  playerLeft,
+  setMatch,
+  toggleIsAdmin,
+} from 'src/app/store/match.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +18,7 @@ export class MatchService {
   constructor(
     private io: Socket,
     private router: Router,
-    private store: Store<{ match: Match }>
+    private store: Store<{ match: Match; isAdmin: boolean }>
   ) {
     this.playerJoined$.subscribe(({ name, id }) => {
       this.store.dispatch(playerJoined({ name, id }));
@@ -28,7 +33,7 @@ export class MatchService {
 
   createMatch(name: string) {
     const handleMatchCreated = ({ matchId }: { matchId: string }) => {
-
+      this.store.dispatch(toggleIsAdmin({ isAdmin: true }));
       this.router.navigate(['/match', matchId]);
     };
 

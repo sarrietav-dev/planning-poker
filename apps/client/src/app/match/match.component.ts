@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { MatchService } from '../core/services/match/match.service';
-import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Match } from '@planning-poker/models';
-import { selectPlayers } from '../store';
-import { map } from 'rxjs';
+import { State, selectPlayers } from '../store';
+import { map, tap } from 'rxjs';
 
 @Component({
   templateUrl: './match.component.html',
@@ -14,14 +13,17 @@ export class MatchComponent {
   constructor(
     private matchService: MatchService,
     private route: ActivatedRoute,
-    private store: Store<{ match: Match }>
+    private store: Store<State>
   ) {}
 
   isUserChosed: boolean = false;
   currentUserIndex: number = 6;
   match$ = this.store.select('match');
 
-  players$ = this.store.select(selectPlayers);
+  players$ = this.store.select(selectPlayers)
+    .pipe(
+      tap(players => console.log(players))
+    );
 
   get name$() {
     return this.match$.pipe(map((match) => match.name));
