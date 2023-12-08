@@ -48,6 +48,10 @@ export class MatchComponent implements OnInit {
     return `seat seat--${index + 1}`;
   }
 
+  get spectatorCountLabel() {
+    return `${this.spectatorsCount - 3}+`
+  }
+
   handleUserChoose(data: { name: string; mode: string }) {
     this.isUserChosed = true;
     this.matchService.joinMatch(
