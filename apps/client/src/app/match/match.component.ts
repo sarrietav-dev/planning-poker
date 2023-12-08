@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatchService } from '../core/services/match/match.service';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { State, selectPlayers } from '../store';
+import { State, selectIsAdmin, selectPlayers } from '../store';
 import { map, tap } from 'rxjs';
 
 @Component({
@@ -13,20 +13,22 @@ export class MatchComponent {
   constructor(
     private matchService: MatchService,
     private route: ActivatedRoute,
-    private store: Store<State>
+    private store: Store<{
+      match: State;
+    }>
   ) {}
 
   isUserChosed: boolean = false;
   currentUserIndex: number = 6;
   match$ = this.store.select('match');
+  isAdmin$ = this.store.select(selectIsAdmin);
 
-  players$ = this.store.select(selectPlayers)
-    .pipe(
-      tap(players => console.log(players))
-    );
+  players$ = this.store
+    .select(selectPlayers)
+    .pipe(tap((players) => console.log(players)));
 
   get name$() {
-    return this.match$.pipe(map((match) => match.name));
+    return this.match$.pipe(map((match) => match.match.name));
   }
 
   getSeatClass(index: number) {

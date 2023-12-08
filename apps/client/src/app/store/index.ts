@@ -45,6 +45,8 @@ export const matchReducer = createReducer(
 );
 
 export const selectPlayers = createSelector(
-  (state: State) => state.match.players,
-  (players) => players
+  (state: { match: State }) => state.match,
+  (match) => match.match.players
 );
+
+export const selectIsAdmin = (state: { match: State }) => state.match.isAdmin;
