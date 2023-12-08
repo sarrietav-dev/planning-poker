@@ -29,7 +29,7 @@
   <main>
     <div class="match-table">
       <match-desk class="desk">
-        <button class="btn btn--primary">Nueva votación</button>
+        <button class="btn btn--primary" *ngIf="isAdmin$ | async">Nueva votación</button>
       </match-desk>
 
       <div
