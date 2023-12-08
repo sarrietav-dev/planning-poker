@@ -8,5 +8,10 @@ export const setMatch = createAction(
 
 export const playerJoined = createAction(
   '[Match] Player Joined',
-  props<{ name: string }>()
+  props<{ name: string, id: string }>()
+);
+
+export const playerLeft = createAction(
+  '[Match] Player Left',
+  props<{ playerId: string }>()
 );

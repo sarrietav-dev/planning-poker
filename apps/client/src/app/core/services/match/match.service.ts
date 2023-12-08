@@ -4,7 +4,7 @@ import * as events from '@planning-poker/events';
 import { Router } from '@angular/router';
 import { Match } from '@planning-poker/models';
 import { Store } from '@ngrx/store';
-import { playerJoined, setMatch } from 'src/app/store/match.actions';
+import { playerJoined, playerLeft, setMatch } from 'src/app/store/match.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -15,8 +15,12 @@ export class MatchService {
     private router: Router,
     private store: Store<{ match: Match }>
   ) {
-    this.playerJoined$.subscribe(({ name }) => {
-      this.store.dispatch(playerJoined({ name }));
+    this.playerJoined$.subscribe(({ name, id }) => {
+      this.store.dispatch(playerJoined({ name, id }));
+    });
+
+    this.playerLeft$.subscribe(({ playerId }) => {
+      this.store.dispatch(playerLeft({ playerId }));
     });
   }
 
@@ -50,6 +54,10 @@ export class MatchService {
   }
 
   get playerJoined$() {
-    return this.io.fromEvent<{ name: string }>(events.PlayerJoined);
+    return this.io.fromEvent<{ name: string; id: string }>(events.PlayerJoined);
+  }
+
+  get playerLeft$() {
+    return this.io.fromEvent<{ playerId: string }>(events.PlayerLeft);
   }
 }

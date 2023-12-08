@@ -31,16 +31,14 @@ export async function getMatch(matchId: string): Promise<Match> {
     log.error(`Could not find deck: ${matchId}`);
   }
 
-  const players: {
-    name: string;
-    card?: number;
-  }[] = [];
+  const players: Match["players"] = [];
   for await (const playerId of redis.scanIterator({
     MATCH: `match:${matchId}:player:*`,
   })) {
     const player = await redis.hGetAll(playerId);
     players.push({
       name: player.name,
+      id: playerId,
       card: Number(player.card),
     });
   }
