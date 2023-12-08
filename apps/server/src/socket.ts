@@ -24,11 +24,15 @@ export default (socket: Socket) => {
 
     if (mode === "player") {
       await repo.addPlayer(matchId, socket.id, name);
-      socket.to(matchId).emit(events.PlayerJoined, { matchId, name, id: socket.id });
+      socket
+        .to(matchId)
+        .emit(events.PlayerJoined, { matchId, name, id: socket.id });
       log.info(`Player joined: ${matchId} ${name}`);
     } else {
       await repo.addSpectator(matchId, socket.id, name);
-      socket.to(matchId).emit(events.SpectatorJoined, { matchId, name, id: socket.id });
+      socket
+        .to(matchId)
+        .emit(events.SpectatorJoined, { matchId, name, id: socket.id });
       log.info(`Spectator joined: ${matchId} ${name}`);
     }
 

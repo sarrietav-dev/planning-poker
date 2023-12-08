@@ -6,7 +6,7 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { MatchService } from '../../services/match/match.service';
 import { Socket } from 'ngx-socket-io';
 import { DoesMatchExist } from '@planning-poker/events';
@@ -16,6 +16,8 @@ import { DoesMatchExist } from '@planning-poker/events';
 })
 export class MatchGuard implements CanActivate {
   constructor(private router: Router, private socket: Socket) {}
+
+  response: Subject<boolean> = new Subject<boolean>();
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -32,11 +34,16 @@ export class MatchGuard implements CanActivate {
     }
 
     this.socket.emit(DoesMatchExist, matchId, (exists: boolean) => {
+
+
       if (!exists) {
         this.router.navigate(['/']);
+        this.response.next(false);
       }
+
+      this.response.next(true);
     });
 
-    return true;
+    return this.response.asObservable();
   }
 }

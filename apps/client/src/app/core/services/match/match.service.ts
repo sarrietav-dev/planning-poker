@@ -28,7 +28,7 @@ export class MatchService {
 
   createMatch(name: string) {
     const handleMatchCreated = ({ matchId }: { matchId: string }) => {
-      console.log('Match created', matchId);
+
       this.router.navigate(['/match', matchId]);
     };
 
