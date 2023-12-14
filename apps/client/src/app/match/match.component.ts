@@ -3,7 +3,7 @@ import { MatchService } from '../core/services/match/match.service';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State, selectIsAdmin, selectPlayers } from '../store';
-import { map, scan, take, tap } from 'rxjs';
+import { from, map, reduce, scan, switchMap, take, tap } from 'rxjs';
 
 @Component({
   templateUrl: './match.component.html',
@@ -28,14 +28,21 @@ export class MatchComponent implements OnInit {
 
   spectators$ = this.store
     .select((state) => state.match.match.spectators)
-    .pipe(take(3));
+    .pipe(
+      switchMap((spectators) => from(spectators)),
+      take(3),
+      reduce((acc, spectator) => [...acc, spectator], [] as { name: string }[])
+    );
 
   spectatorsCount = 0;
 
   ngOnInit(): void {
     this.store
       .select((state) => state.match.match.spectators)
-      .pipe(scan((acc) => acc + 1, 0))
+      .pipe(
+        switchMap((spectators) => from(spectators)),
+        scan((acc) => acc + 1, 0)
+      )
       .subscribe((count) => {
         this.spectatorsCount = count;
       });
