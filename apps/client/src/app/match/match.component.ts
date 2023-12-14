@@ -3,7 +3,7 @@ import { MatchService } from '../core/services/match/match.service';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State, selectIsAdmin, selectPlayers } from '../store';
-import { map, scan, take, tap } from 'rxjs';
+import { from, map, reduce, scan, switchMap, take, tap } from 'rxjs';
 
 @Component({
   templateUrl: './match.component.html',
@@ -22,19 +22,27 @@ export class MatchComponent implements OnInit {
   currentUserIndex: number = 6;
   match$ = this.store.select('match');
   isAdmin$ = this.store.select(selectIsAdmin);
+  isInviteModalOpen = false;
 
   players$ = this.store.select(selectPlayers);
 
   spectators$ = this.store
     .select((state) => state.match.match.spectators)
-    .pipe(take(3));
+    .pipe(
+      switchMap((spectators) => from(spectators)),
+      take(3),
+      reduce((acc, spectator) => [...acc, spectator], [] as { name: string }[])
+    );
 
   spectatorsCount = 0;
 
   ngOnInit(): void {
     this.store
       .select((state) => state.match.match.spectators)
-      .pipe(scan((acc) => acc + 1, 0))
+      .pipe(
+        switchMap((spectators) => from(spectators)),
+        scan((acc) => acc + 1, 0)
+      )
       .subscribe((count) => {
         this.spectatorsCount = count;
       });
@@ -49,7 +57,7 @@ export class MatchComponent implements OnInit {
   }
 
   get spectatorCountLabel() {
-    return `${this.spectatorsCount - 3}+`
+    return `${this.spectatorsCount - 3}+`;
   }
 
   handleUserChoose(data: { name: string; mode: string }) {
@@ -59,5 +67,13 @@ export class MatchComponent implements OnInit {
       data.name,
       data.mode
     );
+  }
+
+  handleInviteModalOpen() {
+    this.isInviteModalOpen = true;
+  }
+
+  handleInviteModalClose() {
+    this.isInviteModalOpen = false;
   }
 }
