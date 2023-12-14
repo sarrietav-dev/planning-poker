@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location as NgLocation } from '@angular/common';
 
 @Component({
   selector: 'match-invite-dialog',
@@ -8,12 +8,12 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './invite-dialog.component.scss',
 })
 export class InviteDialogComponent {
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: Router, private location: NgLocation) {}
 
   @Output() close = new EventEmitter<void>();
 
   get inviteLink(): string {
-    return this.route.snapshot.toString();
+    return this.url;
   }
 
   copyLink() {
@@ -22,5 +22,13 @@ export class InviteDialogComponent {
 
   closeDialog() {
     this.close.emit();
+  }
+
+  private get url() {
+    const fullUrl = this.location.prepareExternalUrl(this.location.path());
+    const urlObject = window.location;
+    return `${urlObject.protocol}//${urlObject.hostname}${
+      urlObject.port ? ':' + urlObject.port : ''
+    }${fullUrl}`;
   }
 }

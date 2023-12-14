@@ -2,15 +2,19 @@
   <div class="invite-dialog__header">
     <h2 class="invite-dialog__title">Invite a friend</h2>
     <button class="invite-dialog__close" (click)="closeDialog()">
-      <i class="material-icons">close</i>
+      <mat-icon color="#fff" fontIcon="close"></mat-icon>
     </button>
   </div>
   <div class="invite-dialog__body">
-    <input type="text" class="invite-dialog__link .text-input" [value]="inviteLink" disabled>
+    <input
+      type="text"
+      class="invite-dialog__link"
+      [value]="inviteLink"
+      disabled
+    />
 
     <div class="invite-dialog__copy">
-      <button class="invite-dialog__copy-button" (click)="copyLink()">
-        <i class="material-icons">content_copy</i>
+      <button class="btn btn--secondary" (click)="copyLink()">
         <span>Copy</span>
       </button>
     </div>

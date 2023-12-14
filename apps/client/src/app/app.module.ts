@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 import { StoreModule } from '@ngrx/store';
 import { matchReducer } from './store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent, CreateMatchFormComponent],
@@ -20,8 +21,9 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     HttpClientModule,
     ReactiveFormsModule,
     SocketIoModule.forRoot({ url: environment.baseUrl }),
-    StoreModule.forRoot({match: matchReducer}),
+    StoreModule.forRoot({ match: matchReducer }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
