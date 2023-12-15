@@ -1,7 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "modern-normalize/modern-normalize.css";
 @import "app/styles/form-elements";
-@import "app/styles/button";
 
 :root {
   --accent-color: #bb65ff;
@@ -43,5 +42,11 @@ $lg-screen: 1024px;
   }
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

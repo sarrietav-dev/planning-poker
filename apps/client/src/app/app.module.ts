@@ -12,6 +12,7 @@ import { StoreModule } from '@ngrx/store';
 import { matchReducer } from './store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ButtonComponent } from './components/button/button.component';
 
 @NgModule({
   declarations: [AppComponent, CreateMatchFormComponent],
@@ -24,6 +25,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     StoreModule.forRoot({ match: matchReducer }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     BrowserAnimationsModule,
+    ButtonComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

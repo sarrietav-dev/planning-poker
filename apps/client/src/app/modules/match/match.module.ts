@@ -12,6 +12,7 @@ import { DialogComponent } from '../../components/dialog/dialog.component';
 import { InviteDialogComponent } from './components/invite-dialog/invite-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
 import { CardDeckComponent } from './components/card-deck/card-deck.component';
+import { ButtonComponent } from 'src/app/components/button/button.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import { CardDeckComponent } from './components/card-deck/card-deck.component';
     MatchComponent,
     DeskComponent,
     InviteDialogComponent,
-    CardDeckComponent
+    CardDeckComponent,
   ],
   imports: [
     CommonModule,
@@ -29,6 +30,7 @@ import { CardDeckComponent } from './components/card-deck/card-deck.component';
     CardComponent,
     AvatarComponent,
     DialogComponent,
+    ButtonComponent,
   ],
 })
 export class MatchModule {}
