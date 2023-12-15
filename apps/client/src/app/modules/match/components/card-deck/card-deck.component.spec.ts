@@ -2,16 +2,18 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CardDeckComponent } from './card-deck.component';
 import { MatchService } from 'src/app/services/match/match.service';
-import { from, of } from 'rxjs';
+import { from } from 'rxjs';
 import { CardComponent } from 'src/app/components/card/card.component';
 
-describe('CardDeckComponent', () => {
+fdescribe('CardDeckComponent', () => {
   let component: CardDeckComponent;
   let fixture: ComponentFixture<CardDeckComponent>;
+  let service: jasmine.SpyObj<MatchService>;
 
   beforeEach(async () => {
     const serviceSpy = jasmine.createSpyObj('MatchService', [
       'cardDeck$',
+      'selectCard',
     ]) as jasmine.SpyObj<MatchService>;
 
     serviceSpy.cardDeck$.and.returnValue(from([1, 2, 3]));
@@ -30,6 +32,7 @@ describe('CardDeckComponent', () => {
     fixture = TestBed.createComponent(CardDeckComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    service = TestBed.inject(MatchService) as jasmine.SpyObj<MatchService>;
   });
 
   it('should create', () => {
@@ -56,5 +59,11 @@ describe('CardDeckComponent', () => {
     component.selectedCard = 3;
     component.onSelectedCard(5);
     expect(component.selectedCard).toBe(3);
+  });
+
+  it('should call service.selectCard when onSelectedCard is called and selectedCard is -1', () => {
+    component.onSelectedCard(5);
+    expect(service.selectCard).toHaveBeenCalled();
+    expect(service.selectCard).toHaveBeenCalledWith(5);
   });
 });

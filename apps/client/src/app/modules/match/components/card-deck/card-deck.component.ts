@@ -22,6 +22,9 @@ export class CardDeckComponent {
   }
 
   onSelectedCard(card: number) {
-    if (this.selectedCard === -1) this.selectedCard = card;
+    if (this.selectedCard === -1) {
+      this.selectedCard = card;
+      this.service.selectCard(card);
+    }
   }
 }
