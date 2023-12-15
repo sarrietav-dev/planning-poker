@@ -1,6 +1,7 @@
 import { Match } from "@planning-poker/models";
 import redis from "./redis";
 import log from "../lib/logger";
+import { remove } from "winston";
 
 export async function createMatch(
   matchId: string,
@@ -107,4 +108,8 @@ export async function setCardDeck(matchId: string, cards: number[]) {
   await redis.hSet(`match:${matchId}`, {
     cards: JSON.stringify(cards),
   });
+}
+
+export async function removePlayer(matchId: string, playerId: string) {
+  await redis.hDel(`match:${matchId}`, `player:${playerId}`);
 }

@@ -52,6 +52,7 @@ export default (socket: Socket) => {
     log.info(`Client disconnected: ${socket.id}`);
     socket.rooms.forEach(async (room) => {
       socket.to(room).emit(events.PlayerLeft, { playerId: socket.id });
+      await repo.removePlayer(room, socket.id);
     });
   }
 
