@@ -22,7 +22,6 @@ export class MatchComponent implements OnInit {
   match$ = this.store.select('match');
   isInviteModalOpen = false;
 
-
   spectators$ = this.store
     .select((state) => state.match.match.spectators)
     .pipe(
@@ -48,7 +47,6 @@ export class MatchComponent implements OnInit {
   get name$() {
     return this.match$.pipe(map((match) => match.match.name));
   }
-
 
   get spectatorCountLabel() {
     return `${this.spectatorsCount - 3}+`;

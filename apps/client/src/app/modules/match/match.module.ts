@@ -11,6 +11,7 @@ import { AvatarComponent } from '../../components/avatar/avatar.component';
 import { DialogComponent } from '../../components/dialog/dialog.component';
 import { InviteDialogComponent } from './components/invite-dialog/invite-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
+import { CardDeckComponent } from './components/card-deck/card-deck.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatchComponent,
     DeskComponent,
     InviteDialogComponent,
+    CardDeckComponent
   ],
   imports: [
     CommonModule,
