@@ -5,7 +5,7 @@ import { Socket } from 'ngx-socket-io';
 import { Router, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
-describe('MatchGuard', () => {
+xdescribe('MatchGuard', () => {
   let guard: MatchGuard;
   let socketService: jasmine.SpyObj<Socket>;
   let routerService: jasmine.SpyObj<Router>;

@@ -74,4 +74,8 @@ export class MatchService {
   selectCard(card: number) {
     console.log(card);
   }
+
+  doesMatchExist(matchId: string, cb: (exists: boolean) => void) {
+    this.io.emit(events.DoesMatchExist, matchId, cb);
+  }
 }
