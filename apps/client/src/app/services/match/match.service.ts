@@ -67,7 +67,7 @@ export class MatchService {
     return this.io.fromEvent<{ playerId: string }>(events.PlayerLeft);
   }
 
-  get cardDeck$() {
+  cardDeck$() {
     return from([1, 2, 3, 5, 8, 13, 21, 34, 55, 89]);
   }
 }

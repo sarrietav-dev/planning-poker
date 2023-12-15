@@ -13,11 +13,13 @@ export class CardDeckComponent {
 
   selectedCard = -1;
 
-  cardDeck$ = this.service.cardDeck$.pipe(
-    reduce((acc, curr) => {
-      return [...acc, curr];
-    }, [] as number[])
-  );
+  get cardDeck$() {
+    return this.service.cardDeck$().pipe(
+      reduce((acc, curr) => {
+        return [...acc, curr];
+      }, [] as number[])
+    );
+  }
 
   onSelectedCard(card: number) {
     if (this.selectedCard === -1) this.selectedCard = card;
