@@ -5,7 +5,7 @@ import { MatchService } from 'src/app/services/match/match.service';
 import { from } from 'rxjs';
 import { CardComponent } from 'src/app/components/card/card.component';
 
-fdescribe('CardDeckComponent', () => {
+describe('CardDeckComponent', () => {
   let component: CardDeckComponent;
   let fixture: ComponentFixture<CardDeckComponent>;
   let service: jasmine.SpyObj<MatchService>;

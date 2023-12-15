@@ -1,5 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Location as NgLocation } from '@angular/common';
 
 @Component({
@@ -8,7 +7,7 @@ import { Location as NgLocation } from '@angular/common';
   styleUrl: './invite-dialog.component.scss',
 })
 export class InviteDialogComponent {
-  constructor(private route: Router, private location: NgLocation) {}
+  constructor(private location: NgLocation) {}
 
   @Output() close = new EventEmitter<void>();
 
