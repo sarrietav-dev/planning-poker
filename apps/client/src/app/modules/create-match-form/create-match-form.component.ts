@@ -26,8 +26,12 @@ export class CreateMatchFormComponent {
     return this.formGroup.get('name')!;
   }
 
+  isFormValid() {
+    return this.formGroup.valid;
+  }
+
   onSubmit() {
-    if (this.formGroup.valid) {
+    if (this.isFormValid()) {
       this.matchService.createMatch(this.name.value!);
     }
 
