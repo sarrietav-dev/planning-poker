@@ -1,7 +1,28 @@
-<div class="outer-line">
-  <div class="inner-line">
-    <div class="desk">
-      <ng-content></ng-content>
+<div class="match-table">
+  <div class="desk-container">
+    <div class="outer-line">
+      <div class="inner-line">
+        <div class="desk">
+          <button class="btn btn--primary" *ngIf="isAdmin$ | async">
+            Nueva votación
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <div
+    *ngFor="let player of players$ | async; let i = index"
+    [class]="getSeatClass(i)"
+  >
+    <app-avatar
+      *ngIf="i === currentUserIndex; else normalCard"
+      name="David"
+    ></app-avatar>
+    <ng-template #normalCard>
+      <app-card>
+        {{ player.name }}
+      </app-card>
+    </ng-template>
   </div>
 </div>

@@ -19,12 +19,8 @@ export class MatchComponent implements OnInit {
   ) {}
 
   isUserChosed: boolean = false;
-  currentUserIndex: number = 6;
   match$ = this.store.select('match');
-  isAdmin$ = this.store.select(selectIsAdmin);
   isInviteModalOpen = false;
-
-  players$ = this.store.select(selectPlayers);
 
   spectators$ = this.store
     .select((state) => state.match.match.spectators)
@@ -50,10 +46,6 @@ export class MatchComponent implements OnInit {
 
   get name$() {
     return this.match$.pipe(map((match) => match.match.name));
-  }
-
-  getSeatClass(index: number) {
-    return `seat seat--${index + 1}`;
   }
 
   get spectatorCountLabel() {

@@ -1,9 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'match-avatar',
+  selector: 'app-avatar',
+  standalone: true,
   templateUrl: './avatar.component.html',
   styleUrls: ['./avatar.component.scss'],
+  imports: [CommonModule],
 })
 export class AvatarComponent {
   @Input() public name: string = '';

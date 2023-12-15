@@ -83,7 +83,7 @@ nav {
       align-items: center;
       gap: 0.5rem;
 
-      match-avatar {
+      app-avatar {
         border: 2px solid #fff;
         border-radius: 50%;
 
@@ -95,121 +95,6 @@ nav {
   }
 }
 
-.match-table {
-  display: grid;
-
-  grid-template-columns: repeat(3, 1fr);
-
-  grid-template-rows: repeat(5, 0.35fr);
-
-  justify-items: center;
-  align-items: center;
-
-  @include lg {
-    grid-template-columns: repeat(5, 0.4fr);
-    grid-template-rows: repeat(3, 0.7fr);
-  }
-}
-
-.desk {
-  grid-column: 2;
-  grid-row: 2 / 5;
-
-  button {
-    width: 75%;
-  }
-
-  @include lg {
-    grid-column: 2 / 5;
-    grid-row: 2;
-
-    button {
-      width: initial;
-    }
-  }
-}
-
-.seat {
-  &--1 {
-    grid-column: 2;
-    grid-row: 1;
-
-    @include lg {
-      grid-column: 1;
-      grid-row: 2;
-    }
-  }
-
-  &--2 {
-    grid-column: 1;
-    grid-row: 2;
-
-    @include lg {
-      grid-column: 2;
-      grid-row: 1;
-    }
-  }
-
-  &--3 {
-    grid-column: 1;
-    grid-row: 3;
-
-    @include lg {
-      grid-column: 3;
-      grid-row: 1;
-    }
-  }
-
-  &--4 {
-    grid-column: 1;
-    grid-row: 4;
-
-    @include lg {
-      grid-column: 4;
-      grid-row: 1;
-    }
-  }
-
-  &--5 {
-    grid-column: -2;
-    grid-row: 2;
-
-    @include lg {
-      grid-column: 2;
-      grid-row: -2;
-    }
-  }
-
-  &--6 {
-    grid-column: -2;
-    grid-row: 3;
-
-    @include lg {
-      grid-column: 3;
-      grid-row: -2;
-    }
-  }
-
-  &--7 {
-    grid-column: -2;
-    grid-row: 4;
-
-    @include lg {
-      grid-column: 4;
-      grid-row: -2;
-    }
-  }
-
-  &--8 {
-    grid-column: 2;
-    grid-row: -2;
-
-    @include lg {
-      grid-column: -2;
-      grid-row: 2;
-    }
-  }
-}
 
 .card-deck-container {
   display: none;
