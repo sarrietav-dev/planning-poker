@@ -21,19 +21,19 @@
     </p>
     <div class="right">
       <div class="spectators">
-        <match-avatar
+        <app-avatar
           *ngFor="let spectator of spectators$ | async"
           [showLabel]="false"
           size="small"
           [name]="spectator.name"
-        ></match-avatar>
-        <match-avatar
+        ></app-avatar>
+        <app-avatar
           *ngIf="spectatorsCount > 3"
           [showLabel]="false"
           size="small"
           [customPrefix]="spectatorCountLabel"
           [backgroundColor]="'white'"
-        ></match-avatar>
+        ></app-avatar>
       </div>
       <div class="menu">
         <button (click)="handleInviteModalOpen()" class="btn btn--outlined">
@@ -54,14 +54,14 @@
         *ngFor="let player of players$ | async; let i = index"
         [class]="getSeatClass(i)"
       >
-        <match-avatar
+        <app-avatar
           *ngIf="i === currentUserIndex; else normalCard"
           name="David"
-        ></match-avatar>
+        ></app-avatar>
         <ng-template #normalCard>
-          <match-card>
+          <app-card>
             {{ player.name }}
-          </match-card>
+          </app-card>
         </ng-template>
       </div>
     </div>
@@ -70,18 +70,18 @@
         <strong>Elige una carta 👇</strong>
       </p>
       <div class="card-deck">
-        <match-card [selected]="true">1</match-card>
-        <match-card>2</match-card>
-        <match-card>3</match-card>
-        <match-card>4</match-card>
-        <match-card>5</match-card>
-        <match-card>6</match-card>
-        <match-card>7</match-card>
-        <match-card>8</match-card>
-        <match-card>9</match-card>
-        <match-card>10</match-card>
-        <match-card>11</match-card>
-        <match-card>12</match-card>
+        <app-card [selected]="true">1</app-card>
+        <app-card>2</app-card>
+        <app-card>3</app-card>
+        <app-card>4</app-card>
+        <app-card>5</app-card>
+        <app-card>6</app-card>
+        <app-card>7</app-card>
+        <app-card>8</app-card>
+        <app-card>9</app-card>
+        <app-card>10</app-card>
+        <app-card>11</app-card>
+        <app-card>12</app-card>
       </div>
     </div>
   </main>

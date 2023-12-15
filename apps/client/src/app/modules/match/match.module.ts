@@ -6,9 +6,9 @@ import { JoinDialogComponent } from './components/join-dialog/join-dialog.compon
 import { MatchComponent } from './match.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DeskComponent } from './components/desk/desk.component';
-import { CardComponent } from './components/card/card.component';
-import { AvatarComponent } from './components/avatar/avatar.component';
-import { DialogComponent } from './components/dialog/dialog.component';
+import { CardComponent } from '../../components/card/card.component';
+import { AvatarComponent } from '../../components/avatar/avatar.component';
+import { DialogComponent } from '../../components/dialog/dialog.component';
 import { InviteDialogComponent } from './components/invite-dialog/invite-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -17,9 +17,6 @@ import { MatIconModule } from '@angular/material/icon';
     JoinDialogComponent,
     MatchComponent,
     DeskComponent,
-    CardComponent,
-    AvatarComponent,
-    DialogComponent,
     InviteDialogComponent,
   ],
   imports: [
@@ -27,6 +24,9 @@ import { MatIconModule } from '@angular/material/icon';
     MatchRoutingModule,
     ReactiveFormsModule,
     MatIconModule,
+    CardComponent,
+    AvatarComponent,
+    DialogComponent,
   ],
 })
 export class MatchModule {}

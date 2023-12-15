@@ -6,12 +6,10 @@ describe('AvatarComponent', () => {
   let component: AvatarComponent;
   let fixture: ComponentFixture<AvatarComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [AvatarComponent]
-    })
-    .compileComponents();
-    
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [AvatarComponent]
+    });
     fixture = TestBed.createComponent(AvatarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
