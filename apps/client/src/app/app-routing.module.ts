@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CreateMatchFormComponent } from './create-match-form/create-match-form.component';
-import { MatchGuard } from './core/guards/match/match.guard';
+import { CreateMatchFormComponent } from './modules/create-match-form/create-match-form.component';
+import { MatchGuard } from './guards/match/match.guard';
 
 const routes: Routes = [
   {
@@ -16,7 +16,7 @@ const routes: Routes = [
   {
     path: 'match/:id',
     loadChildren: () =>
-      import('./match/match.module').then((m) => m.MatchModule),
+      import('./modules/match/match.module').then((m) => m.MatchModule),
     canActivate: [MatchGuard],
   },
 ];

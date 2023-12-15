@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MatchService } from '../core/services/match/match.service';
+import { MatchService } from '../../services/match/match.service';
 
 @Component({
   selector: 'app-create-match-form',
