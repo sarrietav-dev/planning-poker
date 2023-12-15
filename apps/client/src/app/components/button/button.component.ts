@@ -5,8 +5,17 @@ import { CommonModule } from '@angular/common';
   selector: 'app-button',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './button.component.html',
   styleUrl: './button.component.scss',
+  template: `
+    <button
+      [ngClass]="className"
+      [disabled]="disabled"
+      [type]="type"
+      (click)="handleClick()"
+    >
+      <ng-content></ng-content>
+    </button>
+  `,
 })
 export class ButtonComponent {
   @Input() color: 'primary' | 'secondary' | 'tertiary' = 'primary';
