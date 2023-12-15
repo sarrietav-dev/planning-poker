@@ -1,4 +1,8 @@
-<div class="card" [ngClass]="{ 'card--selected': selected }">
+<div
+  class="card"
+  (click)="onSelectedCard()"
+  [ngClass]="{ 'card--selected': selected }"
+>
   <div class="card__body">
     <p class="card__value">
       {{ value }}
