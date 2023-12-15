@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 @Component({
@@ -5,6 +6,7 @@ import { Component, Input } from '@angular/core';
   standalone: true,
   templateUrl: './avatar.component.html',
   styleUrls: ['./avatar.component.scss'],
+  imports: [CommonModule],
 })
 export class AvatarComponent {
   @Input() public name: string = '';

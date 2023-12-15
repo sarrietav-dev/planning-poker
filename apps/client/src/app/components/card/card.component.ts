@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 @Component({
@@ -5,6 +6,7 @@ import { Component, Input } from '@angular/core';
   standalone: true,
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
+  imports: [CommonModule],
 })
 export class CardComponent {
   @Input() selected?: boolean;
