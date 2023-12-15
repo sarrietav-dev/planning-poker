@@ -10,6 +10,7 @@ import {
   setMatch,
   toggleIsAdmin,
 } from 'src/app/store/match.actions';
+import { from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -64,5 +65,9 @@ export class MatchService {
 
   get playerLeft$() {
     return this.io.fromEvent<{ playerId: string }>(events.PlayerLeft);
+  }
+
+  get cardDeck$() {
+    return from([1, 2, 3, 5, 8, 13, 21, 34, 55, 89]);
   }
 }
