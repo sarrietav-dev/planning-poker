@@ -12,7 +12,7 @@ export class JoinDialogComponent {
   form = new FormGroup({
     name: new FormControl('', {
       nonNullable: true,
-      updateOn: 'blur',
+      updateOn: 'submit',
       validators: [
         Validators.required,
         Validators.minLength(5),
