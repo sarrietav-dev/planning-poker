@@ -95,54 +95,6 @@ nav {
   }
 }
 
-
-.card-deck-container {
-  display: none;
-
-  @include lg {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    gap: 1rem;
-
-    p {
-      font-size: 1.25rem;
-      font-weight: 700;
-      text-align: center;
-    }
-
-    .card-deck {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 2rem;
-      min-height: 7rem;
-      padding-bottom: 2rem;
-      margin-top: auto;
-
-      & > * {
-        transition: all 0.2s ease-in-out;
-      }
-
-      & > *:hover {
-        transform: translateY(-10px);
-      }
-
-      & > .selected {
-        transform: translateY(-10px);
-      }
-
-      // If the card is selected, and the user hovers over another card,
-      // the hovered card should not move.
-      .selected ~ *:not(.selected):hover {
-        transform: none;
-      }
-    }
-  }
-}
-
 .backdrop {
   position: fixed;
   z-index: 1;

@@ -4,18 +4,14 @@
   </p>
   <div class="card-deck-container">
     <div class="card-deck">
-      <app-card [selected]="true">1</app-card>
-      <app-card>2</app-card>
-      <app-card>3</app-card>
-      <app-card>4</app-card>
-      <app-card>5</app-card>
-      <app-card>6</app-card>
-      <app-card>7</app-card>
-      <app-card>8</app-card>
-      <app-card>9</app-card>
-      <app-card>10</app-card>
-      <app-card>11</app-card>
-      <app-card>12</app-card>
+      <app-card
+        *ngFor="let card of cardDeck$ | async; let i = index"
+        (select)="onSelectedCard(card)"
+        [selected]="selectedCard === card"
+        [ngClass]="{ selected: selectedCard === card }"
+      >
+        {{ card }}
+      </app-card>
     </div>
   </div>
 </div>

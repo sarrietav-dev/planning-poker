@@ -53,7 +53,7 @@
 
       // If the card is selected, and the user hovers over another card,
       // the hovered card should not move.
-      .selected ~ *:not(.selected):hover {
+      &:has(.selected) *:not(.selected):hover {
         transform: none;
       }
     }
