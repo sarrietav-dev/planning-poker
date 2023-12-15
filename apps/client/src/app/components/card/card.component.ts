@@ -10,7 +10,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class CardComponent {
   @Input() selected?: boolean;
-  @Input() value!: string;
+  @Input() value: string = '';
   @Output() select = new EventEmitter();
 
   onSelectedCard() {
