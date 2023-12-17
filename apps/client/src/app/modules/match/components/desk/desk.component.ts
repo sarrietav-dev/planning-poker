@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { MatchService } from 'src/app/services/match/match.service';
 import { State, selectIsAdmin, selectPlayers } from 'src/app/store';
-import { resetGame, revealCards } from 'src/app/store/match.actions';
 
 @Component({
   selector: 'match-desk',
@@ -13,6 +13,7 @@ export class DeskComponent {
     private store: Store<{
       match: State;
     }>,
+    private service: MatchService
   ) {}
 
   players$ = this.store.select(selectPlayers);
@@ -24,10 +25,10 @@ export class DeskComponent {
   }
 
   onRevealCardsClick() {
-    this.store.dispatch(revealCards());
+    this.service.revealCards();
   }
 
   onResetGameClick() {
-    this.store.dispatch(resetGame());
+    this.service.resetGame();
   }
 }

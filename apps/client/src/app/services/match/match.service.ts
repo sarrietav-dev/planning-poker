@@ -11,7 +11,8 @@ import {
   setPlayerCard,
   toggleIsAdmin,
 } from 'src/app/store/match.actions';
-import { EMPTY, Observable, from } from 'rxjs';
+import { EMPTY, from } from 'rxjs';
+import { resetGame, revealCards } from 'src/app/store/match.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -95,11 +96,11 @@ export class MatchService {
     this.io.emit(events.DoesMatchExist, matchId, cb);
   }
 
-  resetGame(): Observable<unknown> {
-    return EMPTY;
+  resetGame() {
+    this.store.dispatch(resetGame());
   }
 
-  revealCards(): Observable<unknown> {
-    return EMPTY;
+  revealCards() {
+    this.store.dispatch(revealCards());
   }
 }
