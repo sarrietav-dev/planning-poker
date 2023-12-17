@@ -74,3 +74,6 @@ export const selectPlayers = createSelector(
 );
 
 export const selectIsAdmin = (state: { match: State }) => state.match.isAdmin;
+
+export const selectAreCardsRevealed = (state: { match: State }) =>
+  state.match.areCardsRevealed;
