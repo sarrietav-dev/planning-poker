@@ -11,18 +11,12 @@ import {
   setPlayerCard,
   toggleIsAdmin,
 } from 'src/app/store/match.actions';
-import { from } from 'rxjs';
+import { EMPTY, Observable, from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MatchService {
-  resetGame() {
-    throw new Error('Method not implemented.');
-  }
-  revealCards() {
-    throw new Error('Method not implemented.');
-  }
   constructor(
     private io: Socket,
     private router: Router,
@@ -99,5 +93,13 @@ export class MatchService {
 
   doesMatchExist(matchId: string, cb: (exists: boolean) => void) {
     this.io.emit(events.DoesMatchExist, matchId, cb);
+  }
+
+  resetGame(): Observable<unknown> {
+    return EMPTY;
+  }
+
+  revealCards(): Observable<unknown> {
+    return EMPTY;
   }
 }
