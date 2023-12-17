@@ -25,6 +25,7 @@
     "@ngrx/store-devtools": "^17.0.1",
     "@planning-poker/events": "workspace:*",
     "@planning-poker/models": "workspace:*",
+    "immer": "^10.0.3",
     "modern-normalize": "^2.0.0",
     "ngx-socket-io": "^4.6.1",
     "rxjs": "~7.8.0",
