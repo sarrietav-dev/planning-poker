@@ -1,7 +1,7 @@
 <div
   class="card"
   (click)="onSelectedCard()"
-  [ngClass]="{ 'card--selected': selected }"
+  [ngClass]="{ 'card--selected': selected, 'card--shown': show }"
 >
   <div class="card__body">
     <p class="card__value">

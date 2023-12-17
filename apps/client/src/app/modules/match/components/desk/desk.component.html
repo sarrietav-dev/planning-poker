@@ -23,6 +23,7 @@
       <app-card
         [selected]="didPlayerSelectCard(player)"
         [value]="getCardValue(player.card)"
+        [show]="areCardsRevealed ?? false"
       >
         {{ player.name }}
       </app-card>

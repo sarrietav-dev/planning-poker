@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { tap } from 'rxjs';
 import { MatchService } from 'src/app/services/match/match.service';
 import {
   State,
@@ -13,7 +14,7 @@ import {
   templateUrl: './desk.component.html',
   styleUrls: ['./desk.component.scss'],
 })
-export class DeskComponent {
+export class DeskComponent implements OnInit {
   constructor(
     private store: Store<{
       match: State;
@@ -21,10 +22,21 @@ export class DeskComponent {
     private service: MatchService
   ) {}
 
-  players$ = this.store.select(selectPlayers);
-  currentUserIndex: number = 6;
+  areCardsRevealed?: boolean = false;
+
+  ngOnInit(): void {
+    this.store.select(selectAreCardsRevealed).subscribe((areCardsRevealed) => {
+      this.areCardsRevealed = areCardsRevealed;
+    });
+  }
+
+  players$ = this.store.select(selectPlayers).pipe(
+    tap((players) => {
+      console.log({ players });
+    })
+  );
+  currentUserIndex: number = 0;
   isAdmin$ = this.store.select(selectIsAdmin);
-  areCardsRevealed$ = this.store.select(selectAreCardsRevealed);
 
   getSeatClass(index: number) {
     return `seat seat--${index + 1}`;
@@ -43,10 +55,13 @@ export class DeskComponent {
     card?: number | undefined;
     id: string;
   }) {
-    return player.id !== undefined;
+    return player.card !== null;
   }
 
-  getCardValue(card: number | undefined) {
-    return card === undefined ? '' : card.toString();
+  getCardValue(card: number | undefined | null) {
+    if (card) {
+      return card.toString();
+    }
+    return '4';
   }
 }
