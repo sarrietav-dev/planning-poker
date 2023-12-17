@@ -8,6 +8,7 @@ import {
   playerJoined,
   playerLeft,
   setMatch,
+  setPlayerCard,
   toggleIsAdmin,
 } from 'src/app/store/match.actions';
 import { from } from 'rxjs';
@@ -16,6 +17,12 @@ import { from } from 'rxjs';
   providedIn: 'root',
 })
 export class MatchService {
+  resetGame() {
+    throw new Error('Method not implemented.');
+  }
+  revealCards() {
+    throw new Error('Method not implemented.');
+  }
   constructor(
     private io: Socket,
     private router: Router,
@@ -27,6 +34,15 @@ export class MatchService {
 
     this.playerLeft$.subscribe(({ playerId }) => {
       this.store.dispatch(playerLeft({ playerId }));
+    });
+
+    this.playerSelectedCard$.subscribe(({ playerId, card }) => {
+      this.store.dispatch(
+        setPlayerCard({
+          playerId,
+          card,
+        })
+      );
     });
   }
 
@@ -65,6 +81,12 @@ export class MatchService {
 
   get playerLeft$() {
     return this.io.fromEvent<{ playerId: string }>(events.PlayerLeft);
+  }
+
+  get playerSelectedCard$() {
+    return this.io.fromEvent<{ playerId: string; card: number }>(
+      events.PlayerSelectedCard
+    );
   }
 
   cardDeck$() {

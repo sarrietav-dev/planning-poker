@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { MatchService } from 'src/app/services/match/match.service';
 import { State, selectIsAdmin, selectPlayers } from 'src/app/store';
+import { resetGame, revealCards } from 'src/app/store/match.actions';
 
 @Component({
   selector: 'match-desk',
@@ -11,7 +13,8 @@ export class DeskComponent {
   constructor(
     private store: Store<{
       match: State;
-    }>
+    }>,
+    private matchService: MatchService
   ) {}
 
   players$ = this.store.select(selectPlayers);
@@ -20,5 +23,13 @@ export class DeskComponent {
 
   getSeatClass(index: number) {
     return `seat seat--${index + 1}`;
+  }
+
+  onRevealCardsClick() {
+    this.store.dispatch(revealCards());
+  }
+
+  onResetGameClick() {
+    this.store.dispatch(resetGame());
   }
 }

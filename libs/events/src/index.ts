@@ -5,3 +5,4 @@ export const PlayerLeft = "player-left" as const;
 export const SpectatorJoined = "spectator-joined" as const;
 export const SpectatorLeft = "spectator-left" as const;
 export const DoesMatchExist = "does-match-exist" as const;
+export const PlayerSelectedCard = "player-selected-card" as const;
