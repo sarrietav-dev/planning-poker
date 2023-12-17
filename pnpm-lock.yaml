@@ -50,6 +50,9 @@ importers:
       '@angular/router':
         specifier: ^17.0.0
         version: 17.0.2(@angular/common@17.0.2)(@angular/core@17.0.2)(@angular/platform-browser@17.0.2)(rxjs@7.8.1)
+      '@ngrx/effects':
+        specifier: ^17.0.1
+        version: 17.0.1(@angular/core@17.0.2)(@ngrx/store@17.0.1)(rxjs@7.8.1)
       '@ngrx/store':
         specifier: ^17.0.1
         version: 17.0.1(@angular/core@17.0.2)(rxjs@7.8.1)
@@ -2972,6 +2975,29 @@ packages:
     dependencies:
       '@material/feature-targeting': 15.0.0-canary.a246a4439.0
       '@material/theme': 15.0.0-canary.a246a4439.0
+      tslib: 2.6.2
+    dev: false
+
+  /@ngrx/effects@17.0.1(@angular/core@17.0.2)(@ngrx/store@17.0.1)(rxjs@7.8.1):
+    resolution: {integrity: sha512-U7ewZpUoJlLrWyZVyzAMU6Qfxmte7Noi9n/pJb5BR3pWmdHnU+VPs08xnSIQUa0US7K6dJJRTGtcEpEvv/IT4A==}
+    peerDependencies:
+      '@angular/core': ^17.0.0
+      '@ngrx/store': 17.0.1
+      rxjs: ^6.5.3 || ^7.5.0
+    dependencies:
+      '@angular/core': 17.0.2(rxjs@7.8.1)(zone.js@0.14.2)
+      '@ngrx/operators': 17.0.0-beta.0(rxjs@7.8.1)
+      '@ngrx/store': 17.0.1(@angular/core@17.0.2)(rxjs@7.8.1)
+      rxjs: 7.8.1
+      tslib: 2.6.2
+    dev: false
+
+  /@ngrx/operators@17.0.0-beta.0(rxjs@7.8.1):
+    resolution: {integrity: sha512-EbO8AONuQ6zo2v/mPyBOi4y0CTAp1x4Z+bx7ZF+Pd8BL5ma53BTCL1TmzaeK5zPUe0yApudLk9/ZbHXPnVox5A==}
+    peerDependencies:
+      rxjs: ^6.5.3 || ^7.4.0
+    dependencies:
+      rxjs: 7.8.1
       tslib: 2.6.2
     dev: false
 
