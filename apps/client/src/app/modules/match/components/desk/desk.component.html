@@ -20,7 +20,10 @@
       name="David"
     ></app-avatar>
     <ng-template #normalCard>
-      <app-card>
+      <app-card
+        [selected]="didPlayerSelectCard(player)"
+        [value]="getCardValue(player.card)"
+      >
         {{ player.name }}
       </app-card>
     </ng-template>
