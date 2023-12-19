@@ -29,3 +29,13 @@ export const setPlayerCard = createAction(
   '[Match] Set Player Card',
   props<{ playerId: string; card: number }>()
 );
+
+export const setAdmin = createAction(
+  '[Match] Set Admin',
+  props<{ playerId: string }>()
+);
+
+export const changeCards = createAction(
+  '[Match] Change Cards',
+  props<{ cards: number[] }>()
+);
