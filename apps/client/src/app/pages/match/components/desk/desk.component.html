@@ -3,8 +3,17 @@
     <div class="outer-line">
       <div class="inner-line">
         <div class="desk">
-          <button class="btn btn--primary" *ngIf="isAdmin$ | async">
+          <button
+            class="btn btn--primary"
+            *ngIf="canShowResetGameButton | async"
+          >
             Nueva votación
+          </button>
+          <button
+            class="btn btn--primary"
+            *ngIf="canShowRevealCardsButton | async"
+          >
+            Revelar las cartas
           </button>
         </div>
       </div>

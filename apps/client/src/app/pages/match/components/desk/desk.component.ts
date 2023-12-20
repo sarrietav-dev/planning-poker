@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { tap } from 'rxjs';
+import { map, tap } from 'rxjs';
 import { MatchService } from 'src/app/services/match/match.service';
 import {
   State,
@@ -63,5 +63,17 @@ export class DeskComponent implements OnInit {
       return card.toString();
     }
     return '4';
+  }
+
+  get canShowResetGameButton() {
+    return this.isAdmin$.pipe(
+      map((isAdmin) => isAdmin && this.areCardsRevealed)
+    );
+  }
+
+  get canShowRevealCardsButton() {
+    return this.isAdmin$.pipe(
+      map((isAdmin) => isAdmin && !this.areCardsRevealed)
+    );
   }
 }
