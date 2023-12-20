@@ -11,6 +11,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class CardComponent {
   @Input() selected?: boolean;
   @Input() value: string = '';
+  @Input() show: boolean = false;
   @Output() select = new EventEmitter();
 
   onSelectedCard() {

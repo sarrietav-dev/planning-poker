@@ -50,6 +50,9 @@ importers:
       '@angular/router':
         specifier: ^17.0.0
         version: 17.0.2(@angular/common@17.0.2)(@angular/core@17.0.2)(@angular/platform-browser@17.0.2)(rxjs@7.8.1)
+      '@ngrx/effects':
+        specifier: ^17.0.1
+        version: 17.0.1(@angular/core@17.0.2)(@ngrx/store@17.0.1)(rxjs@7.8.1)
       '@ngrx/store':
         specifier: ^17.0.1
         version: 17.0.1(@angular/core@17.0.2)(rxjs@7.8.1)
@@ -62,6 +65,9 @@ importers:
       '@planning-poker/models':
         specifier: workspace:*
         version: link:../../libs/models
+      immer:
+        specifier: ^10.0.3
+        version: 10.0.3
       modern-normalize:
         specifier: ^2.0.0
         version: 2.0.0
@@ -108,6 +114,9 @@ importers:
       karma-jasmine-html-reporter:
         specifier: ~2.1.0
         version: 2.1.0(jasmine-core@4.6.0)(karma-jasmine@5.1.0)(karma@6.4.2)
+      karma-mocha-reporter:
+        specifier: ^2.2.5
+        version: 2.2.5(karma@6.4.2)
       typescript:
         specifier: ~5.2.2
         version: 5.2.2
@@ -2975,6 +2984,29 @@ packages:
       tslib: 2.6.2
     dev: false
 
+  /@ngrx/effects@17.0.1(@angular/core@17.0.2)(@ngrx/store@17.0.1)(rxjs@7.8.1):
+    resolution: {integrity: sha512-U7ewZpUoJlLrWyZVyzAMU6Qfxmte7Noi9n/pJb5BR3pWmdHnU+VPs08xnSIQUa0US7K6dJJRTGtcEpEvv/IT4A==}
+    peerDependencies:
+      '@angular/core': ^17.0.0
+      '@ngrx/store': 17.0.1
+      rxjs: ^6.5.3 || ^7.5.0
+    dependencies:
+      '@angular/core': 17.0.2(rxjs@7.8.1)(zone.js@0.14.2)
+      '@ngrx/operators': 17.0.0-beta.0(rxjs@7.8.1)
+      '@ngrx/store': 17.0.1(@angular/core@17.0.2)(rxjs@7.8.1)
+      rxjs: 7.8.1
+      tslib: 2.6.2
+    dev: false
+
+  /@ngrx/operators@17.0.0-beta.0(rxjs@7.8.1):
+    resolution: {integrity: sha512-EbO8AONuQ6zo2v/mPyBOi4y0CTAp1x4Z+bx7ZF+Pd8BL5ma53BTCL1TmzaeK5zPUe0yApudLk9/ZbHXPnVox5A==}
+    peerDependencies:
+      rxjs: ^6.5.3 || ^7.4.0
+    dependencies:
+      rxjs: 7.8.1
+      tslib: 2.6.2
+    dev: false
+
   /@ngrx/store-devtools@17.0.1(@ngrx/store@17.0.1)(rxjs@7.8.1):
     resolution: {integrity: sha512-1/BrHmd1KnjEvZtUkmMeOAhftzTLCBxpk0KoVSnl7BFr0LGQZrYUTXHI3b6tzJ2igGuj0d9hk/JRMOXmYn/5WA==}
     peerDependencies:
@@ -3648,6 +3680,11 @@ packages:
     resolution: {integrity: sha512-1APHAyr3+PCamwNw3bXCPp4HFLONZt/yIH0sZp0/469KWNTEy+qN5jQ3GVX6DMZ1UXAi34yVwtTeaG/HpBuuzw==}
     engines: {'0': node >= 0.8.0}
     hasBin: true
+    dev: true
+
+  /ansi-regex@3.0.1:
+    resolution: {integrity: sha512-+O9Jct8wf++lXxxFc4hc8LsjaSq0HFzzL7cVsw8pRDIPdjKD2mT4ytDZlLuSBZ4cLKZFXIrMGO7DbQCtMJJMKw==}
+    engines: {node: '>=4'}
     dev: true
 
   /ansi-regex@5.0.1:
@@ -5477,6 +5514,10 @@ packages:
     dev: true
     optional: true
 
+  /immer@10.0.3:
+    resolution: {integrity: sha512-pwupu3eWfouuaowscykeckFmVTpqbzW+rXFCX8rQLkZzM9ftBmU/++Ra+o+L27mz03zJTlyV4UUr+fdKNffo4A==}
+    dev: false
+
   /immutable@3.8.2:
     resolution: {integrity: sha512-15gZoQ38eYjEjxkorfbcgBKBL6R7T459OuK+CpcWt7O3KF4uPCx2tD0uFETlUDIyo+1789crbMhTvQBSR5yBMg==}
     engines: {node: '>=0.10.0'}
@@ -5875,6 +5916,17 @@ packages:
       karma: 6.4.2
     dev: true
 
+  /karma-mocha-reporter@2.2.5(karma@6.4.2):
+    resolution: {integrity: sha512-Hr6nhkIp0GIJJrvzY8JFeHpQZNseuIakGac4bpw8K1+5F0tLb6l7uvXRa8mt2Z+NVwYgCct4QAfp2R2QP6o00w==}
+    peerDependencies:
+      karma: '>=0.13'
+    dependencies:
+      chalk: 2.4.2
+      karma: 6.4.2
+      log-symbols: 2.2.0
+      strip-ansi: 4.0.0
+    dev: true
+
   /karma-source-map-support@1.4.0:
     resolution: {integrity: sha512-RsBECncGO17KAoJCYXjv+ckIz+Ii9NCi+9enk+rq6XC81ezYkb4/RHE6CTXdA7IOJqoF3wcaLfVG0CPmE5ca6A==}
     dependencies:
@@ -6048,6 +6100,13 @@ packages:
 
   /lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
+    dev: true
+
+  /log-symbols@2.2.0:
+    resolution: {integrity: sha512-VeIAFslyIerEJLXHziedo2basKbMKtTw3vfn5IzG0XTjhAVEJyNHnL2p7vc+wBDSdQuUpNw3M2u6xb9QsAY5Eg==}
+    engines: {node: '>=4'}
+    dependencies:
+      chalk: 2.4.2
     dev: true
 
   /log-symbols@4.1.0:
@@ -7822,6 +7881,13 @@ packages:
     resolution: {integrity: sha512-hkRX8U1WjJFd8LsDJ2yQ/wWWxaopEsABU1XfkM8A+j0+85JAGppt16cr1Whg6KIbb4okU6Mql6BOj+uup/wKeA==}
     dependencies:
       safe-buffer: 5.2.1
+
+  /strip-ansi@4.0.0:
+    resolution: {integrity: sha512-4XaJ2zQdCzROZDivEVIDPkcQn8LMFSa8kj8Gxb/Lnwzv9A8VctNZ+lfivC/sV3ivW8ElJTERXZoPBRrZKkNKow==}
+    engines: {node: '>=4'}
+    dependencies:
+      ansi-regex: 3.0.1
+    dev: true
 
   /strip-ansi@6.0.1:
     resolution: {integrity: sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==}
