@@ -62,7 +62,7 @@ export class DeskComponent implements OnInit {
     if (card) {
       return card.toString();
     }
-    return '4';
+    return '';
   }
 
   get canShowResetGameButton() {
