@@ -22,14 +22,14 @@ export class MatchComponent implements OnInit {
   match$ = this.store.select('match');
   isInviteModalOpen = false;
 
-  spectators$ = this.store
-    .select((state) => state.match.match.spectators)
-    .pipe(
+  get spectators$() {
+    return this.matchService.getSpectators().pipe(
       switchMap((spectators) => from(spectators)),
       take(3),
       reduce((acc, spectator) => [...acc, spectator], [] as { name: string }[])
     );
-
+  }
+  
   spectatorsCount = 0;
 
   ngOnInit(): void {

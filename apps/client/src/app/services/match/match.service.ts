@@ -142,4 +142,12 @@ export class MatchService {
   revealCards() {
     this.store.dispatch(revealCards());
   }
+
+  getSpectators() {
+    return this.store.select((state) => state.match.spectators);
+  }
+
+  getMatch() {
+    return this.store.select((state) => state.match);
+  }
 }
