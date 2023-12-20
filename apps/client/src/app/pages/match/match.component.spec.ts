@@ -29,7 +29,7 @@ describe('MatchComponent', () => {
     ]) as jasmine.SpyObj<MatchService>;
 
     serviceSpy.getSpectators.and.returnValue(
-      of([{ name: 'hey' }, { name: 'whats' }, { name: 'up' }, { name: 'bro' }])
+      of([{ name: 'hey', id: "" }, { name: 'whats', id: "" }, { name: 'up', id: "" }, { name: 'bro', id: "" }])
     );
 
     const storeSpy = jasmine.createSpyObj('Store', ['select', 'dispatch']);
