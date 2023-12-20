@@ -16,6 +16,16 @@ export const playerLeft = createAction(
   props<{ playerId: string }>()
 );
 
+export const spectatorJoined = createAction(
+  '[Match] Spectator Joined',
+  props<{ name: string; id: string }>()
+);
+
+export const spectatorLeft = createAction(
+  '[Match] Spectator Left',
+  props<{ spectatorId: string }>()
+);
+
 export const toggleIsAdmin = createAction(
   '[Match] Toggle Is Admin',
   props<{ isAdmin: boolean }>()

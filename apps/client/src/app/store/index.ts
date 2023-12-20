@@ -39,6 +39,18 @@ export const matchReducer = createReducer(
       );
     })
   ),
+  on(MatchActions.spectatorJoined, (state, { name, id }) =>
+    produce(state, (draft) => {
+      draft.match.spectators.push({ name, id });
+    })
+  ),
+  on(MatchActions.spectatorLeft, (state, { spectatorId }) =>
+    produce(state, (draft) => {
+      draft.match.spectators = draft.match.spectators.filter(
+        (s) => s.id !== spectatorId
+      );
+    })
+  ),
   on(MatchActions.toggleIsAdmin, (state, { isAdmin }) =>
     produce(state, (draft) => {
       draft.isAdmin = isAdmin;
@@ -64,6 +76,11 @@ export const matchReducer = createReducer(
   on(MatchActions.revealCards, (state) =>
     produce(state, (draft) => {
       draft.areCardsRevealed = true;
+    })
+  ),
+  on(MatchActions.changeCards, (state, { cards }) =>
+    produce(state, (draft) => {
+      draft.match.cardDeck = cards;
     })
   )
 );
