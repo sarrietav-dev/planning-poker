@@ -29,19 +29,20 @@ export class MatchComponent implements OnInit {
       reduce((acc, spectator) => [...acc, spectator], [] as { name: string }[])
     );
   }
-  
+
+  get spectatorsCount$() {
+    return this.matchService.getSpectators().pipe(
+      switchMap((spectators) => from(spectators)),
+      scan((acc) => acc + 1, 0)
+    );
+  }
+
   spectatorsCount = 0;
 
   ngOnInit(): void {
-    this.store
-      .select((state) => state.match.match.spectators)
-      .pipe(
-        switchMap((spectators) => from(spectators)),
-        scan((acc) => acc + 1, 0)
-      )
-      .subscribe((count) => {
-        this.spectatorsCount = count;
-      });
+    this.spectatorsCount$.subscribe((count) => {
+      this.spectatorsCount = count;
+    });
   }
 
   get name$() {

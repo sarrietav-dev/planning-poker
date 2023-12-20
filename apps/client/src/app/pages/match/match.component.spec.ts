@@ -4,7 +4,7 @@ import { MatchComponent } from './match.component';
 import { MatchService } from 'src/app/services/match/match.service';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { EMPTY, of } from 'rxjs';
+import { EMPTY, last, of } from 'rxjs';
 import { ButtonComponent } from 'src/app/components/button/button.component';
 import { CardDeckComponent } from './components/card-deck/card-deck.component';
 import { DeskComponent } from './components/desk/desk.component';
@@ -38,6 +38,12 @@ describe('MatchComponent', () => {
     serviceSpy.cardDeck$.and.callFake(() => EMPTY);
 
     const routeSpy = jasmine.createSpyObj('ActivatedRoute', ['snapshot']);
+
+    routeSpy.snapshot = {
+      paramMap: {
+        get: () => '1',
+      },
+    };
 
     TestBed.configureTestingModule({
       declarations: [
@@ -76,5 +82,37 @@ describe('MatchComponent', () => {
       expect(spectators.length).toBe(3);
       done();
     });
+  });
+
+  it('should return a spectator count', (done) => {
+    component.spectatorsCount$.pipe(last()).subscribe((count) => {
+      expect(count).toBe(4);
+      done();
+    });
+  });
+
+  it('should return a spectator count label', () => {
+    expect(component.spectatorCountLabel).toBe('1+');
+  });
+
+  it('should handle user choose', () => {
+    component.handleUserChoose({ name: 'hey', mode: 'single' });
+    expect(component.isUserChosed).toBeTrue();
+    expect(matchService.joinMatch).toHaveBeenCalled();
+  });
+
+  it('should handle invite modal open', () => {
+    component.handleInviteModalOpen();
+    expect(component.isInviteModalOpen).toBeTrue();
+  });
+
+  it('should handle invite modal close', () => {
+    component.handleInviteModalClose();
+    expect(component.isInviteModalOpen).toBeFalse();
+  });
+
+  it('should return a name', () => {
+    store.select.and.returnValue(of({ match: { name: 'hey', k: 'v' } }));
+    expect(component.name$).toBeTruthy();
   });
 });
