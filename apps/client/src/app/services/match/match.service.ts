@@ -5,14 +5,16 @@ import { Router } from '@angular/router';
 import { Match } from '@planning-poker/models';
 import { Store } from '@ngrx/store';
 import {
+  changeCards,
   playerJoined,
   playerLeft,
   setMatch,
   setPlayerCard,
   toggleIsAdmin,
+  resetGame,
+  revealCards,
 } from 'src/app/store/match.actions';
 import { EMPTY, from } from 'rxjs';
-import { resetGame, revealCards } from 'src/app/store/match.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +25,12 @@ export class MatchService {
     private router: Router,
     private store: Store<{ match: Match; isAdmin: boolean }>
   ) {
+    this.registerEvents();
+  }
+
+  match$ = this.store.select('match');
+
+  registerEvents() {
     this.playerJoined$.subscribe(({ name, id }) => {
       this.store.dispatch(playerJoined({ name, id }));
     });
@@ -39,9 +47,57 @@ export class MatchService {
         })
       );
     });
+
+    this.adminAssigned$.subscribe(() => {
+      this.store.dispatch(toggleIsAdmin({ isAdmin: true }));
+    });
+
+    this.cardsChanged$.subscribe(({ cards }) => {
+      this.store.dispatch(changeCards({ cards }));
+    });
+
+    this.cardsRevealed$.subscribe(() => {
+      this.store.dispatch(revealCards());
+    });
+
+    this.matchRestarted$.subscribe(() => {
+      this.store.dispatch(resetGame());
+    });
   }
 
-  match$ = this.store.select('match');
+  get playerJoined$() {
+    return this.io.fromEvent<{ name: string; id: string }>(events.PlayerJoined);
+  }
+
+  get playerLeft$() {
+    return this.io.fromEvent<{ playerId: string }>(events.PlayerLeft);
+  }
+
+  get playerSelectedCard$() {
+    return this.io.fromEvent<{ playerId: string; card: number }>(
+      events.PlayerSelectedCard
+    );
+  }
+
+  get matchRestarted$() {
+    return this.io.fromEvent(events.MatchRestarted);
+  }
+
+  get cardsRevealed$() {
+    return this.io.fromEvent(events.CardsRevealed);
+  }
+
+  get adminAssigned$() {
+    return this.io.fromEvent<{ playerId: string }>(events.AdminAssigned);
+  }
+
+  get cardsChanged$() {
+    return this.io.fromEvent<{ cards: number[] }>(events.CardsChanged);
+  }
+
+  cardDeck$() {
+    return from([1, 2, 3, 5, 8, 13, 21, 34, 55, 89]);
+  }
 
   createMatch(name: string) {
     const handleMatchCreated = ({ matchId }: { matchId: string }) => {
@@ -70,26 +126,9 @@ export class MatchService {
     this.io.emit(events.JoinMatchCommand, data, handleJoinMatch);
   }
 
-  get playerJoined$() {
-    return this.io.fromEvent<{ name: string; id: string }>(events.PlayerJoined);
-  }
-
-  get playerLeft$() {
-    return this.io.fromEvent<{ playerId: string }>(events.PlayerLeft);
-  }
-
-  get playerSelectedCard$() {
-    return this.io.fromEvent<{ playerId: string; card: number }>(
-      events.PlayerSelectedCard
-    );
-  }
-
-  cardDeck$() {
-    return from([1, 2, 3, 5, 8, 13, 21, 34, 55, 89]);
-  }
-
   selectCard(card: number) {
-    console.log(card);
+    this.io.emit(events.ChooseCardCommand, card);
+    // TODO: FInd a way to know which player is the current one
   }
 
   doesMatchExist(matchId: string, cb: (exists: boolean) => void) {

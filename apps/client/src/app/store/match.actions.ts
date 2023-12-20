@@ -30,11 +30,6 @@ export const setPlayerCard = createAction(
   props<{ playerId: string; card: number }>()
 );
 
-export const setAdmin = createAction(
-  '[Match] Set Admin',
-  props<{ playerId: string }>()
-);
-
 export const changeCards = createAction(
   '[Match] Change Cards',
   props<{ cards: number[] }>()
