@@ -18,6 +18,7 @@ const initialState: State = {
     spectators: [],
   },
   isAdmin: false,
+  areCardsRevealed: false,
 };
 
 export const matchReducer = createReducer(
