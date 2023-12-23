@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatchService } from '../../services/match/match.service';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { State, selectIsAdmin, selectPlayers } from '../../store';
-import { from, map, reduce, scan, switchMap, take, tap } from 'rxjs';
+import { State } from '../../store';
+import { from, map, reduce, scan, switchMap, take } from 'rxjs';
 
 @Component({
   templateUrl: './match.component.html',

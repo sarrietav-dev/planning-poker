@@ -26,6 +26,7 @@ describe('MatchComponent', () => {
       'createMatch',
       'cardDeck$',
       'getSpectators',
+      'getAreCardsRevealed'
     ]) as jasmine.SpyObj<MatchService>;
 
     serviceSpy.getSpectators.and.returnValue(
@@ -36,6 +37,8 @@ describe('MatchComponent', () => {
         { name: 'bro', id: '' },
       ])
     );
+
+    serviceSpy.getAreCardsRevealed.and.returnValue(of(false));
 
     const storeSpy = jasmine.createSpyObj('Store', ['select', 'dispatch']);
 

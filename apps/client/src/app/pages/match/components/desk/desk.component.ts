@@ -25,7 +25,7 @@ export class DeskComponent implements OnInit {
   areCardsRevealed?: boolean = false;
 
   ngOnInit(): void {
-    this.store.select(selectAreCardsRevealed).subscribe((areCardsRevealed) => {
+    this.service.getAreCardsRevealed().subscribe((areCardsRevealed) => {
       this.areCardsRevealed = areCardsRevealed;
     });
   }
@@ -55,7 +55,7 @@ export class DeskComponent implements OnInit {
     card?: number | undefined;
     id: string;
   }) {
-    return player.card !== null;
+    return player.card !== undefined;
   }
 
   getCardValue(card: number | undefined | null) {

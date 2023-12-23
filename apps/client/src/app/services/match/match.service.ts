@@ -14,7 +14,8 @@ import {
   resetGame,
   revealCards,
 } from 'src/app/store/match.actions';
-import { EMPTY, from } from 'rxjs';
+import { from } from 'rxjs';
+import { State, selectAreCardsRevealed } from 'src/app/store';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +24,7 @@ export class MatchService {
   constructor(
     private io: Socket,
     private router: Router,
-    private store: Store<{ match: Match; isAdmin: boolean }>
+    private store: Store<State>
   ) {
     this.registerEvents();
   }
@@ -149,5 +150,9 @@ export class MatchService {
 
   getMatch() {
     return this.store.select((state) => state.match);
+  }
+
+  getAreCardsRevealed() {
+    return this.store.select((state) => state.areCardsRevealed);
   }
 }
