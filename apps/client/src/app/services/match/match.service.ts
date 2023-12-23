@@ -14,8 +14,8 @@ import {
   resetGame,
   revealCards,
 } from 'src/app/store/match.actions';
-import { from } from 'rxjs';
-import { State, selectAreCardsRevealed } from 'src/app/store';
+import { EMPTY, from, switchMap } from 'rxjs';
+import { State } from 'src/app/store';
 
 @Injectable({
   providedIn: 'root',
@@ -32,9 +32,7 @@ export class MatchService {
   match$ = this.store.select('match');
 
   registerEvents() {
-    this.playerJoined$.subscribe(({ name, id }) => {
-      this.store.dispatch(playerJoined({ name, id }));
-    });
+    this.playerJoined$().subscribe();
 
     this.playerLeft$.subscribe(({ playerId }) => {
       this.store.dispatch(playerLeft({ playerId }));
@@ -66,8 +64,15 @@ export class MatchService {
     });
   }
 
-  get playerJoined$() {
-    return this.io.fromEvent<{ name: string; id: string }>(events.PlayerJoined);
+  playerJoined$() {
+    return this.io
+      .fromEvent<{ name: string; id: string }>(events.PlayerJoined)
+      .pipe(
+        switchMap(({ id, name }) => {
+          this.store.dispatch(playerJoined({ name, id }));
+          return EMPTY;
+        })
+      );
   }
 
   get playerLeft$() {
