@@ -14,8 +14,8 @@ import {
   resetGame,
   revealCards,
 } from 'src/app/store/match.actions';
-import { from } from 'rxjs';
-import { State, selectAreCardsRevealed } from 'src/app/store';
+import { from, tap } from 'rxjs';
+import { State } from 'src/app/store';
 
 @Injectable({
   providedIn: 'root',
@@ -32,68 +32,86 @@ export class MatchService {
   match$ = this.store.select('match');
 
   registerEvents() {
-    this.playerJoined$.subscribe(({ name, id }) => {
-      this.store.dispatch(playerJoined({ name, id }));
-    });
+    this.playerJoined$().subscribe();
 
-    this.playerLeft$.subscribe(({ playerId }) => {
-      this.store.dispatch(playerLeft({ playerId }));
-    });
+    this.playerLeft$().subscribe();
 
-    this.playerSelectedCard$.subscribe(({ playerId, card }) => {
-      this.store.dispatch(
-        setPlayerCard({
-          playerId,
-          card,
+    this.playerSelectedCard$().subscribe();
+
+    this.adminAssigned$().subscribe();
+
+    this.cardsChanged$().subscribe();
+
+    this.cardsRevealed$().subscribe();
+
+    this.matchRestarted$().subscribe();
+  }
+
+  playerJoined$() {
+    return this.io
+      .fromEvent<{ name: string; id: string }>(events.PlayerJoined)
+      .pipe(
+        tap(({ id, name }) => {
+          this.store.dispatch(playerJoined({ name, id }));
         })
       );
-    });
-
-    this.adminAssigned$.subscribe(() => {
-      this.store.dispatch(toggleIsAdmin({ isAdmin: true }));
-    });
-
-    this.cardsChanged$.subscribe(({ cards }) => {
-      this.store.dispatch(changeCards({ cards }));
-    });
-
-    this.cardsRevealed$.subscribe(() => {
-      this.store.dispatch(revealCards());
-    });
-
-    this.matchRestarted$.subscribe(() => {
-      this.store.dispatch(resetGame());
-    });
   }
 
-  get playerJoined$() {
-    return this.io.fromEvent<{ name: string; id: string }>(events.PlayerJoined);
-  }
-
-  get playerLeft$() {
-    return this.io.fromEvent<{ playerId: string }>(events.PlayerLeft);
-  }
-
-  get playerSelectedCard$() {
-    return this.io.fromEvent<{ playerId: string; card: number }>(
-      events.PlayerSelectedCard
+  playerLeft$() {
+    return this.io.fromEvent<{ playerId: string }>(events.PlayerLeft).pipe(
+      tap(({ playerId }) => {
+        this.store.dispatch(playerLeft({ playerId }));
+      })
     );
   }
 
-  get matchRestarted$() {
-    return this.io.fromEvent(events.MatchRestarted);
+  playerSelectedCard$() {
+    return this.io
+      .fromEvent<{ playerId: string; card: number }>(events.PlayerSelectedCard)
+      .pipe(
+        tap(({ playerId, card }) => {
+          this.store.dispatch(
+            setPlayerCard({
+              playerId,
+              card,
+            })
+          );
+        })
+      );
   }
 
-  get cardsRevealed$() {
-    return this.io.fromEvent(events.CardsRevealed);
+  matchRestarted$() {
+    return this.io.fromEvent(events.MatchRestarted).pipe(
+      tap(() => {
+        this.store.dispatch(resetGame());
+      })
+    );
   }
 
-  get adminAssigned$() {
-    return this.io.fromEvent<{ playerId: string }>(events.AdminAssigned);
+  cardsRevealed$() {
+    return this.io.fromEvent(events.CardsRevealed).pipe(
+      tap(() => {
+        this.store.dispatch(revealCards());
+      })
+    );
   }
 
-  get cardsChanged$() {
-    return this.io.fromEvent<{ cards: number[] }>(events.CardsChanged);
+  adminAssigned$() {
+    return this.io.fromEvent<{ playerId: string }>(events.AdminAssigned).pipe(
+      tap(() => {
+        this.store.dispatch(toggleIsAdmin({ isAdmin: true }));
+      })
+    );
+  }
+
+  cardsChanged$() {
+    return this.io.fromEvent<{ cards: number[] }>(events.CardsChanged).pipe(
+      tap((props) => {
+        console.log('cards changed', props);
+
+        this.store.dispatch(changeCards({ cards: props.cards }));
+      })
+    );
   }
 
   cardDeck$() {
