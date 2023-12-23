@@ -16,9 +16,12 @@
     <div class="logo">
       <img src="../../../assets/pragma.png" alt="Logo" />
     </div>
-    <p class="match__title">
+    <p *ngIf="(name$ | async) !== ''; else empty" class="match__title">
       {{ name$ | async | json }}
     </p>
+    <ng-template #empty>
+      <p></p>
+    </ng-template>
     <div class="right">
       <div class="spectators">
         <app-avatar
