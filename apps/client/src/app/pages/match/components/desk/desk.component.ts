@@ -2,12 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { map, tap } from 'rxjs';
 import { MatchService } from 'src/app/services/match/match.service';
-import {
-  State,
-  selectAreCardsRevealed,
-  selectIsAdmin,
-  selectPlayers,
-} from 'src/app/store';
+import { State, selectIsAdmin, selectPlayers } from 'src/app/store';
 
 @Component({
   selector: 'match-desk',
@@ -50,11 +45,7 @@ export class DeskComponent implements OnInit {
     this.service.resetGame();
   }
 
-  didPlayerSelectCard(player: {
-    name: string;
-    card?: number | undefined;
-    id: string;
-  }) {
+  didPlayerSelectCard(player: { name: string; card?: number; id: string }) {
     return player.card !== undefined;
   }
 
