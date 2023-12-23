@@ -1,7 +1,6 @@
 import { Match } from "@planning-poker/models";
 import redis from "./redis";
 import log from "../lib/logger";
-import { remove } from "winston";
 
 export async function createMatch(
   matchId: string,
@@ -43,13 +42,14 @@ export async function getMatch(matchId: string): Promise<Match> {
       card: Number(player.card),
     });
   }
-  const spectators: { name: string }[] = [];
+  const spectators: Match["spectators"] = [];
 
   for await (const spectatorId of redis.scanIterator({
     MATCH: `match:${matchId}:spectator:*`,
   })) {
     const spectator = await redis.hGetAll(spectatorId);
     spectators.push({
+      id: spectatorId,
       name: spectator.name,
     });
   }
