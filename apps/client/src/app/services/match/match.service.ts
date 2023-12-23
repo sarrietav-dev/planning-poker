@@ -38,21 +38,13 @@ export class MatchService {
 
     this.playerSelectedCard$().subscribe();
 
-    this.adminAssigned$.subscribe(() => {
-      this.store.dispatch(toggleIsAdmin({ isAdmin: true }));
-    });
+    this.adminAssigned$().subscribe();
 
-    this.cardsChanged$.subscribe(({ cards }) => {
-      this.store.dispatch(changeCards({ cards }));
-    });
+    this.cardsChanged$().subscribe();
 
-    this.cardsRevealed$.subscribe(() => {
-      this.store.dispatch(revealCards());
-    });
+    this.cardsRevealed$().subscribe();
 
-    this.matchRestarted$.subscribe(() => {
-      this.store.dispatch(resetGame());
-    });
+    this.matchRestarted$().subscribe();
   }
 
   playerJoined$() {
@@ -88,20 +80,38 @@ export class MatchService {
       );
   }
 
-  get matchRestarted$() {
-    return this.io.fromEvent(events.MatchRestarted);
+  matchRestarted$() {
+    return this.io.fromEvent(events.MatchRestarted).pipe(
+      tap(() => {
+        this.store.dispatch(resetGame());
+      })
+    );
   }
 
-  get cardsRevealed$() {
-    return this.io.fromEvent(events.CardsRevealed);
+  cardsRevealed$() {
+    return this.io.fromEvent(events.CardsRevealed).pipe(
+      tap(() => {
+        this.store.dispatch(revealCards());
+      })
+    );
   }
 
-  get adminAssigned$() {
-    return this.io.fromEvent<{ playerId: string }>(events.AdminAssigned);
+  adminAssigned$() {
+    return this.io.fromEvent<{ playerId: string }>(events.AdminAssigned).pipe(
+      tap(() => {
+        this.store.dispatch(toggleIsAdmin({ isAdmin: true }));
+      })
+    );
   }
 
-  get cardsChanged$() {
-    return this.io.fromEvent<{ cards: number[] }>(events.CardsChanged);
+  cardsChanged$() {
+    return this.io.fromEvent<{ cards: number[] }>(events.CardsChanged).pipe(
+      tap((props) => {
+        console.log('cards changed', props);
+
+        this.store.dispatch(changeCards({ cards: props.cards }));
+      })
+    );
   }
 
   cardDeck$() {

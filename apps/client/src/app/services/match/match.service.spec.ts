@@ -3,8 +3,9 @@ import { TestBed } from '@angular/core/testing';
 import { MatchService } from './match.service';
 import { Socket } from 'ngx-socket-io';
 import { Store } from '@ngrx/store';
-import { EMPTY, of } from 'rxjs';
+import { EMPTY, from, of, toArray } from 'rxjs';
 import {
+  changeCards,
   playerJoined,
   playerLeft,
   resetGame,
@@ -85,6 +86,54 @@ describe('MatchService', () => {
       service.playerSelectedCard$().subscribe(() => {
         expect(store.dispatch).toHaveBeenCalledWith(
           setPlayerCard({ playerId: '1', card: 2 })
+        );
+        done();
+      });
+    });
+  });
+
+  describe('@matchRestarted$', () => {
+    it('should dispatch resetGame', (done) => {
+      socket.fromEvent.and.returnValue(of({}));
+      store.dispatch.and.callThrough();
+      service.matchRestarted$().subscribe(() => {
+        expect(store.dispatch).toHaveBeenCalledWith(resetGame());
+        done();
+      });
+    });
+  });
+
+  describe('@cardsRevealed$', () => {
+    it('should dispatch revealCards', (done) => {
+      socket.fromEvent.and.returnValue(of({}));
+      store.dispatch.and.callThrough();
+      service.cardsRevealed$().subscribe(() => {
+        expect(store.dispatch).toHaveBeenCalledWith(revealCards());
+        done();
+      });
+    });
+  });
+
+  describe('@adminAssigned$', () => {
+    it('should dispatch toggleIsAdmin', (done) => {
+      socket.fromEvent.and.returnValue(of({ playerId: '' }));
+      store.dispatch.and.callThrough();
+      service.adminAssigned$().subscribe(() => {
+        expect(store.dispatch).toHaveBeenCalledWith(
+          toggleIsAdmin({ isAdmin: true })
+        );
+        done();
+      });
+    });
+  });
+
+  describe('@cardsChanged$', () => {
+    it('should dispatch changeCards', (done) => {
+      socket.fromEvent.and.returnValue(of({cards: [1, 2]}));
+      store.dispatch.and.callThrough();
+      service.cardsChanged$().subscribe(() => {
+        expect(store.dispatch).toHaveBeenCalledWith(
+          changeCards({ cards: [1, 2] })
         );
         done();
       });
