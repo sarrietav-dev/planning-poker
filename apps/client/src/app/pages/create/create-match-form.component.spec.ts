@@ -50,4 +50,88 @@ describe('CreateMatchFormComponent', () => {
     expect(matchService.createMatch).not.toHaveBeenCalled();
     expect(component.formGroup.markAllAsTouched).toHaveBeenCalled();
   });
+
+  describe('Form valid cases', () => {
+    it('should be valid if name is between 5 and 20 characters', () => {
+      component.formGroup.get('name')?.setValue('Acoolname');
+      expect(component.isFormValid()).toBeTrue();
+    });
+
+    it('should be valid if name contains 3 numbers', () => {
+      component.formGroup.get('name')?.setValue('test123');
+      expect(component.isFormValid()).toBeTrue();
+    });
+
+    it('should be valid if name starts with a number', () => {
+      component.formGroup.get('name')?.setValue('1test');
+      expect(component.isFormValid()).toBeTrue();
+    });
+  });
+
+  describe('Form invalid cases', () => {
+    it('should be invalid if name is null', () => {
+      component.formGroup.get('name')?.setValue(null);
+      expect(component.isFormValid()).toBeFalse();
+    });
+
+    it('should be invalid if name is empty', () => {
+      component.formGroup.get('name')?.setValue('');
+      expect(component.isFormValid()).toBeFalse();
+    });
+
+    it('should be invalid if name is less than 5 characters', () => {
+      component.formGroup.get('name')?.setValue('test');
+      expect(component.isFormValid()).toBeFalse();
+    });
+
+    it('should be invalid if name is more than 20 characters', () => {
+      component.formGroup.get('name')?.setValue('loremipsumdolorsitamet');
+      expect(component.isFormValid()).toBeFalse();
+    });
+
+    it('should be invalid if name contains underscores', () => {
+      component.formGroup.get('name')?.setValue('test_');
+      expect(component.isFormValid()).toBeFalse();
+    });
+
+    it('should be invalid if name contains dashes', () => {
+      component.formGroup.get('name')?.setValue('test-');
+      expect(component.isFormValid()).toBeFalse();
+    });
+
+    it('should be invalid if name contains periods', () => {
+      component.formGroup.get('name')?.setValue('test.');
+      expect(component.isFormValid()).toBeFalse();
+    });
+
+    it('should be invalid if name contains commas', () => {
+      component.formGroup.get('name')?.setValue('test,test');
+      expect(component.isFormValid()).toBeFalse();
+    });
+
+    it('should be invalid if name contains asterisks', () => {
+      component.formGroup.get('name')?.setValue('test*');
+      expect(component.isFormValid()).toBeFalse();
+    });
+
+    it('should be invalid if name contains spaces', () => {
+      component.formGroup.get('name')?.setValue('test test');
+      expect(component.isFormValid()).toBeFalse();
+    });
+
+    it('should be invalid if name contains hashtags', () => {
+      component.formGroup.get('name')?.setValue('test#');
+      expect(component.isFormValid()).toBeFalse();
+    });
+
+    it('should be invalid if name has more than 3 numbers', () => {
+      component.formGroup.get('name')?.setValue('test1234');
+      expect(component.isFormValid()).toBeFalse();
+    });
+
+    it('should be invalid if it has only numbers', () => {
+      component.formGroup.get('name')?.setValue('1234');
+      expect(component.isFormValid()).toBeFalse();
+    });
+  });
 });
