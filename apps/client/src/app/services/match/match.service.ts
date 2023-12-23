@@ -74,8 +74,12 @@ export class MatchService {
       );
   }
 
-  get playerLeft$() {
-    return this.io.fromEvent<{ playerId: string }>(events.PlayerLeft);
+  playerLeft$() {
+    return this.io.fromEvent<{ playerId: string }>(events.PlayerLeft).pipe(
+      tap(({ playerId }) => {
+        this.store.dispatch(playerLeft({ playerId }));
+      })
+    );
   }
 
   get playerSelectedCard$() {

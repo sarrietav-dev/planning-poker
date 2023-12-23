@@ -63,6 +63,19 @@ describe('MatchService', () => {
     });
   });
 
+  describe('@playerLeft$', () => {
+    it('should dispatch playerLeft', (done) => {
+      socket.fromEvent.and.returnValue(of({ playerId: '1' }));
+      store.dispatch.and.callThrough();
+      service.playerLeft$().subscribe(() => {
+        expect(store.dispatch).toHaveBeenCalledWith(
+          playerLeft({ playerId: '1' })
+        );
+        done();
+      });
+    });
+  });
+
   describe('@createMatch', () => {
     it('should emit createMatch', () => {
       service.createMatch('hi');
