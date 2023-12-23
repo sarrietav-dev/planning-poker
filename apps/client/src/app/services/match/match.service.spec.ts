@@ -127,6 +127,18 @@ describe('MatchService', () => {
 
       expect(store.dispatch).toHaveBeenCalledWith(setMatch({ match }));
     });
+
+    it('should alert if match does not exist', () => {
+      socket.emit.and.callFake((_event, _data, cb) => {
+        cb(null, { message: 'error' });
+      });
+
+      spyOn(window, 'alert');
+
+      service.joinMatch('2', 'hi', '2');
+
+      expect(window.alert).toHaveBeenCalledWith('error');
+    });
   });
 
   describe('@selectCard', () => {
