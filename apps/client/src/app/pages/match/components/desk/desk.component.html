@@ -3,18 +3,20 @@
     <div class="outer-line">
       <div class="inner-line">
         <div class="desk">
-          <button
+          <app-button
             class="btn btn--primary"
+            color="primary"
             *ngIf="canShowResetGameButton | async"
           >
             Nueva votación
-          </button>
-          <button
+          </app-button>
+          <app-button
             class="btn btn--primary"
+            color="primary"
             *ngIf="canShowRevealCardsButton | async"
           >
             Revelar las cartas
-          </button>
+          </app-button>
         </div>
       </div>
     </div>
