@@ -34,18 +34,9 @@ export class MatchService {
   registerEvents() {
     this.playerJoined$().subscribe();
 
-    this.playerLeft$.subscribe(({ playerId }) => {
-      this.store.dispatch(playerLeft({ playerId }));
-    });
+    this.playerLeft$().subscribe();
 
-    this.playerSelectedCard$.subscribe(({ playerId, card }) => {
-      this.store.dispatch(
-        setPlayerCard({
-          playerId,
-          card,
-        })
-      );
-    });
+    this.playerSelectedCard$().subscribe();
 
     this.adminAssigned$.subscribe(() => {
       this.store.dispatch(toggleIsAdmin({ isAdmin: true }));
@@ -82,10 +73,19 @@ export class MatchService {
     );
   }
 
-  get playerSelectedCard$() {
-    return this.io.fromEvent<{ playerId: string; card: number }>(
-      events.PlayerSelectedCard
-    );
+  playerSelectedCard$() {
+    return this.io
+      .fromEvent<{ playerId: string; card: number }>(events.PlayerSelectedCard)
+      .pipe(
+        tap(({ playerId, card }) => {
+          this.store.dispatch(
+            setPlayerCard({
+              playerId,
+              card,
+            })
+          );
+        })
+      );
   }
 
   get matchRestarted$() {

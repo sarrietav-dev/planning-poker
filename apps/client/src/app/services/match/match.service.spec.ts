@@ -6,9 +6,11 @@ import { Store } from '@ngrx/store';
 import { EMPTY, of } from 'rxjs';
 import {
   playerJoined,
+  playerLeft,
   resetGame,
   revealCards,
   setMatch,
+  setPlayerCard,
   toggleIsAdmin,
 } from 'src/app/store/match.actions';
 import * as events from '@planning-poker/events';
@@ -70,6 +72,19 @@ describe('MatchService', () => {
       service.playerLeft$().subscribe(() => {
         expect(store.dispatch).toHaveBeenCalledWith(
           playerLeft({ playerId: '1' })
+        );
+        done();
+      });
+    });
+  });
+
+  describe('@playerSelectedCard$', () => {
+    it('should dispatch playerSelectedCard', (done) => {
+      socket.fromEvent.and.returnValue(of({ playerId: '1', card: 2 }));
+      store.dispatch.and.callThrough();
+      service.playerSelectedCard$().subscribe(() => {
+        expect(store.dispatch).toHaveBeenCalledWith(
+          setPlayerCard({ playerId: '1', card: 2 })
         );
         done();
       });
