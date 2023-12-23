@@ -50,6 +50,19 @@ describe('MatchService', () => {
     expect(service).toBeTruthy();
   });
 
+  describe('@playerJoined$', () => {
+    it('should dispatch playerJoined', (done) => {
+      socket.fromEvent.and.returnValue(of({ id: '1', name: 'Player 1' }));
+      store.dispatch.and.callThrough();
+      service.playerJoined$().subscribe(() => {
+        expect(store.dispatch).toHaveBeenCalledWith(
+          playerJoined({ id: '1', name: 'Player 1' })
+        );
+        done();
+      });
+    });
+  });
+
   describe('@createMatch', () => {
     it('should emit createMatch', () => {
       service.createMatch('hi');

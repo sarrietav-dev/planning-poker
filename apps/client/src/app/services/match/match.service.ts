@@ -14,7 +14,7 @@ import {
   resetGame,
   revealCards,
 } from 'src/app/store/match.actions';
-import { EMPTY, from, switchMap } from 'rxjs';
+import { EMPTY, from, mergeMap, switchMap, tap } from 'rxjs';
 import { State } from 'src/app/store';
 
 @Injectable({
@@ -68,9 +68,8 @@ export class MatchService {
     return this.io
       .fromEvent<{ name: string; id: string }>(events.PlayerJoined)
       .pipe(
-        switchMap(({ id, name }) => {
+        tap(({ id, name }) => {
           this.store.dispatch(playerJoined({ name, id }));
-          return EMPTY;
         })
       );
   }
