@@ -14,7 +14,7 @@ import {
   resetGame,
   revealCards,
 } from 'src/app/store/match.actions';
-import { EMPTY, from, mergeMap, switchMap, tap } from 'rxjs';
+import { from, tap } from 'rxjs';
 import { State } from 'src/app/store';
 
 @Injectable({

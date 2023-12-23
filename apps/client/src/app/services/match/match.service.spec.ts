@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { MatchService } from './match.service';
 import { Socket } from 'ngx-socket-io';
 import { Store } from '@ngrx/store';
-import { EMPTY, from, of, toArray } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import {
   changeCards,
   playerJoined,
@@ -129,7 +129,7 @@ describe('MatchService', () => {
 
   describe('@cardsChanged$', () => {
     it('should dispatch changeCards', (done) => {
-      socket.fromEvent.and.returnValue(of({cards: [1, 2]}));
+      socket.fromEvent.and.returnValue(of({ cards: [1, 2] }));
       store.dispatch.and.callThrough();
       service.cardsChanged$().subscribe(() => {
         expect(store.dispatch).toHaveBeenCalledWith(
