@@ -28,10 +28,14 @@ module.exports = function (config) {
     coverageReporter: {
       dir: require("path").join(__dirname, "./coverage/pragma-poker"),
       subdir: ".",
-      reporters: [{ type: "html" }, { type: "text-summary" }],
+      reporters: [{type: "html"}, {type: "text-summary"}],
     },
     reporters: ["mocha"],
     browsers: ["ChromeHeadless"],
     restartOnFileChange: true,
+    angularCli: {
+      config: './angular-cli.json',
+      environment: 'dev'
+    },
   });
 };

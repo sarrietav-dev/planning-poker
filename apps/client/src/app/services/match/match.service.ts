@@ -132,8 +132,12 @@ export class MatchService {
     // TODO: FInd a way to know which player is the current one
   }
 
-  doesMatchExist(matchId: string, cb: (exists: boolean) => void) {
-    this.io.emit(events.DoesMatchExist, matchId, cb);
+  async doesMatchExist(matchId: string) {
+    return new Promise<boolean>((resolve) => {
+      this.io.emit(events.DoesMatchExist, matchId, (exists: boolean) => {
+        resolve(exists);
+      });
+    });
   }
 
   resetGame() {
