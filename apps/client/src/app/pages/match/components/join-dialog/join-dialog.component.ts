@@ -1,5 +1,10 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'match-join-dialog',
@@ -7,24 +12,30 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./join-dialog.component.scss'],
 })
 export class JoinDialogComponent {
+  constructor(private fb: FormBuilder) {}
+
   @Output() onSubmit = new EventEmitter<{ name: string; mode: string }>();
 
-  form = new FormGroup({
-    name: new FormControl('', {
-      nonNullable: true,
+  form = this.fb.group({
+    name: this.fb.control('', {
       updateOn: 'submit',
       validators: [
         Validators.required,
         Validators.minLength(5),
         Validators.maxLength(20),
-        Validators.pattern(/^[a-zA-Z0-9]+$/),
+        Validators.pattern(
+          /^(?=.*[a-zA-Z])(?=(?:[^0-9]*[0-9]){0,3}[^0-9]*$)[a-zA-Z0-9]*$/
+        ),
       ],
     }),
-    mode: new FormControl<string>('', {
+    mode: this.fb.control<string>('', {
       validators: [Validators.required],
-      nonNullable: true,
     }),
   });
+
+  isFormValid() {
+    return this.form.valid;
+  }
 
   handleSubmit() {
     if (this.form.valid) {

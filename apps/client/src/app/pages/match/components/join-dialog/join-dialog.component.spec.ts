@@ -57,4 +57,96 @@ describe('JoinDialogComponent', () => {
     expect(component.name).toBe(component.form.get('name')!);
     expect(component.mode).toBe(component.form.get('mode')!);
   });
+
+  describe('Form valid cases', () => {
+    beforeEach(() => {
+      component.form.get('mode')?.setValue('testmode');
+    });
+
+    it('should be valid if name is between 5 and 20 characters', () => {
+      component.name?.setValue('Acoolname');
+      expect(component.isFormValid()).toBeTrue();
+    });
+
+    it('should be valid if name contains 3 numbers', () => {
+      component.name?.setValue('test123');
+      expect(component.isFormValid()).toBeTrue();
+    });
+
+    it('should be valid if name starts with a number', () => {
+      component.name?.setValue('1test');
+      expect(component.isFormValid()).toBeTrue();
+    });
+  });
+
+  describe('Form invalid cases', () => {
+    beforeEach(() => {
+      component.form.get('mode')?.setValue('testmode');
+    });
+
+    it('should be invalid if name is null', () => {
+      component.name.setValue('');
+      expect(component.isFormValid()).toBeFalse();
+    });
+
+    it('should be invalid if name is empty', () => {
+      component.form.get('name')?.setValue('');
+      expect(component.isFormValid()).toBeFalse();
+    });
+
+    it('should be invalid if name is less than 5 characters', () => {
+      component.form.get('name')?.setValue('test');
+      expect(component.isFormValid()).toBeFalse();
+    });
+
+    it('should be invalid if name is more than 20 characters', () => {
+      component.form.get('name')?.setValue('loremipsumdolorsitamet');
+      expect(component.isFormValid()).toBeFalse();
+    });
+
+    it('should be invalid if name contains underscores', () => {
+      component.form.get('name')?.setValue('test_');
+      expect(component.isFormValid()).toBeFalse();
+    });
+
+    it('should be invalid if name contains dashes', () => {
+      component.form.get('name')?.setValue('test-');
+      expect(component.isFormValid()).toBeFalse();
+    });
+
+    it('should be invalid if name contains periods', () => {
+      component.form.get('name')?.setValue('test.');
+      expect(component.isFormValid()).toBeFalse();
+    });
+
+    it('should be invalid if name contains commas', () => {
+      component.form.get('name')?.setValue('test,test');
+      expect(component.isFormValid()).toBeFalse();
+    });
+
+    it('should be invalid if name contains asterisks', () => {
+      component.form.get('name')?.setValue('test*');
+      expect(component.isFormValid()).toBeFalse();
+    });
+
+    it('should be invalid if name contains spaces', () => {
+      component.form.get('name')?.setValue('test test');
+      expect(component.isFormValid()).toBeFalse();
+    });
+
+    it('should be invalid if name contains hashtags', () => {
+      component.form.get('name')?.setValue('test#');
+      expect(component.isFormValid()).toBeFalse();
+    });
+
+    it('should be invalid if name has more than 3 numbers', () => {
+      component.form.get('name')?.setValue('test1234');
+      expect(component.isFormValid()).toBeFalse();
+    });
+
+    it('should be invalid if it has only numbers', () => {
+      component.form.get('name')?.setValue('1234');
+      expect(component.isFormValid()).toBeFalse();
+    });
+  });
 });
