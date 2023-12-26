@@ -15,7 +15,7 @@ import {
   revealCards,
 } from 'src/app/store/match.actions';
 import { from, tap } from 'rxjs';
-import { State } from 'src/app/store';
+import { State, selectMatchSpectators } from 'src/app/store';
 
 @Injectable({
   providedIn: 'root',
@@ -24,12 +24,12 @@ export class MatchService {
   constructor(
     private io: Socket,
     private router: Router,
-    private store: Store<State>
+    private store: Store<{ match: State }>
   ) {
     this.registerEvents();
   }
 
-  match$ = this.store.select('match');
+  match$ = this.store.select((state) => state.match.match);
 
   registerEvents() {
     this.playerJoined$().subscribe();
@@ -167,7 +167,7 @@ export class MatchService {
   }
 
   getSpectators() {
-    return this.store.select((state) => state.match.spectators);
+    return this.store.select(selectMatchSpectators);
   }
 
   getMatch() {
@@ -175,6 +175,6 @@ export class MatchService {
   }
 
   getAreCardsRevealed() {
-    return this.store.select((state) => state.areCardsRevealed);
+    return this.store.select((state) => state.match.areCardsRevealed);
   }
 }

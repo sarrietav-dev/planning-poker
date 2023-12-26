@@ -25,7 +25,7 @@
     <div class="right">
       <div class="spectators">
         <app-avatar
-          *ngFor="let spectator of spectators$ | async"
+          *ngFor="let spectator of spectators$"
           [showLabel]="false"
           size="small"
           [name]="spectator.name"

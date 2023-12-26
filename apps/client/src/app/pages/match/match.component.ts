@@ -3,7 +3,7 @@ import { MatchService } from '../../services/match/match.service';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../../store';
-import { from, map, reduce, scan, switchMap, take } from 'rxjs';
+import { from, map, scan, switchMap } from 'rxjs';
 
 @Component({
   templateUrl: './match.component.html',
@@ -16,18 +16,21 @@ export class MatchComponent implements OnInit {
     private store: Store<{
       match: State;
     }>
-  ) {}
+  ) {
+    this.getSpectators$().subscribe((spectators) => {
+      this.spectators$ = spectators;
+    });
+  }
 
   isUserChosed: boolean = false;
   match$ = this.store.select('match');
   isInviteModalOpen = false;
+  spectators$: State['match']['spectators'] = [];
 
-  get spectators$() {
-    return this.matchService.getSpectators().pipe(
-      switchMap((spectators) => from(spectators)),
-      take(3),
-      reduce((acc, spectator) => [...acc, spectator], [] as { name: string }[])
-    );
+  getSpectators$() {
+    return this.matchService
+      .getSpectators()
+      .pipe(map((spectators) => spectators.slice(0, 3)));
   }
 
   get spectatorsCount$() {
