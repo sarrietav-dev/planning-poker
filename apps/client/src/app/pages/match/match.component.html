@@ -5,6 +5,10 @@
 <div class="backdrop"></div>
 <match-invite-dialog (close)="handleInviteModalClose()" class="dialog-wrapper"></match-invite-dialog>
 }
+@if (selectedCard === -1) {
+<div class="backdrop"></div>
+<match-card-deck-modal></match-card-deck-modal>
+}
 <div class="page-container">
   <nav>
     <div class="logo">
