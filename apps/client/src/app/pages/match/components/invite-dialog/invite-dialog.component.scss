@@ -1,5 +1,9 @@
 @import "../../../../styles/form-elements";
 
+app-dialog {
+  min-width: 356px;
+}
+
 .invite-dialog {
   &__header {
     width: 100%;
