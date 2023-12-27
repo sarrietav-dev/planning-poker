@@ -86,7 +86,7 @@ describe('MatchComponent', () => {
   });
 
   it('should return a list of three spectators', (done) => {
-    component.spectators$.subscribe((spectators) => {
+    component.getSpectators$().subscribe((spectators) => {
       expect(spectators.length).toBe(3);
       done();
     });

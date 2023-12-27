@@ -4,11 +4,11 @@ import { CardDeckComponent } from './card-deck.component';
 import { MatchService } from 'src/app/services/match/match.service';
 import { from } from 'rxjs';
 import { CardComponent } from 'src/app/components/card/card.component';
+import { EventEmitter } from '@angular/core';
 
 describe('CardDeckComponent', () => {
   let component: CardDeckComponent;
   let fixture: ComponentFixture<CardDeckComponent>;
-  let service: jasmine.SpyObj<MatchService>;
 
   beforeEach(async () => {
     const serviceSpy = jasmine.createSpyObj('MatchService', [
@@ -32,7 +32,6 @@ describe('CardDeckComponent', () => {
     fixture = TestBed.createComponent(CardDeckComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    service = TestBed.inject(MatchService) as jasmine.SpyObj<MatchService>;
   });
 
   it('should create', () => {
@@ -50,20 +49,19 @@ describe('CardDeckComponent', () => {
     });
   });
 
-  it('should set selectedCard when onSelectedCard is called and selectedCard is -1', () => {
-    component.onSelectedCard(5);
-    expect(component.selectedCard).toBe(5);
-  });
-
   it('should not change selectedCard when onSelectedCard is called and selectedCard is not -1', () => {
     component.selectedCard = 3;
     component.onSelectedCard(5);
     expect(component.selectedCard).toBe(3);
   });
 
-  it('should call service.selectCard when onSelectedCard is called and selectedCard is -1', () => {
+  it('should emit selectCard event when onSelectedCard is called and selectedCard is -1', () => {
+    const eventEmitterSpy = jasmine.createSpyObj('EventEmitter', [
+      'emit',
+    ]) as jasmine.SpyObj<EventEmitter<number>>;
+    component.cardSelect = eventEmitterSpy;
     component.onSelectedCard(5);
-    expect(service.selectCard).toHaveBeenCalled();
-    expect(service.selectCard).toHaveBeenCalledWith(5);
+    expect(eventEmitterSpy.emit).toHaveBeenCalled();
+    expect(eventEmitterSpy.emit).toHaveBeenCalledWith(5);
   });
 });
