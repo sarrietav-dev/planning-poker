@@ -25,7 +25,10 @@ export class CardDeckModalComponent {
   }
 
   selectCard(card: number) {
-    this.cardSelect.emit(card);
+    this.selectedCard = card;
+    setTimeout(() => {
+      this.cardSelect.emit(card);
+    }, 1000);
   }
 
   cardValue(card: number) {
