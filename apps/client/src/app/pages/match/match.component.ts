@@ -22,10 +22,11 @@ export class MatchComponent implements OnInit {
     });
   }
 
-  isUserChosed: boolean = false;
+  isUserChosed: boolean = true;
   match$ = this.store.select('match');
   isInviteModalOpen = false;
   spectators$: State['match']['spectators'] = [];
+  selectedCard = -1;
 
   getSpectators$() {
     return this.matchService
@@ -71,5 +72,12 @@ export class MatchComponent implements OnInit {
 
   handleInviteModalClose() {
     this.isInviteModalOpen = false;
+  }
+
+  onSelectedCard(card: number) {
+    if (this.selectedCard === -1) {
+      this.selectedCard = card;
+      this.matchService.selectCard(card);
+    }
   }
 }
