@@ -14,7 +14,10 @@
 }
 @if (isCardDeckModalOpen) {
   <div class="backdrop"></div>
-  <match-card-deck-modal></match-card-deck-modal>
+  <match-card-deck-modal
+    [selectedCard]="selectedCard"
+    (cardSelect)="onSelectedCard($event)"
+  ></match-card-deck-modal>
 }
 <div class="page-container">
   <nav>
