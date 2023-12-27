@@ -1,1 +1,14 @@
-<p>card-deck-modal works!</p>
+<app-dialog>
+  <div class="deck-container">
+    @for (card of cards; track $index) {
+      <app-card
+        [selected]="selectedCard === card"
+        [value]="cardValue(card)"
+        (select)="selectCard(card)"
+        [ngClass]="{ selected: selectedCard === card }"
+      >
+        {{ card }}
+      </app-card>
+    }
+  </div>
+</app-dialog>

@@ -1,0 +1,21 @@
+:host {
+  display: block;
+  max-width: 50%;
+  min-width: 90%;
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+.deck-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 2rem 4rem;
+  gap: 1rem;
+  width: 100%;
+}
