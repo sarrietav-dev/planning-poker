@@ -1,13 +1,20 @@
 @if (!isUserChosed) {
-<div class="backdrop"></div>
-<match-join-dialog (onSubmit)="handleUserChoose($event)" class="dialog-wrapper"></match-join-dialog>
-} @if (isInviteModalOpen) {
-<div class="backdrop"></div>
-<match-invite-dialog (close)="handleInviteModalClose()" class="dialog-wrapper"></match-invite-dialog>
+  <div class="backdrop"></div>
+  <match-join-dialog
+    (onSubmit)="handleUserChoose($event)"
+    class="dialog-wrapper"
+  ></match-join-dialog>
 }
-@if (selectedCard === -1) {
-<div class="backdrop"></div>
-<match-card-deck-modal></match-card-deck-modal>
+@if (isInviteModalOpen) {
+  <div class="backdrop"></div>
+  <match-invite-dialog
+    (close)="handleInviteModalClose()"
+    class="dialog-wrapper"
+  ></match-invite-dialog>
+}
+@if (isCardDeckModalOpen) {
+  <div class="backdrop"></div>
+  <match-card-deck-modal></match-card-deck-modal>
 }
 <div class="page-container">
   <nav>
@@ -22,10 +29,19 @@
     </ng-template>
     <div class="right">
       <div class="spectators">
-        <app-avatar *ngFor="let spectator of spectators$" [showLabel]="false" size="small"
-          [name]="spectator.name"></app-avatar>
-        <app-avatar *ngIf="spectatorsCount > 3" [showLabel]="false" size="small" [customPrefix]="spectatorCountLabel"
-          [backgroundColor]="'white'"></app-avatar>
+        <app-avatar
+          *ngFor="let spectator of spectators$"
+          [showLabel]="false"
+          size="small"
+          [name]="spectator.name"
+        ></app-avatar>
+        <app-avatar
+          *ngIf="spectatorsCount > 3"
+          [showLabel]="false"
+          size="small"
+          [customPrefix]="spectatorCountLabel"
+          [backgroundColor]="'white'"
+        ></app-avatar>
       </div>
       <div class="menu">
         <app-button (click)="handleInviteModalOpen()" variant="outlined">
@@ -36,6 +52,9 @@
   </nav>
   <main>
     <match-desk></match-desk>
-    <match-card-deck [selectedCard]="selectedCard" (cardSelect)="onSelectedCard($event)"></match-card-deck>
+    <match-card-deck
+      [selectedCard]="selectedCard"
+      (cardSelect)="onSelectedCard($event)"
+    ></match-card-deck>
   </main>
 </div>

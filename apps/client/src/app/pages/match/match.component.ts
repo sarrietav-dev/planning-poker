@@ -80,4 +80,8 @@ export class MatchComponent implements OnInit {
       this.matchService.selectCard(card);
     }
   }
+
+  get isCardDeckModalOpen() {
+    return this.selectedCard !== -1 && this.isUserChosed;
+  }
 }
