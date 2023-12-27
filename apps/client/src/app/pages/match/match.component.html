@@ -1,15 +1,23 @@
 @if (!isUserChosed) {
-<div class="backdrop"></div>
-<match-join-dialog
-  (onSubmit)="handleUserChoose($event)"
-  class="dialog-wrapper"
-></match-join-dialog>
-} @if (isInviteModalOpen) {
-<div class="backdrop"></div>
-<match-invite-dialog
-  (close)="handleInviteModalClose()"
-  class="dialog-wrapper"
-></match-invite-dialog>
+  <div class="backdrop"></div>
+  <match-join-dialog
+    (onSubmit)="handleUserChoose($event)"
+    class="dialog-wrapper"
+  ></match-join-dialog>
+}
+@if (isInviteModalOpen) {
+  <div class="backdrop"></div>
+  <match-invite-dialog
+    (close)="handleInviteModalClose()"
+    class="dialog-wrapper"
+  ></match-invite-dialog>
+}
+@if (isCardDeckModalOpen) {
+  <div class="backdrop"></div>
+  <match-card-deck-modal
+    [selectedCard]="selectedCard"
+    (cardSelect)="onSelectedCard($event)"
+  ></match-card-deck-modal>
 }
 <div class="page-container">
   <nav>
@@ -47,6 +55,9 @@
   </nav>
   <main>
     <match-desk></match-desk>
-    <match-card-deck></match-card-deck>
+    <match-card-deck
+      [selectedCard]="selectedCard"
+      (cardSelect)="onSelectedCard($event)"
+    ></match-card-deck>
   </main>
 </div>

@@ -15,7 +15,7 @@ export class MatchComponent implements OnInit {
     private route: ActivatedRoute,
     private store: Store<{
       match: State;
-    }>
+    }>,
   ) {
     this.getSpectators$().subscribe((spectators) => {
       this.spectators$ = spectators;
@@ -26,6 +26,7 @@ export class MatchComponent implements OnInit {
   match$ = this.store.select('match');
   isInviteModalOpen = false;
   spectators$: State['match']['spectators'] = [];
+  selectedCard = -1;
 
   getSpectators$() {
     return this.matchService
@@ -36,7 +37,7 @@ export class MatchComponent implements OnInit {
   get spectatorsCount$() {
     return this.matchService.getSpectators().pipe(
       switchMap((spectators) => from(spectators)),
-      scan((acc) => acc + 1, 0)
+      scan((acc) => acc + 1, 0),
     );
   }
 
@@ -61,7 +62,7 @@ export class MatchComponent implements OnInit {
     this.matchService.joinMatch(
       this.route.snapshot.paramMap.get('id')!,
       data.name,
-      data.mode
+      data.mode,
     );
   }
 
@@ -71,5 +72,20 @@ export class MatchComponent implements OnInit {
 
   handleInviteModalClose() {
     this.isInviteModalOpen = false;
+  }
+
+  onSelectedCard(card: number) {
+    if (this.selectedCard === -1) {
+      this.selectedCard = card;
+      this.matchService.selectCard(card);
+    }
+  }
+
+  get isUserPlayer() {
+    return true;
+  }
+
+  get isCardDeckModalOpen() {
+    return this.selectedCard === -1 && this.isUserChosed && this.isUserPlayer;
   }
 }

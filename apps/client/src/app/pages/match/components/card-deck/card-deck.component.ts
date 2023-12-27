@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatchService } from 'src/app/services/match/match.service';
 import { reduce } from 'rxjs';
 
@@ -11,7 +10,9 @@ import { reduce } from 'rxjs';
 export class CardDeckComponent {
   constructor(private service: MatchService) {}
 
-  selectedCard = -1;
+  @Output() cardSelect = new EventEmitter<number>();
+
+  @Input() selectedCard = -1;
 
   get cardDeck$() {
     return this.service.cardDeck$().pipe(
@@ -23,8 +24,7 @@ export class CardDeckComponent {
 
   onSelectedCard(card: number) {
     if (this.selectedCard === -1) {
-      this.selectedCard = card;
-      this.service.selectCard(card);
+      this.cardSelect.emit(card);
     }
   }
 }

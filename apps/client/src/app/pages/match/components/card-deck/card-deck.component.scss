@@ -14,6 +14,14 @@
   }
 }
 
+p {
+  display: none;
+
+  @include lg {
+    display: block;
+  }
+}
+
 .card-deck-container {
   display: none;
 

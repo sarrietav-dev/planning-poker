@@ -1,0 +1,46 @@
+:host {
+  display: block;
+  max-width: 50%;
+  min-width: 90%;
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+p {
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+  color: white;
+}
+
+.deck-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 2rem 4rem;
+  gap: 1rem;
+  width: 100%;
+
+  & > * {
+    transition: all 0.2s ease-in-out;
+  }
+
+  & > *:hover {
+    transform: translateY(-10px);
+  }
+
+  & > .selected {
+    transform: translateY(-10px);
+  }
+
+  // If the card is selected, and the user hovers over another card,
+  // the hovered card should not move.
+  &:has(.selected) *:not(.selected):hover {
+    transform: none;
+  }
+}
