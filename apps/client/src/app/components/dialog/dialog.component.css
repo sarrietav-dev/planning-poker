@@ -9,7 +9,5 @@
   width: 90%;
   margin: 0 auto;
   max-width: 25rem;
-  min-width: 356px;
-
   box-shadow: 0px 0px 7px var(--accent-color);
 }
