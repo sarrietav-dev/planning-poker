@@ -12,6 +12,14 @@
   }
 }
 
+.responsive-card-deck {
+  display: block;
+
+  @include lg {
+    display: none;
+  }
+}
+
 main {
   display: flex;
   flex-direction: column;

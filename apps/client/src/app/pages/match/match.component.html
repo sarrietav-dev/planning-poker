@@ -13,12 +13,14 @@
   ></match-invite-dialog>
 }
 @if (isCardDeckModalOpen) {
-  <div class="backdrop"></div>
+  <div class="backdrop responsive-card-deck"></div>
   <match-card-deck-modal
+    class="responsive-card-deck"
     [selectedCard]="selectedCard"
     (cardSelect)="onSelectedCard($event)"
   ></match-card-deck-modal>
 }
+
 <div class="page-container">
   <nav>
     <div class="logo">
