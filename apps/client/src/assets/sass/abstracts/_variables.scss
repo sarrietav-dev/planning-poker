@@ -1,7 +1,13 @@
-$accent-color: #bb65ff;
-$dark-purple: #280952;
-$light-lila: #8f72e2;
-$somewhat-blue: #bdbdff;
+// ? Why do I use CSS variables instead of Sass variables for colors?
+// ? If I use Sass variables, I have to import this file in every component that uses it.
+// ? If I use CSS variables, I can use them in every component without importing anything.
+// ? Because of the cascading nature of CSS.
+:root {
+  --accent-color: #bb65ff;
+  --dark-purple: #280952;
+  --light-lila: #8f72e2;
+  --somewhat-blue: #bdbdff;
+}
 
 $background-gradient: radial-gradient(
   circle,
