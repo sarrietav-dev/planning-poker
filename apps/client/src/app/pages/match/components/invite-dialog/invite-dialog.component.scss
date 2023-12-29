@@ -1,5 +1,3 @@
-@import "../../../../styles/form-elements";
-
 app-dialog {
   min-width: 356px;
 }
@@ -39,12 +37,5 @@ app-dialog {
     align-items: center;
     gap: 1rem;
     padding: 26px;
-  }
-
-  &__link,
-  &__link:disabled {
-    width: 100%;
-    background-color: transparent;
-    @extend .text-input;
   }
 }

@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
@@ -9,7 +8,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
       <ng-content></ng-content>
     </div>
   `,
-  styleUrl: './dialog.component.css',
+  styleUrl: './dialog.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DialogComponent {}
