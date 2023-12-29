@@ -1,4 +1,7 @@
 form {
+  // ? This is a hack to make the form fill the screen
+  padding: 41vh 0;
+
   display: flex;
   flex-direction: column;
   width: 80%;
