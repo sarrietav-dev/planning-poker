@@ -1,0 +1,90 @@
+.text-input,
+.text-input:disabled {
+  border: 1px solid var(--accent-color);
+  border-radius: 1rem;
+  padding: 6px 12px;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  color: #fff;
+  background-color: transparent;
+
+  &:focus {
+    outline: var(--accent-color) auto 5px;
+    box-shadow: none;
+  }
+
+  &.ng-invalid.ng-touched {
+    border: 2px solid #ff6565;
+  }
+}
+
+.label {
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #fff;
+
+  & + .text-input {
+    margin-top: 10px;
+  }
+
+  &--bold {
+    font-weight: 700;
+  }
+}
+
+.radio-field {
+  position: relative;
+
+  input[type="radio"] {
+    display: none;
+  }
+
+  label {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+  }
+
+  input[type="radio"].ng-invalid.ng-touched + span {
+    border-color: #ff6565;
+  }
+
+  span {
+    margin-left: 0.5rem;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--accent-color);
+    border-radius: 100%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    &::after {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 100%;
+      background-color: var(--accent-color);
+      display: none;
+    }
+  }
+
+  input[type="radio"]:checked + span::after {
+    display: block;
+  }
+}
+
+.error {
+  background-color: red;
+
+  color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+
+  padding: 6px 12px;
+
+  border-radius: 1rem;
+}
