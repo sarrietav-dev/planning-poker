@@ -1,6 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
-@import "modern-normalize/modern-normalize.css";
-@import "app/styles/form-elements";
+@import "assets/sass/abstracts/mixins";
+@import "assets/sass/abstracts/variables";
+
+@import "assets/sass/base/reset";
+@import "assets/sass/base/typography";
+
+@import "assets/sass/layout/forms";
+
+@import "assets/sass/themes/default";
 
 // TODO: Centralizar variables en un archivo
 :root {
@@ -8,39 +15,4 @@
   --dark-purple: #280952;
   --light-lila: #8f72e2;
   --somewhat-blue: #bdbdff;
-}
-
-body {
-  background: radial-gradient(
-    circle,
-    rgba(55, 5, 120, 1) 0%,
-    rgba(55, 5, 120, 1) 50%,
-    rgba(85, 85, 92, 1) 100%
-  );
-}
-
-$sm-screen: 640px;
-$md-screen: 768px;
-$lg-screen: 1024px;
-
-@mixin sm {
-  @media (min-width: $sm-screen) {
-    @content;
-  }
-}
-
-@mixin md {
-  @media (min-width: $md-screen) {
-    @content;
-  }
-}
-
-@mixin lg {
-  @media (min-width: $lg-screen) {
-    @content;
-  }
-}
-
-body {
-  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
