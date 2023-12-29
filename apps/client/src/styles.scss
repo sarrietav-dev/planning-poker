@@ -11,8 +11,6 @@
 }
 
 body {
-  height: 100vh;
-  width: 100%;
   background: radial-gradient(
     circle,
     rgba(55, 5, 120, 1) 0%,
@@ -43,11 +41,6 @@ $lg-screen: 1024px;
   }
 }
 
-html,
 body {
-  height: 100%;
-}
-body {
-  margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
