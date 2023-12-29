@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CardDeckComponent } from './components/card-deck/card-deck.component';
 import { ButtonComponent } from 'src/app/components/button/button.component';
 import { CardDeckModalComponent } from './components/card-deck-modal/card-deck-modal.component';
+import { NavComponent } from './components/nav/nav.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { CardDeckModalComponent } from './components/card-deck-modal/card-deck-m
     DeskComponent,
     InviteDialogComponent,
     CardDeckComponent,
-    CardDeckModalComponent
+    CardDeckModalComponent,
+    NavComponent,
   ],
   imports: [
     CommonModule,
