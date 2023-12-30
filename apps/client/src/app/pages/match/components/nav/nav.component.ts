@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
 import { MatchService } from 'src/app/services/match/match.service';
@@ -26,7 +26,8 @@ export class NavComponent implements OnInit {
   match$ = this.store.select('match');
   spectators$: State['match']['spectators'] = [];
   spectatorsCount = 0;
-  isInviteModalOpen = false;
+  @Input() isInviteModalOpen = false;
+  @Output() isInviteModalOpenChange = new EventEmitter<boolean>();
 
   get name$() {
     return this.match$.pipe(map((match) => match.match.name));
@@ -43,6 +44,6 @@ export class NavComponent implements OnInit {
   }
 
   handleInviteModalOpen() {
-    this.isInviteModalOpen = true;
+    this.isInviteModalOpenChange.emit(true);
   }
 }
