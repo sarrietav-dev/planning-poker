@@ -7,12 +7,12 @@ import { MatchComponent } from './match.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DeskComponent } from './components/desk/desk.component';
 import { CardComponent } from '../../components/card/card.component';
-import { AvatarComponent } from '../../components/avatar/avatar.component';
+import { AvatarComponent } from '../../components/atoms/avatar/avatar.component';
 import { DialogComponent } from '../../components/atoms/dialog/dialog.component';
 import { InviteDialogComponent } from './components/invite-dialog/invite-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
 import { CardDeckComponent } from './components/card-deck/card-deck.component';
-import { ButtonComponent } from 'src/app/components/button/button.component';
+import { ButtonComponent } from 'src/app/components/atoms/button/button.component';
 import { CardDeckModalComponent } from './components/card-deck-modal/card-deck-modal.component';
 import { NavComponent } from './components/nav/nav.component';
 

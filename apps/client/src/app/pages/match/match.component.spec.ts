@@ -12,7 +12,7 @@ import { InviteDialogComponent } from './components/invite-dialog/invite-dialog.
 import { JoinDialogComponent } from './components/join-dialog/join-dialog.component';
 import { DialogComponent } from 'src/app/components/atoms/dialog/dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AvatarComponent } from 'src/app/components/avatar/avatar.component';
+import { AvatarComponent } from 'src/app/components/atoms/avatar/avatar.component';
 
 describe('MatchComponent', () => {
   let component: MatchComponent;
