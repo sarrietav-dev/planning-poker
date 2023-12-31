@@ -8,7 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DeskComponent } from './components/desk/desk.component';
 import { CardComponent } from '../../components/card/card.component';
 import { AvatarComponent } from '../../components/avatar/avatar.component';
-import { DialogComponent } from '../../components/dialog/dialog.component';
+import { DialogComponent } from '../../components/atoms/dialog/dialog.component';
 import { InviteDialogComponent } from './components/invite-dialog/invite-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
 import { CardDeckComponent } from './components/card-deck/card-deck.component';

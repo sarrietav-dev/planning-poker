@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CardDeckModalComponent } from './card-deck-modal.component';
 import { MatchService } from 'src/app/services/match/match.service';
-import { DialogComponent } from 'src/app/components/dialog/dialog.component';
+import { DialogComponent } from 'src/app/components/atoms/dialog/dialog.component';
 import { from } from 'rxjs';
 import { CardComponent } from 'src/app/components/card/card.component';
 

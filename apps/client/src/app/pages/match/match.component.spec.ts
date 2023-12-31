@@ -10,7 +10,7 @@ import { CardDeckComponent } from './components/card-deck/card-deck.component';
 import { DeskComponent } from './components/desk/desk.component';
 import { InviteDialogComponent } from './components/invite-dialog/invite-dialog.component';
 import { JoinDialogComponent } from './components/join-dialog/join-dialog.component';
-import { DialogComponent } from 'src/app/components/dialog/dialog.component';
+import { DialogComponent } from 'src/app/components/atoms/dialog/dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AvatarComponent } from 'src/app/components/avatar/avatar.component';
 
