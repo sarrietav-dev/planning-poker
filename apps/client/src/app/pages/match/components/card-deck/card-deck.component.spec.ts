@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CardDeckComponent } from './card-deck.component';
 import { MatchService } from 'src/app/services/match/match.service';
 import { from } from 'rxjs';
-import { CardComponent } from 'src/app/components/card/card.component';
+import { CardComponent } from 'src/app/components/atoms/card/card.component';
 import { EventEmitter } from '@angular/core';
 
 describe('CardDeckComponent', () => {

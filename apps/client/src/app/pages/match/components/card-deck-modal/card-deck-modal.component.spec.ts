@@ -4,7 +4,7 @@ import { CardDeckModalComponent } from './card-deck-modal.component';
 import { MatchService } from 'src/app/services/match/match.service';
 import { DialogComponent } from 'src/app/components/atoms/dialog/dialog.component';
 import { from } from 'rxjs';
-import { CardComponent } from 'src/app/components/card/card.component';
+import { CardComponent } from 'src/app/components/atoms/card/card.component';
 
 describe('CardDeckModalComponent', () => {
   let component: CardDeckModalComponent;

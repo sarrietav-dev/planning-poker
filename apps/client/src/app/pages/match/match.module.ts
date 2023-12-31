@@ -6,7 +6,7 @@ import { JoinDialogComponent } from './components/join-dialog/join-dialog.compon
 import { MatchComponent } from './match.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DeskComponent } from './components/desk/desk.component';
-import { CardComponent } from '../../components/card/card.component';
+import { CardComponent } from '../../components/atoms/card/card.component';
 import { AvatarComponent } from '../../components/atoms/avatar/avatar.component';
 import { DialogComponent } from '../../components/atoms/dialog/dialog.component';
 import { InviteDialogComponent } from './components/invite-dialog/invite-dialog.component';
