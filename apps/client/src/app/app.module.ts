@@ -12,7 +12,7 @@ import { StoreModule } from '@ngrx/store';
 import { matchReducer } from './store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ButtonComponent } from './components/button/button.component';
+import { ButtonComponent } from './components/atoms/button/button.component';
 import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
