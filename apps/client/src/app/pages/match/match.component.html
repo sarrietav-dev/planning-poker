@@ -23,7 +23,10 @@
 
 <div class="page-container">
   <nav>
-    
+    <match-nav
+      (isInviteModalOpenChange)="handleInviteModalOpen()"
+      [isInviteModalOpen]="isInviteModalOpen"
+    ></match-nav>
   </nav>
   <main>
     <match-desk></match-desk>

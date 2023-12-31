@@ -9,45 +9,21 @@ import { from, map, scan, switchMap } from 'rxjs';
   templateUrl: './match.component.html',
   styleUrls: ['./match.component.scss'],
 })
-export class MatchComponent implements OnInit {
+export class MatchComponent {
   constructor(
     private matchService: MatchService,
     private route: ActivatedRoute,
     private store: Store<{
       match: State;
     }>,
-  ) {
-    this.getSpectators$().subscribe((spectators) => {
-      this.spectators$ = spectators;
-    });
-  }
+  ) {}
 
   isUserChosed: boolean = false;
   match$ = this.store.select('match');
   isInviteModalOpen = false;
-  spectators$: State['match']['spectators'] = [];
   selectedCard = -1;
 
-  getSpectators$() {
-    return this.matchService
-      .getSpectators()
-      .pipe(map((spectators) => spectators.slice(0, 3)));
-  }
-
-  get spectatorsCount$() {
-    return this.matchService.getSpectators().pipe(
-      switchMap((spectators) => from(spectators)),
-      scan((acc) => acc + 1, 0),
-    );
-  }
-
   spectatorsCount = 0;
-
-  ngOnInit(): void {
-    this.spectatorsCount$.subscribe((count) => {
-      this.spectatorsCount = count;
-    });
-  }
 
   get name$() {
     return this.match$.pipe(map((match) => match.match.name));

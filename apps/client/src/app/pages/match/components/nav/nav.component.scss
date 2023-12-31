@@ -1,4 +1,6 @@
-nav {
+@import "../../../../../assets/sass/abstracts/_mixins.scss";
+
+:host {
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -10,6 +10,13 @@
     height: 100%;
     margin: 0 auto;
   }
+
+  nav {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-template-rows: 1fr;
+    grid-column: 1 / -1;
+  }
 }
 
 .responsive-card-deck {
@@ -33,7 +40,6 @@ main {
     grid-row: 2 / 3;
   }
 }
-
 
 .backdrop {
   position: fixed;
