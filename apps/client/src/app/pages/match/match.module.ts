@@ -17,6 +17,7 @@ import { CardDeckModalComponent } from './components/card-deck-modal/card-deck-m
 import { NavComponent } from './components/nav/nav.component';
 import { MatchResultsComponent } from './components/match-results/match-results.component';
 import { FormatVotePipe } from './components/match-results/pipes/format-vote.pipe';
+import { MatchResultsDialogComponent } from './components/match-results-dialog/match-results-dialog.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { FormatVotePipe } from './components/match-results/pipes/format-vote.pip
     CardDeckModalComponent,
     NavComponent,
     MatchResultsComponent,
-    FormatVotePipe
+    FormatVotePipe,
+    MatchResultsDialogComponent
   ],
   imports: [
     CommonModule,
