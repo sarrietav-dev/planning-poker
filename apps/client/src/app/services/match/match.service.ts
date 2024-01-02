@@ -29,8 +29,6 @@ export class MatchService {
     this.registerEvents();
   }
 
-  match$ = this.store.select((state) => state.match.match);
-
   registerEvents() {
     this.playerJoined$().subscribe();
 
@@ -171,7 +169,7 @@ export class MatchService {
   }
 
   getMatch() {
-    return this.store.select((state) => state.match);
+    return this.store.select((state) => state.match.match);
   }
 
   getAreCardsRevealed() {

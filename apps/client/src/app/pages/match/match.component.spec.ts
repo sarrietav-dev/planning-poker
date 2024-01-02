@@ -121,6 +121,6 @@ describe('MatchComponent', () => {
 
   it('should return a name', () => {
     store.select.and.returnValue(of({ match: { name: 'hey', k: 'v' } }));
-    expect(component.name$).toBeTruthy();
+    expect(component.name).toBeTruthy();
   });
 });

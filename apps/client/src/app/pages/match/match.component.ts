@@ -4,33 +4,31 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../../store';
 import { from, map, scan, switchMap } from 'rxjs';
+import { Match } from '@planning-poker/models';
 
 @Component({
   templateUrl: './match.component.html',
   styleUrls: ['./match.component.scss'],
 })
-export class MatchComponent {
+export class MatchComponent implements OnInit {
   constructor(
     private matchService: MatchService,
     private route: ActivatedRoute,
-    private store: Store<{
-      match: State;
-    }>,
   ) {}
 
   isUserChosed: boolean = false;
-  match$ = this.store.select('match');
+  match?: Match = undefined;
   isInviteModalOpen = false;
   selectedCard = -1;
 
-  spectatorsCount = 0;
-
-  get name$() {
-    return this.match$.pipe(map((match) => match.match.name));
+  ngOnInit(): void {
+    this.matchService.getMatch().subscribe(match => {
+      this.match = match;
+    })
   }
 
-  get spectatorCountLabel() {
-    return `${this.spectatorsCount - 3}+`;
+  get name() {
+    return this.match?.name;
   }
 
   handleUserChoose(data: { name: string; mode: string }) {
