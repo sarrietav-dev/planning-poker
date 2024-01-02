@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InviteDialogComponent } from './invite-dialog.component';
 import { CommonModule, Location as NgLocation } from '@angular/common';
-import { ButtonComponent } from 'src/app/components/button/button.component';
+import { ButtonComponent } from 'src/app/components/atoms/button/button.component';
 import { DialogComponent } from 'src/app/components/atoms/dialog/dialog.component';
 import { MatIconModule } from '@angular/material/icon';
 

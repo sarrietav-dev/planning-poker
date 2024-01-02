@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreateMatchFormComponent } from './create-match-form.component';
 import { MatchService } from 'src/app/services/match/match.service';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { ButtonComponent } from 'src/app/components/button/button.component';
+import { ButtonComponent } from 'src/app/components/atoms/button/button.component';
 
 describe('CreateMatchFormComponent', () => {
   let component: CreateMatchFormComponent;

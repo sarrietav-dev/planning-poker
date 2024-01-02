@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { JoinDialogComponent } from './join-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ButtonComponent } from 'src/app/components/button/button.component';
+import { ButtonComponent } from 'src/app/components/atoms/button/button.component';
 import { DialogComponent } from 'src/app/components/atoms/dialog/dialog.component';
 
 describe('JoinDialogComponent', () => {
