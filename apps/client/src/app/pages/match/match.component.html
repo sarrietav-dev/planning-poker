@@ -30,14 +30,14 @@
   </nav>
   <main>
     <match-desk></match-desk>
-    @if (!(areCardsRevealed$ | async)) {
+    @if (!areCardsRevealed) {
       <match-card-deck
         [selectedCard]="selectedCard"
         (cardSelect)="onSelectedCard($event)"
       ></match-card-deck>
     }
   </main>
-  @if (areCardsRevealed$ | async) {
+  @if (areCardsRevealed) {
     <match-results></match-results>
   }
 </div>

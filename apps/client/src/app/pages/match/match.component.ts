@@ -17,11 +17,16 @@ export class MatchComponent implements OnInit {
   match?: Match = undefined;
   isInviteModalOpen = false;
   selectedCard = -1;
+  areCardsRevealed = false;
 
   ngOnInit(): void {
-    this.matchService.getMatch().subscribe(match => {
+    this.matchService.getMatch().subscribe((match) => {
       this.match = match;
-    })
+    });
+
+    this.matchService.getAreCardsRevealed().subscribe((areCardsRevealed) => {
+      this.areCardsRevealed = areCardsRevealed ?? false;
+    });
   }
 
   get name() {
@@ -58,9 +63,5 @@ export class MatchComponent implements OnInit {
 
   get isCardDeckModalOpen() {
     return this.selectedCard === -1 && this.isUserChosed && this.isUserPlayer;
-  }
-
-  get areCardsRevealed$() {
-    return this.matchService.getAreCardsRevealed();
   }
 }
