@@ -1,0 +1,15 @@
+<app-dialog>
+  <div class="match-results">
+    <div class="match-results__cards">
+      @for (card of results; track $index) {
+        <app-card [show]="true" [value]="card.card.toString()">
+          {{ card.votes | formatVote }}
+        </app-card>
+      }
+    </div>
+    <div class="match-results__average">
+      <p class="match-results__average-label">Promedio:</p>
+      <p class="match-results__average-value">{{ average }}</p>
+    </div>
+  </div>
+</app-dialog>

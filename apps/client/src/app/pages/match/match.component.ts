@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatchService } from '../../services/match/match.service';
 import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { State } from '../../store';
-import { from, map, scan, switchMap } from 'rxjs';
 import { Match } from '@planning-poker/models';
 
 @Component({
@@ -16,15 +13,20 @@ export class MatchComponent implements OnInit {
     private route: ActivatedRoute,
   ) {}
 
-  isUserChosed: boolean = false;
+  isUserChosed: boolean = true;
   match?: Match = undefined;
   isInviteModalOpen = false;
   selectedCard = -1;
+  areCardsRevealed = false;
 
   ngOnInit(): void {
-    this.matchService.getMatch().subscribe(match => {
+    this.matchService.getMatch().subscribe((match) => {
       this.match = match;
-    })
+    });
+
+    this.matchService.getAreCardsRevealed().subscribe((areCardsRevealed) => {
+      this.areCardsRevealed = !areCardsRevealed ?? false;
+    });
   }
 
   get name() {
@@ -61,5 +63,14 @@ export class MatchComponent implements OnInit {
 
   get isCardDeckModalOpen() {
     return this.selectedCard === -1 && this.isUserChosed && this.isUserPlayer;
+  }
+
+  get results(): { card: number; votes: number }[] {
+    return [
+      { card: 3, votes: 1 },
+      { card: 5, votes: 1 },
+      { card: 13, votes: 3 },
+      { card: 21, votes: 2 },
+    ];
   }
 }

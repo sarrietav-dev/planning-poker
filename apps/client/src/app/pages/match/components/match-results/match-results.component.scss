@@ -1,0 +1,37 @@
+@import "../../../../../assets/sass/abstracts/_mixins.scss";
+
+:host {
+  display: none;
+
+  @include lg {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-template-rows: 1fr;
+    grid-column: 1 / -1;
+  }
+}
+
+.match-results {
+  &__cards {
+    grid-column: 2;
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  &__average {
+    grid-column: -1;
+    color: white;
+    text-align: center;
+
+    &-label {
+      margin: 0;
+      font-size: 0.75rem;
+    }
+
+    &-value {
+      font-size: 1.5rem;
+    }
+  }
+}

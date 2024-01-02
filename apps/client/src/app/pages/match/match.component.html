@@ -12,13 +12,20 @@
     class="dialog-wrapper"
   ></match-invite-dialog>
 }
-@if (isCardDeckModalOpen) {
-  <div class="backdrop responsive-card-deck"></div>
+@if (!isCardDeckModalOpen) {
+  <div class="backdrop hide-lg"></div>
   <match-card-deck-modal
-    class="responsive-card-deck"
+    class="hide-lg"
     [selectedCard]="selectedCard"
     (cardSelect)="onSelectedCard($event)"
   ></match-card-deck-modal>
+}
+@if (areCardsRevealed) {
+  <div class="backdrop hide-lg"></div>
+  <match-results-dialog
+    class="hide-lg"
+    [results]="results"
+  ></match-results-dialog>
 }
 
 <div class="page-container">
@@ -30,9 +37,14 @@
   </nav>
   <main>
     <match-desk></match-desk>
-    <match-card-deck
-      [selectedCard]="selectedCard"
-      (cardSelect)="onSelectedCard($event)"
-    ></match-card-deck>
+    @if (!areCardsRevealed) {
+      <match-card-deck
+        [selectedCard]="selectedCard"
+        (cardSelect)="onSelectedCard($event)"
+      ></match-card-deck>
+    }
   </main>
+  @if (areCardsRevealed) {
+    <match-results [results]="results"></match-results>
+  }
 </div>

@@ -5,7 +5,7 @@ import { MatchService } from 'src/app/services/match/match.service';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { EMPTY, last, of } from 'rxjs';
-import { ButtonComponent } from 'src/app/components/button/button.component';
+import { ButtonComponent } from 'src/app/components/atoms/button/button.component';
 import { CardDeckComponent } from './components/card-deck/card-deck.component';
 import { DeskComponent } from './components/desk/desk.component';
 import { InviteDialogComponent } from './components/invite-dialog/invite-dialog.component';
@@ -85,23 +85,6 @@ describe('MatchComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should return a list of three spectators', (done) => {
-    component.getSpectators$().subscribe((spectators) => {
-      expect(spectators.length).toBe(3);
-      done();
-    });
-  });
-
-  it('should return a spectator count', (done) => {
-    component.spectatorsCount$.pipe(last()).subscribe((count) => {
-      expect(count).toBe(4);
-      done();
-    });
-  });
-
-  it('should return a spectator count label', () => {
-    expect(component.spectatorCountLabel).toBe('1+');
-  });
 
   it('should handle user choose', () => {
     component.handleUserChoose({ name: 'hey', mode: 'single' });
