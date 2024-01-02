@@ -25,11 +25,8 @@ export class DeskComponent implements OnInit {
     });
   }
 
-  players$ = this.store.select(selectPlayers).pipe(
-    tap((players) => {
-      console.log({ players });
-    })
-  );
+  players$ = this.store.select(selectPlayers);
+
   currentUserIndex: number = 0;
   isAdmin$ = this.store.select(selectIsAdmin);
 
