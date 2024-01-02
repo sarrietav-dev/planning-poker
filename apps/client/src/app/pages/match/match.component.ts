@@ -67,11 +67,10 @@ export class MatchComponent implements OnInit {
 
   get results(): { card: number; votes: number }[] {
     return [
-      { card: 1, votes: 1 },
-      { card: 2, votes: 1 },
       { card: 3, votes: 1 },
       { card: 5, votes: 1 },
-      { card: 8, votes: 1 },
+      { card: 13, votes: 3 },
+      { card: 21, votes: 2 },
     ];
   }
 }
