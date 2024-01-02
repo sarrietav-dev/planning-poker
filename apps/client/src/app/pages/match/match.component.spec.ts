@@ -16,6 +16,9 @@ import { AvatarComponent } from 'src/app/components/atoms/avatar/avatar.componen
 import { NavComponent } from './components/nav/nav.component';
 import { MatchResultsComponent } from './components/match-results/match-results.component';
 import { MatchResultsDialogComponent } from './components/match-results-dialog/match-results-dialog.component';
+import { Match } from '@planning-poker/models';
+import { CardComponent } from 'src/app/components/atoms/card/card.component';
+import { FormatVotePipe } from './pipes/format-vote.pipe';
 
 describe('MatchComponent', () => {
   let component: MatchComponent;
@@ -29,7 +32,8 @@ describe('MatchComponent', () => {
       'createMatch',
       'cardDeck$',
       'getSpectators',
-      'getAreCardsRevealed'
+      'getAreCardsRevealed',
+      'getMatch',
     ]) as jasmine.SpyObj<MatchService>;
 
     serviceSpy.getSpectators.and.returnValue(
@@ -38,7 +42,17 @@ describe('MatchComponent', () => {
         { name: 'whats', id: '' },
         { name: 'up', id: '' },
         { name: 'bro', id: '' },
-      ])
+      ]),
+    );
+
+    serviceSpy.getMatch.and.returnValue(
+      of({
+        cardDeck: [],
+        id: '1',
+        name: 'hey',
+        players: [],
+        spectators: [],
+      } satisfies Match),
     );
 
     serviceSpy.getAreCardsRevealed.and.returnValue(of(false));
@@ -66,13 +80,15 @@ describe('MatchComponent', () => {
         CardDeckComponent,
         NavComponent,
         MatchResultsComponent,
-        MatchResultsDialogComponent
+        MatchResultsDialogComponent,
+        FormatVotePipe
       ],
       imports: [
         ButtonComponent,
         DialogComponent,
         ReactiveFormsModule,
         AvatarComponent,
+        CardComponent
       ],
       providers: [
         { provide: MatchService, useValue: serviceSpy },
@@ -90,7 +106,6 @@ describe('MatchComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
 
   it('should handle user choose', () => {
     component.handleUserChoose({ name: 'hey', mode: 'single' });
