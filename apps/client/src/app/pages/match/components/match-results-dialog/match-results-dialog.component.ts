@@ -7,4 +7,10 @@ import { Component, Input } from '@angular/core';
 })
 export class MatchResultsDialogComponent {
   @Input() results: { card: number; votes: number }[] = [];
+
+  get average() {
+    return this.results.reduce((acc, curr) => {
+      return acc + curr.card * curr.votes;
+    }, 0);
+  }
 }
