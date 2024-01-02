@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatchService } from '../../services/match/match.service';
 import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { State } from '../../store';
-import { from, map, scan, switchMap } from 'rxjs';
 import { Match } from '@planning-poker/models';
 
 @Component({
