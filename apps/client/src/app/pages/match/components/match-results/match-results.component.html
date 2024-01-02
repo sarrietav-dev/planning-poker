@@ -1,6 +1,6 @@
 <div class="match-results__cards">
   @for (card of results; track $index) {
-    <app-card [value]="card.card.toString()">
+    <app-card [show]="true" [value]="card.card.toString()">
       {{ card.votes | formatVote }}
     </app-card>
   }

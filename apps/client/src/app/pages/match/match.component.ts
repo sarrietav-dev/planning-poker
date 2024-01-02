@@ -64,4 +64,14 @@ export class MatchComponent implements OnInit {
   get isCardDeckModalOpen() {
     return this.selectedCard === -1 && this.isUserChosed && this.isUserPlayer;
   }
+
+  get results(): { card: number; votes: number }[] {
+    return [
+      { card: 1, votes: 1 },
+      { card: 2, votes: 1 },
+      { card: 3, votes: 1 },
+      { card: 5, votes: 1 },
+      { card: 8, votes: 1 },
+    ];
+  }
 }
