@@ -9,10 +9,12 @@ import { AvatarComponent } from 'src/app/components/atoms/avatar/avatar.componen
 import { ButtonComponent } from 'src/app/components/atoms/button/button.component';
 import { MatchService } from 'src/app/services/match/match.service';
 import { CommonModule } from '@angular/common';
+import { State } from 'src/app/store';
 
 describe('NavComponent', () => {
   let component: NavComponent;
   let fixture: ComponentFixture<NavComponent>;
+  let store: jasmine.SpyObj<Store>;
 
   beforeEach(async () => {
     const serviceSpy = jasmine.createSpyObj('MatchService', [
@@ -60,6 +62,7 @@ describe('NavComponent', () => {
     fixture = TestBed.createComponent(NavComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    store = TestBed.inject(Store) as jasmine.SpyObj<Store>;
   });
 
   it('should create', () => {
@@ -75,5 +78,31 @@ describe('NavComponent', () => {
 
   it('should return a spectator count label', () => {
     expect(component.spectatorCountLabel).toBe('1+');
+  });
+
+  it('should emit inviteModalOpenChange', () => {
+    spyOn(component.isInviteModalOpenChange, 'emit');
+    component.handleInviteModalOpen();
+    expect(component.isInviteModalOpenChange.emit).toHaveBeenCalledWith(true);
+  });
+
+  it('should select name from match in store', (done) => {
+    const expectedMatch = {
+      match: {
+        name: 'Test Match',
+        cardDeck: [],
+        id: '',
+        players: [],
+        spectators: [],
+      },
+      isAdmin: true,
+      areCardsRevealed: true,
+    } satisfies State;
+    component.match$ = of(expectedMatch);
+
+    component.name$.subscribe((name) => {
+      expect(name).toEqual(expectedMatch.match.name);
+      done();
+    });
   });
 });
