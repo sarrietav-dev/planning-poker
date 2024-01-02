@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { CardDeckModalComponent } from './card-deck-modal.component';
 import { MatchService } from 'src/app/services/match/match.service';
@@ -36,4 +36,15 @@ describe('CardDeckModalComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should update selectedCard and emit cardSelect event', fakeAsync(() => {
+    spyOn(component.cardSelect, 'emit');
+
+    const card = 5;
+    component.selectCard(card);
+
+    expect(component.selectedCard).toBe(card);
+    tick(1000);
+    expect(component.cardSelect.emit).toHaveBeenCalledWith(card);
+  }));
 });
