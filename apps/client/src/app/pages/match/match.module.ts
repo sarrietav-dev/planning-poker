@@ -16,7 +16,7 @@ import { ButtonComponent } from 'src/app/components/atoms/button/button.componen
 import { CardDeckModalComponent } from './components/card-deck-modal/card-deck-modal.component';
 import { NavComponent } from './components/nav/nav.component';
 import { MatchResultsComponent } from './components/match-results/match-results.component';
-import { FormatVotePipe } from './components/match-results/pipes/format-vote.pipe';
+import { FormatVotePipe } from './pipes/format-vote.pipe';
 import { MatchResultsDialogComponent } from './components/match-results-dialog/match-results-dialog.component';
 
 @NgModule({
