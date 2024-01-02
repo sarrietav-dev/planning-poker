@@ -34,6 +34,7 @@ describe('MatchComponent', () => {
       'getSpectators',
       'getAreCardsRevealed',
       'getMatch',
+      'selectCard'
     ]) as jasmine.SpyObj<MatchService>;
 
     serviceSpy.getSpectators.and.returnValue(
@@ -81,14 +82,14 @@ describe('MatchComponent', () => {
         NavComponent,
         MatchResultsComponent,
         MatchResultsDialogComponent,
-        FormatVotePipe
+        FormatVotePipe,
       ],
       imports: [
         ButtonComponent,
         DialogComponent,
         ReactiveFormsModule,
         AvatarComponent,
-        CardComponent
+        CardComponent,
       ],
       providers: [
         { provide: MatchService, useValue: serviceSpy },
@@ -126,5 +127,20 @@ describe('MatchComponent', () => {
   it('should return a name', () => {
     store.select.and.returnValue(of({ match: { name: 'hey', k: 'v' } }));
     expect(component.name).toBeTruthy();
+  });
+
+  describe('#onSelectCard', () => {
+    it('should call select card on the service if a card has not been selected', () => {
+      component.selectedCard = -1;
+      component.onSelectedCard(2);
+      expect(matchService.selectCard).toHaveBeenCalled();
+      expect(matchService.selectCard).toHaveBeenCalledWith(2);
+    });
+
+    it('should not call select card on the service if a card has been selected', () => {
+      component.selectedCard = 2;
+      component.onSelectedCard(2);
+      expect(matchService.selectCard).not.toHaveBeenCalled();
+    });
   });
 });
