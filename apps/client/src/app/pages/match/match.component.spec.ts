@@ -13,6 +13,9 @@ import { JoinDialogComponent } from './components/join-dialog/join-dialog.compon
 import { DialogComponent } from 'src/app/components/atoms/dialog/dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AvatarComponent } from 'src/app/components/atoms/avatar/avatar.component';
+import { NavComponent } from './components/nav/nav.component';
+import { MatchResultsComponent } from './components/match-results/match-results.component';
+import { MatchResultsDialogComponent } from './components/match-results-dialog/match-results-dialog.component';
 
 describe('MatchComponent', () => {
   let component: MatchComponent;
@@ -61,6 +64,9 @@ describe('MatchComponent', () => {
         DeskComponent,
         InviteDialogComponent,
         CardDeckComponent,
+        NavComponent,
+        MatchResultsComponent,
+        MatchResultsDialogComponent
       ],
       imports: [
         ButtonComponent,

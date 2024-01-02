@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MatchResultsDialogComponent } from './match-results-dialog.component';
+import { DialogComponent } from 'src/app/components/atoms/dialog/dialog.component';
 
 describe('MatchResultsDialogComponent', () => {
   let component: MatchResultsDialogComponent;
@@ -8,10 +9,10 @@ describe('MatchResultsDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MatchResultsDialogComponent]
-    })
-    .compileComponents();
-    
+      declarations: [MatchResultsDialogComponent],
+      imports: [DialogComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(MatchResultsDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
