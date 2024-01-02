@@ -1,6 +1,13 @@
 @import "/src/styles.scss";
 
 .page-container {
+  &__nav {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-template-rows: 1fr;
+    grid-column: 1 / -1;
+  }
+
   @include lg {
     display: grid;
     position: relative;
@@ -9,13 +16,6 @@
     width: 90%;
     height: 100%;
     margin: 0 auto;
-  }
-
-  nav {
-    display: grid;
-    grid-template-columns: subgrid;
-    grid-template-rows: 1fr;
-    grid-column: 1 / -1;
   }
 }
 
@@ -27,7 +27,7 @@
   }
 }
 
-main {
+.main {
   display: flex;
   flex-direction: column;
   justify-content: center;

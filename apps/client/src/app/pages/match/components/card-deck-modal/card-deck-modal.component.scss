@@ -10,14 +10,14 @@
   z-index: 1000;
 }
 
-p {
+.dialog__title {
   font-size: 1.25rem;
   font-weight: 700;
   text-align: center;
   color: white;
 }
 
-.deck-container {
+.dialog__container {
   display: flex;
   justify-content: center;
   align-items: center;

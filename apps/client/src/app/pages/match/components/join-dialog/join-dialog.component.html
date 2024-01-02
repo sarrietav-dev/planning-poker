@@ -1,5 +1,5 @@
 <app-dialog>
-  <form [formGroup]="form" (ngSubmit)="handleSubmit()">
+  <form class="join-dialog-form" [formGroup]="form" (ngSubmit)="handleSubmit()">
     <div>
       <div>
         <label for="name" class="label label--bold">Tu nombre</label>
@@ -59,6 +59,6 @@
         <div *ngIf="mode.errors?.['required']">Eliga un modo</div>
       </div>
     </div>
-    <app-button color="secondary" type="submit">Continuar</app-button>
+    <app-button class="join-dialog-form__submit-button" color="secondary" type="submit">Continuar</app-button>
   </form>
 </app-dialog>

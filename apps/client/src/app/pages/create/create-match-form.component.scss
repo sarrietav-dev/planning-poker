@@ -1,4 +1,4 @@
-form {
+.create-match-form {
   // ? This is a hack to make the form fill the screen
   padding: 41vh 0;
 
@@ -13,11 +13,6 @@ form {
   justify-content: center;
   align-items: center;
   gap: 1rem;
-
-  button {
-    margin-top: 2rem;
-    align-self: center;
-  }
 }
 
 .error {

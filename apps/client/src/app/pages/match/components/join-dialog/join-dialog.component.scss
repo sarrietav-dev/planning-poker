@@ -2,7 +2,7 @@ app-dialog {
   min-width: 356px;
 }
 
-form {
+.join-dialog-form {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -11,7 +11,7 @@ form {
   gap: 2rem;
   padding: 0rem 4rem;
 
-  button {
+  &__submit-button {
     align-self: center;
   }
 }

@@ -1,9 +1,9 @@
-<div class="container">
-  <p>
+<div class="card-deck">
+  <p class="card-deck__title">
     <strong>Elige una carta 👇</strong>
   </p>
-  <div class="card-deck-container">
-    <div class="card-deck">
+  <div class="card-deck__container">
+    <div class="card-deck__cards">
       <app-card
         *ngFor="let card of cardDeck$ | async; let i = index"
         (select)="onSelectedCard(card)"

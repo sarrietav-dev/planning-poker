@@ -1,8 +1,8 @@
 <app-dialog>
-  <p style="text-align: center">
+  <h1 class="dialog__title">
     <strong>Elige una carta 👇</strong>
-  </p>
-  <div class="deck-container">
+  </h1>
+  <div class="dialog__container">
     @for (card of cards; track $index) {
       <app-card
         [selected]="selectedCard === card"

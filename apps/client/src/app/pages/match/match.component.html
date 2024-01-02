@@ -29,13 +29,13 @@
 }
 
 <div class="page-container">
-  <nav>
+  <nav class="page-container__nav">
     <match-nav
       (isInviteModalOpenChange)="handleInviteModalOpen()"
       [isInviteModalOpen]="isInviteModalOpen"
     ></match-nav>
   </nav>
-  <main>
+  <main class="main">
     <match-desk></match-desk>
     @if (!areCardsRevealed) {
       <match-card-deck
