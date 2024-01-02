@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { map } from 'rxjs';
+import { map, tap } from 'rxjs';
 import { MatchService } from 'src/app/services/match/match.service';
 import { State } from 'src/app/store';
 
@@ -21,6 +21,10 @@ export class NavComponent implements OnInit {
     this.getSpectators$().subscribe((spectators) => {
       this.spectators$ = spectators;
     });
+
+    this.getSpectatorCount$().subscribe((spectatorCount) => {
+      this.spectatorsCount = spectatorCount;
+    });
   }
 
   match$ = this.store.select('match');
@@ -37,6 +41,15 @@ export class NavComponent implements OnInit {
     return this.matchService
       .getSpectators()
       .pipe(map((spectators) => spectators.slice(0, 3)));
+  }
+
+  getSpectatorCount$() {
+    return this.matchService.getSpectators().pipe(
+      map((spectators) => {
+        this.spectatorsCount = spectators.length;
+        return spectators.length;
+      }),
+    );
   }
 
   get spectatorCountLabel() {
