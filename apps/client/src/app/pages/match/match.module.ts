@@ -15,6 +15,7 @@ import { CardDeckComponent } from './components/card-deck/card-deck.component';
 import { ButtonComponent } from 'src/app/components/atoms/button/button.component';
 import { CardDeckModalComponent } from './components/card-deck-modal/card-deck-modal.component';
 import { NavComponent } from './components/nav/nav.component';
+import { MatchResultsComponent } from './components/match-results/match-results.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { NavComponent } from './components/nav/nav.component';
     CardDeckComponent,
     CardDeckModalComponent,
     NavComponent,
+    MatchResultsComponent,
   ],
   imports: [
     CommonModule,

@@ -59,4 +59,8 @@ export class MatchComponent implements OnInit {
   get isCardDeckModalOpen() {
     return this.selectedCard === -1 && this.isUserChosed && this.isUserPlayer;
   }
+
+  get areCardsRevealed$() {
+    return this.matchService.getAreCardsRevealed();
+  }
 }
