@@ -6,6 +6,11 @@ import { Component, Input } from '@angular/core';
   styleUrl: './match-results.component.scss',
 })
 export class MatchResultsComponent {
-  @Input() average: number = 0;
   @Input() results: { card: number; votes: number }[] = [];
+
+  get average() {
+    return this.results.reduce((acc, curr) => {
+      return acc + curr.card * curr.votes;
+    }, 0);
+  }
 }
