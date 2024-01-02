@@ -12,7 +12,7 @@
     class="dialog-wrapper"
   ></match-invite-dialog>
 }
-@if (!isCardDeckModalOpen) {
+@if (isCardDeckModalOpen) {
   <div class="backdrop hide-lg"></div>
   <match-card-deck-modal
     class="hide-lg"

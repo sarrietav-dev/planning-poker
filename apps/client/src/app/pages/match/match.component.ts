@@ -13,7 +13,7 @@ export class MatchComponent implements OnInit {
     private route: ActivatedRoute,
   ) {}
 
-  isUserChosed: boolean = true;
+  isUserChosed: boolean = false;
   match?: Match = undefined;
   isInviteModalOpen = false;
   selectedCard = -1;
@@ -25,7 +25,7 @@ export class MatchComponent implements OnInit {
     });
 
     this.matchService.getAreCardsRevealed().subscribe((areCardsRevealed) => {
-      this.areCardsRevealed = !areCardsRevealed ?? false;
+      this.areCardsRevealed = areCardsRevealed ?? false;
     });
   }
 
