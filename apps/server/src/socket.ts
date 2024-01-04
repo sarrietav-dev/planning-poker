@@ -61,9 +61,19 @@ export default (socket: Socket) => {
     callback(exists === 1);
   }
 
+  async function onChooseCard(card: number) {
+    log.info(`Card chosen: ${socket.id} ${card}`);
+    const matchId = socket.rooms.values().next().value;
+    await repo.chooseCard(matchId, socket.id, card);
+    socket
+      .to(matchId)
+      .emit(events.PlayerSelectedCard, { playerId: socket.id, card });
+  }
+
   socket.on(events.JoinMatchCommand, joinMatch);
   socket.on(events.CreateMatchCommand, createMatch);
   socket.on(events.DoesMatchExist, onDoesMatchExist);
+  socket.on(events.ChooseCardCommand, onChooseCard);
   socket.on("disconnecting", onDisconnect);
 };
 

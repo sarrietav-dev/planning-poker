@@ -113,3 +113,9 @@ export async function setCardDeck(matchId: string, cards: number[]) {
 export async function removePlayer(matchId: string, playerId: string) {
   await redis.hDel(`match:${matchId}`, `player:${playerId}`);
 }
+
+export async function chooseCard(matchId: string, id: string, card: number) {
+  await redis.hSet(`match:${matchId}:player:${id}`, {
+    card,
+  });
+}

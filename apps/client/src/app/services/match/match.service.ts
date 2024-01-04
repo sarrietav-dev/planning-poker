@@ -143,7 +143,6 @@ export class MatchService {
 
   selectCard(card: number) {
     this.io.emit(events.ChooseCardCommand, card);
-    // TODO: FInd a way to know which player is the current one
   }
 
   async doesMatchExist(matchId: string) {
