@@ -119,3 +119,17 @@ export async function chooseCard(matchId: string, id: string, card: number) {
     card,
   });
 }
+export async function resetGame(matchId: string) {
+  for await (const playerId of redis.scanIterator({
+    MATCH: `match:${matchId}:player:*`,
+  })) {
+    await redis.hSet(`match:${matchId}:player:${playerId}`, {
+      card: -1,
+    });
+  }
+}
+
+export async function isMatchAdmin(matchId: string, id: string) {
+  const owner = await redis.hGet(`match:${matchId}`, "owner");
+  return owner === id;
+}

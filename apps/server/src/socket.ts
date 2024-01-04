@@ -70,10 +70,24 @@ export default (socket: Socket) => {
       .emit(events.PlayerSelectedCard, { playerId: socket.id, card });
   }
 
+  async function onResetGame() {
+    const matchId = socket.rooms.values().next().value;
+    const isAdmin = await repo.isMatchAdmin(matchId, socket.id);
+
+    if (!isAdmin) {
+      log.warn(`User is not admin: ${socket.id}`);
+      return;
+    }
+
+    await repo.resetGame(matchId);
+    socket.to(matchId).emit(events.MatchRestarted);
+  }
+
   socket.on(events.JoinMatchCommand, joinMatch);
   socket.on(events.CreateMatchCommand, createMatch);
   socket.on(events.DoesMatchExist, onDoesMatchExist);
   socket.on(events.ChooseCardCommand, onChooseCard);
+  socket.on(events.ResetGameCommand, onResetGame);
   socket.on("disconnecting", onDisconnect);
 };
 
