@@ -1,5 +1,5 @@
 import * as MatchActions from './match.actions';
-import { matchReducer, State, initialState } from './index';
+import { matchReducer, initialState } from './index';
 
 describe('matchReducer', () => {
   it('should return the initial state', () => {

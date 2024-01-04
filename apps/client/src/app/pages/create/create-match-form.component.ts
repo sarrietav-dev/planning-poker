@@ -18,7 +18,7 @@ export class CreateMatchFormComponent {
         Validators.minLength(5),
         Validators.maxLength(20),
         Validators.pattern(
-          /^(?=.*[a-zA-Z])(?=(?:[^0-9]*[0-9]){0,3}[^0-9]*$)[a-zA-Z0-9]*$/
+          /^(?=.*[a-zA-Z])(?=(?:\D*\d){0,3}\D*$)[a-zA-Z0-9]*$/
         ),
       ],
     }),

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { map, tap } from 'rxjs';
+import { map } from 'rxjs';
 import { MatchService } from 'src/app/services/match/match.service';
 import { State, selectIsAdmin, selectPlayers } from 'src/app/store';
 

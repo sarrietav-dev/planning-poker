@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { map, tap } from 'rxjs';
+import { map } from 'rxjs';
 import { MatchService } from 'src/app/services/match/match.service';
 import { State } from 'src/app/store';
 

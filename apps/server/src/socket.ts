@@ -50,7 +50,7 @@ export default (socket: Socket) => {
 
   async function onDisconnect() {
     log.info(`Client disconnected: ${socket.id}`);
-    socket.rooms.forEach(async (room) => {
+    for (const room of socket.rooms) {
       const mode = await repo.getPlayerMode(room, socket.id);
 
       if (mode === "player") {
@@ -60,7 +60,7 @@ export default (socket: Socket) => {
         socket.to(room).emit(events.SpectatorLeft, { spectatorId: socket.id });
         await repo.removeSpectator(room, socket.id);
       }
-    });
+    }
   }
 
   async function onDoesMatchExist(matchId: string, callback: Awk<boolean>) {
