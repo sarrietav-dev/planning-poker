@@ -51,8 +51,15 @@ export default (socket: Socket) => {
   async function onDisconnect() {
     log.info(`Client disconnected: ${socket.id}`);
     socket.rooms.forEach(async (room) => {
-      socket.to(room).emit(events.PlayerLeft, { playerId: socket.id });
-      await repo.removePlayer(room, socket.id);
+      const mode = await repo.getPlayerMode(room, socket.id);
+
+      if (mode === "player") {
+        socket.to(room).emit(events.PlayerLeft, { playerId: socket.id });
+        await repo.removePlayer(room, socket.id);
+      } else if (mode === "spectator") {
+        socket.to(room).emit(events.SpectatorLeft, { spectatorId: socket.id });
+        await repo.removeSpectator(room, socket.id);
+      }
     });
   }
 

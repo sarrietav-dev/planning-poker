@@ -133,3 +133,15 @@ export async function isMatchAdmin(matchId: string, id: string) {
   const owner = await redis.hGet(`match:${matchId}`, "owner");
   return owner === id;
 }
+
+export async function getPlayerMode(
+  matchId: string,
+  id: string
+): Promise<"player" | "spectator"> {
+  const exists = await redis.exists(`match:${matchId}:player:${id}`);
+  return exists ? "player" : "spectator";
+}
+
+export async function removeSpectator(matchId: string, id: string) {
+  return await redis.hDel(`match:${matchId}`, `spectator:${id}`);
+}
