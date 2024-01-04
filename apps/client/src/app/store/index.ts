@@ -9,7 +9,7 @@ export interface State {
   areCardsRevealed?: boolean;
 }
 
-const initialState: State = {
+export const initialState: State = {
   match: {
     cardDeck: [],
     id: '',
@@ -84,7 +84,7 @@ export const matchReducer = createReducer(
       draft.match.cardDeck = cards;
     })
   )
-);
+)
 
 export const selectMatch = (state: { match: State }) => state.match;
 
