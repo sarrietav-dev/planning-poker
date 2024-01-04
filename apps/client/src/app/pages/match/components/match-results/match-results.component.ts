@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { AverageService } from '../../services/average.service';
 
 @Component({
   selector: 'match-results',
@@ -6,13 +7,11 @@ import { Component, Input } from '@angular/core';
   styleUrl: './match-results.component.scss',
 })
 export class MatchResultsComponent {
+  constructor(private averageService: AverageService) {}
+
   @Input() results: { card: number; votes: number }[] = [];
 
   get average() {
-    return (
-      this.results.reduce((acc, curr) => {
-        return acc + curr.card * curr.votes;
-      }, 0) / this.results.reduce((acc, curr) => acc + curr.votes, 0)
-    ).toFixed(1);
+    return this.averageService.calculateAverage(this.results);
   }
 }
