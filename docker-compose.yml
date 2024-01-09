@@ -5,6 +5,18 @@ services:
     build: packages/client
     ports:
       - "80:80"
+  server:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - PACKAGE_NAME=server
+        - SERVICE_PATH=./apps/server
+        - SERVICE_PORT=3000
+    ports:
+      - "3000:3000"
+    environment:
+      - REDIS_URL=redis://redis:6379
   redis:
     image: redis
     ports:
