@@ -1,10 +1,20 @@
 version: '3.1'
 
 services:
-  web:
-    build: packages/client
+  client:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - PACKAGE_NAME=client
+        - SERVICE_PATH=./apps/client
+        - SERVICE_PORT=80
     ports:
       - "80:80"
+    environment:
+      - BASE_URL=http://server:3000
+    depends_on:
+      - server
   server:
     build: 
       context: .
@@ -17,6 +27,8 @@ services:
       - "3000:3000"
     environment:
       - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
   redis:
     image: redis
     ports:

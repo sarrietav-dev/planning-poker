@@ -54,4 +54,4 @@ ENV EXEC_PATH=${SERVICE_PATH}/dist/index.js
 
 EXPOSE ${SERVICE_PORT}
 
-CMD node ${EXEC_PATH}
+CMD pnpm start
