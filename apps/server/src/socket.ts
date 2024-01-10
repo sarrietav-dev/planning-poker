@@ -1,9 +1,8 @@
 import * as repo from "./db/repository";
 import * as events from "@planning-poker/events";
 import log from "./lib/logger";
-import { Awk } from "@planning-poker/events";
 import { AppSocket } from "./types";
-import { createMatch, joinMatch } from "./event-handlers";
+import { createMatch, joinMatch, onDoesMatchExist } from "./event-handlers";
 
 export default (socket: AppSocket) => {
   let disconnectTimeoutFn: NodeJS.Timeout | undefined;
@@ -30,10 +29,6 @@ export default (socket: AppSocket) => {
     }, 3000)
   }
 
-  async function onDoesMatchExist(matchId: string, callback: Awk<boolean>) {
-    const exists = await repo.doesMatchExist(matchId);
-    callback(exists === 1);
-  }
 
   async function onChooseCard(card: number) {
     log.info(`Card chosen: ${socket.data.userId} ${card}`);
