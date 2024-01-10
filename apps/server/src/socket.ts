@@ -1,10 +1,9 @@
-import { nanoid } from "nanoid";
 import * as repo from "./db/repository";
 import * as events from "@planning-poker/events";
-import { Match } from "@planning-poker/models";
 import log from "./lib/logger";
 import { Awk } from "@planning-poker/events";
 import { AppSocket } from "./types";
+import { createMatch, joinMatch } from "./event-handlers";
 
 export default (socket: AppSocket) => {
   let disconnectTimeoutFn: NodeJS.Timeout | undefined;
@@ -12,58 +11,6 @@ export default (socket: AppSocket) => {
   if (disconnectTimeoutFn) {
     log.info(`Clearing disconnect timeout: ${socket.data.userId}`);
     clearTimeout(disconnectTimeoutFn);
-  }
-
-  async function joinMatch(
-    matchId: string,
-    name: string,
-    mode: "spectator" | "player",
-    callback: Awk<Match>
-  ) {
-    if (!(await repo.doesMatchExist(matchId))) {
-      log.info(`Match does not exist: ${matchId}`);
-      callback(undefined, {
-        message: "Match does not exist",
-      });
-      return;
-    }
-
-    if (await repo.isUserInMatch(matchId, socket.data.userId)) {
-      return;
-    }
-
-    if (mode === "player") {
-      await repo.addPlayer(matchId, socket.data.userId, name);
-      socket
-        .to(matchId)
-        .emit(events.PlayerJoined, {
-          matchId,
-          name,
-          id: socket.data.userId,
-        });
-      log.info(`Player joined: ${matchId} ${name}`);
-    } else {
-      await repo.addSpectator(matchId, socket.data.userId, name);
-      socket
-        .to(matchId)
-        .emit(events.SpectatorJoined, {
-          matchId,
-          name,
-          id: socket.data.userId,
-        });
-      log.info(`Spectator joined: ${matchId} ${name}`);
-    }
-
-    socket.join(matchId);
-    const match = await repo.getMatch(matchId);
-    callback(match);
-  }
-
-  async function createMatch(name: string, callback: Awk<string>) {
-    const matchId = nanoid();
-    await repo.createMatch(matchId, name, socket.data.userId);
-    log.info(`Match created: ${matchId} ${name} by ${socket.data.userId}`);
-    callback(matchId);
   }
 
   async function onDisconnect() {
@@ -126,8 +73,8 @@ export default (socket: AppSocket) => {
     socket.to(matchId).emit(events.CardsRevealed);
   }
 
-  socket.on(events.JoinMatchCommand, (matchId, name, mode, callback) => joinMatch(matchId, name, mode, callback));
-  socket.on(events.CreateMatchCommand, (name, callback) => createMatch(name, callback));
+  socket.on(events.JoinMatchCommand, async (matchId, name, mode, callback) => joinMatch(socket, matchId, name, mode, callback));
+  socket.on(events.CreateMatchCommand, (name, callback) => createMatch(socket, name, callback));
   socket.on(events.DoesMatchExist, onDoesMatchExist);
   socket.on(events.ChooseCardCommand, onChooseCard);
   socket.on(events.ResetGameCommand, onResetGame);
