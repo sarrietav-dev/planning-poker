@@ -104,6 +104,12 @@ export async function addSpectator(
   });
 }
 
+export async function isUserInMatch(matchId: string, id: string) {
+  const existsPlayer = await redis.exists(`match:${matchId}:player:${id}`);
+  const existsSpectator = await redis.exists(`match:${matchId}:spectator:${id}`);
+  return existsPlayer || existsSpectator;
+}
+
 export async function setCardDeck(matchId: string, cards: number[]) {
   await redis.hSet(`match:${matchId}`, {
     cards: JSON.stringify(cards),
