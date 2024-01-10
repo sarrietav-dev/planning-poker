@@ -4,7 +4,7 @@ import * as repo from "./db/repository";
 import * as events from "@planning-poker/events";
 import { Match } from "@planning-poker/models";
 import log from "./lib/logger";
-import { DefaultEventsMap, EventsMap } from "socket.io/dist/typed-events";
+import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { Awk } from "@planning-poker/events";
 
 export default (socket: Socket<events.ServerToClientEvents & { connection: () => void }, events.ClientToServerEvents, DefaultEventsMap, events.SocketData>) => {

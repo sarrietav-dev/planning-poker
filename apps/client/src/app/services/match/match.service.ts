@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Socket as NgxSocket, Socket } from 'ngx-socket-io';
+import { Socket } from 'ngx-socket-io';
 import * as events from '@planning-poker/events';
 import { Router } from '@angular/router';
 import { Match } from '@planning-poker/models';
