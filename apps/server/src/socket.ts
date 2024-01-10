@@ -8,7 +8,12 @@ import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { Awk } from "@planning-poker/events";
 
 export default (socket: Socket<events.ServerToClientEvents & { connection: () => void }, events.ClientToServerEvents, DefaultEventsMap, events.SocketData>) => {
-  log.info(`Client connected: ${socket.id}`);
+  let disconnectTimeoutFn: NodeJS.Timeout | undefined;
+
+  if (disconnectTimeoutFn) {
+    log.info(`Clearing disconnect timeout: ${socket.data.userId}`);
+    clearTimeout(disconnectTimeoutFn);
+  }
 
   async function joinMatch(
     matchId: string,
@@ -24,24 +29,28 @@ export default (socket: Socket<events.ServerToClientEvents & { connection: () =>
       return;
     }
 
+    if (await repo.isUserInMatch(matchId, socket.data.userId)) {
+      return;
+    }
+
     if (mode === "player") {
-      await repo.addPlayer(matchId, socket.id, name);
+      await repo.addPlayer(matchId, socket.data.userId, name);
       socket
         .to(matchId)
         .emit(events.PlayerJoined, {
           matchId,
           name,
-          id: socket.id,
+          id: socket.data.userId,
         });
       log.info(`Player joined: ${matchId} ${name}`);
     } else {
-      await repo.addSpectator(matchId, socket.id, name);
+      await repo.addSpectator(matchId, socket.data.userId, name);
       socket
         .to(matchId)
         .emit(events.SpectatorJoined, {
           matchId,
           name,
-          id: socket.id,
+          id: socket.data.userId,
         });
       log.info(`Spectator joined: ${matchId} ${name}`);
     }
@@ -53,24 +62,26 @@ export default (socket: Socket<events.ServerToClientEvents & { connection: () =>
 
   async function createMatch(name: string, callback: Awk<string>) {
     const matchId = nanoid();
-    await repo.createMatch(matchId, name, socket.id);
-    log.info(`Match created: ${matchId} ${name} by ${socket.id}`);
+    await repo.createMatch(matchId, name, socket.data.userId);
+    log.info(`Match created: ${matchId} ${name} by ${socket.data.userId}`);
     callback(matchId);
   }
 
   async function onDisconnect() {
-    log.info(`Client disconnected: ${socket.id}`);
-    for (const room of socket.rooms) {
-      const mode = await repo.getPlayerMode(room, socket.id);
+    disconnectTimeoutFn = setTimeout(async () => {
+      log.info(`Client disconnected: ${socket.data.userId}`);
+      for (const room of socket.rooms) {
+        const mode = await repo.getPlayerMode(room, socket.data.userId);
 
-      if (mode === "player") {
-        socket.to(room).emit(events.PlayerLeft, { playerId: socket.id });
-        await repo.removePlayer(room, socket.id);
-      } else if (mode === "spectator") {
-        socket.to(room).emit(events.SpectatorLeft, { spectatorId: socket.id });
-        await repo.removeSpectator(room, socket.id);
+        if (mode === "player") {
+          socket.to(room).emit(events.PlayerLeft, { playerId: socket.data.userId });
+          await repo.removePlayer(room, socket.data.userId);
+        } else if (mode === "spectator") {
+          socket.to(room).emit(events.SpectatorLeft, { spectatorId: socket.data.userId });
+          await repo.removeSpectator(room, socket.data.userId);
+        }
       }
-    }
+    }, 3000)
   }
 
   async function onDoesMatchExist(matchId: string, callback: Awk<boolean>) {
@@ -79,22 +90,24 @@ export default (socket: Socket<events.ServerToClientEvents & { connection: () =>
   }
 
   async function onChooseCard(card: number) {
-    log.info(`Card chosen: ${socket.id} ${card}`);
+    log.info(`Card chosen: ${socket.data.userId} ${card}`);
     const matchId = socket.rooms.values().next().value;
-    await repo.chooseCard(matchId, socket.id, card);
+    await repo.chooseCard(matchId, socket.data.userId, card);
     socket
       .to(matchId)
-      .emit(events.PlayerSelectedCard, { playerId: socket.id, card });
+      .emit(events.PlayerSelectedCard, { playerId: socket.data.userId, card });
   }
 
   async function onResetGame() {
     const matchId = socket.rooms.values().next().value;
-    const isAdmin = await repo.isMatchAdmin(matchId, socket.id);
+    const isAdmin = await repo.isMatchAdmin(matchId, socket.data.userId);
 
     if (!isAdmin) {
-      log.warn(`User is not admin: ${socket.id}`);
+      log.warn(`User is not admin: ${socket.data.userId}`);
       return;
     }
+
+    log.info(`Game reset: ${matchId}`);
 
     await repo.resetGame(matchId);
     socket.to(matchId).emit(events.MatchRestarted);
@@ -102,12 +115,14 @@ export default (socket: Socket<events.ServerToClientEvents & { connection: () =>
 
   async function onRevealCards() {
     const matchId = socket.rooms.values().next().value;
-    const isAdmin = await repo.isMatchAdmin(matchId, socket.id);
+    const isAdmin = await repo.isMatchAdmin(matchId, socket.data.userId);
 
     if (!isAdmin) {
-      log.warn(`User is not admin: ${socket.id}`);
+      log.warn(`User is not admin: ${socket.data.userId}`);
       return;
     }
+
+    log.info(`Cards revealed: ${matchId}`);
 
     socket.to(matchId).emit(events.CardsRevealed);
   }
@@ -119,10 +134,4 @@ export default (socket: Socket<events.ServerToClientEvents & { connection: () =>
   socket.on(events.ResetGameCommand, onResetGame);
   socket.on(events.RevealCardsCommand, onRevealCards);
   socket.on("disconnecting", onDisconnect);
-};
-
-type JoinMatchProps = {
-  matchId: string;
-  mode: "spectator" | "player";
-  name: string;
 };
