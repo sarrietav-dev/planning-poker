@@ -145,3 +145,18 @@ export async function getPlayerMode(
 export async function removeSpectator(matchId: string, id: string) {
   return await redis.hDel(`match:${matchId}`, `spectator:${id}`);
 }
+
+export async function getSession(sessionId: string) {
+  return await redis.hGetAll(`session:${sessionId}`)
+}
+
+export async function createSession(sessionId: string, userId: string) {
+  await redis.hSet(`session:${sessionId}`, {
+    userId,
+    sessionId,
+  });
+}
+
+export async function removeSession(sessionId: string) {
+  await redis.del(`session:${sessionId}`);
+}

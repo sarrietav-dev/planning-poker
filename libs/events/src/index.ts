@@ -1,3 +1,5 @@
+import { Match } from "@planning-poker/models";
+
 export const JoinMatchCommand = "join-match" as const;
 export const CreateMatchCommand = "create-match" as const;
 export const PlayerJoined = "player-joined" as const;
@@ -15,3 +17,35 @@ export const ResetGameCommand = "reset-game" as const;
 export const RevealCardsCommand = "reveal-cards" as const;
 export const AssignAdminCommand = "assign-admin" as const;
 export const ChangeCardModeCommand = "change-card-mode" as const;
+
+export interface ClientToServerEvents {
+  [PlayerJoined]: (matchId: string, name: string, id: string) => void;
+  [PlayerLeft]: (playerId: string) => void;
+  [SpectatorJoined]: (matchId: string, name: string, id: string) => void;
+  [SpectatorLeft]: (spectatorId: string) => void;
+  [MatchRestarted]: () => void;
+  [CardsRevealed]: () => void;
+  [AdminAssigned]: (adminId: string) => void;
+  [CardsChanged]: (cards: number[]) => void;
+  [PlayerSelectedCard]: (playerId: string, card: number) => void;
+  "session": (args: SocketData) => void
+}
+
+export type Awk<T> = (response?: T, error?: { message: string }) => void;
+
+export interface ServerToClientEvents {
+  [JoinMatchCommand]: (matchId: string, name: string, mode: "spectator" | "player", callback: Awk<Match>) => Promise<void>;
+  [CreateMatchCommand]: (name: string, callback: Awk<string>) => Promise<void>;
+  [DoesMatchExist]: (matchId: string, callback: Awk<boolean>) => Promise<void>;
+  [ChooseCardCommand]: (card: number) => Promise<void>;
+  [ResetGameCommand]: () => Promise<void>;
+  [RevealCardsCommand]: () => Promise<void>;
+  [AssignAdminCommand]: (playerId: string) => Promise<void>;
+  [ChangeCardModeCommand]: (mode: "show" | "hide") => Promise<void>;
+}
+
+export interface SocketData {
+  sessionId: string;
+  userId: string;
+  username: string;
+}

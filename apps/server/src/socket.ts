@@ -4,14 +4,16 @@ import * as repo from "./db/repository";
 import * as events from "@planning-poker/events";
 import { Match } from "@planning-poker/models";
 import log from "./lib/logger";
+import { DefaultEventsMap, EventsMap } from "socket.io/dist/typed-events";
+import { Awk } from "@planning-poker/events";
 
-type Awk<T> = (response?: T, error?: { message: string }) => void;
-
-export default (socket: Socket) => {
+export default (socket: Socket<events.ServerToClientEvents & { connection: () => void }, events.ClientToServerEvents, DefaultEventsMap, events.SocketData>) => {
   log.info(`Client connected: ${socket.id}`);
 
   async function joinMatch(
-    { matchId, mode, name }: JoinMatchProps,
+    matchId: string,
+    name: string,
+    mode: "spectator" | "player",
     callback: Awk<Match>
   ) {
     if (!(await repo.doesMatchExist(matchId))) {
@@ -26,13 +28,13 @@ export default (socket: Socket) => {
       await repo.addPlayer(matchId, socket.id, name);
       socket
         .to(matchId)
-        .emit(events.PlayerJoined, { matchId, name, id: socket.id });
+        .emit(events.PlayerJoined, matchId, name, socket.id);
       log.info(`Player joined: ${matchId} ${name}`);
     } else {
       await repo.addSpectator(matchId, socket.id, name);
       socket
         .to(matchId)
-        .emit(events.SpectatorJoined, { matchId, name, id: socket.id });
+        .emit(events.SpectatorJoined, matchId, name, socket.id);
       log.info(`Spectator joined: ${matchId} ${name}`);
     }
 
@@ -41,11 +43,11 @@ export default (socket: Socket) => {
     callback(match);
   }
 
-  async function createMatch(name: string, callback: Awk<{ matchId: string }>) {
+  async function createMatch(name: string, callback: Awk<string>) {
     const matchId = nanoid();
     await repo.createMatch(matchId, name, socket.id);
     log.info(`Match created: ${matchId} ${name} by ${socket.id}`);
-    callback({ matchId });
+    callback(matchId);
   }
 
   async function onDisconnect() {
@@ -54,10 +56,10 @@ export default (socket: Socket) => {
       const mode = await repo.getPlayerMode(room, socket.id);
 
       if (mode === "player") {
-        socket.to(room).emit(events.PlayerLeft, { playerId: socket.id });
+        socket.to(room).emit(events.PlayerLeft, socket.id);
         await repo.removePlayer(room, socket.id);
       } else if (mode === "spectator") {
-        socket.to(room).emit(events.SpectatorLeft, { spectatorId: socket.id });
+        socket.to(room).emit(events.SpectatorLeft, socket.id);
         await repo.removeSpectator(room, socket.id);
       }
     }
@@ -74,7 +76,7 @@ export default (socket: Socket) => {
     await repo.chooseCard(matchId, socket.id, card);
     socket
       .to(matchId)
-      .emit(events.PlayerSelectedCard, { playerId: socket.id, card });
+      .emit(events.PlayerSelectedCard, socket.id, card);
   }
 
   async function onResetGame() {
@@ -102,8 +104,8 @@ export default (socket: Socket) => {
     socket.to(matchId).emit(events.CardsRevealed);
   }
 
-  socket.on(events.JoinMatchCommand, joinMatch);
-  socket.on(events.CreateMatchCommand, createMatch);
+  socket.on(events.JoinMatchCommand, (matchId, name, mode, callback) => joinMatch(matchId, name, mode, callback));
+  socket.on(events.CreateMatchCommand, (name, callback) => createMatch(name, callback));
   socket.on(events.DoesMatchExist, onDoesMatchExist);
   socket.on(events.ChooseCardCommand, onChooseCard);
   socket.on(events.ResetGameCommand, onResetGame);

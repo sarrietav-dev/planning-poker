@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc"
   },
-  "devDependencies": {
-    "typescript": "^5.2.2"
+  "dependencies": {
+    "@planning-poker/models": "workspace:*"
   }
 }
