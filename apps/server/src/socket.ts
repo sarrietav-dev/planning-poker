@@ -2,7 +2,7 @@ import * as repo from "./db/repository";
 import * as events from "@planning-poker/events";
 import log from "./lib/logger";
 import { AppSocket } from "./types";
-import { createMatch, joinMatch, onDoesMatchExist } from "./event-handlers";
+import { createMatch, joinMatch, onChooseCard, onDoesMatchExist } from "./event-handlers";
 
 export default (socket: AppSocket) => {
   let disconnectTimeoutFn: NodeJS.Timeout | undefined;
@@ -30,14 +30,6 @@ export default (socket: AppSocket) => {
   }
 
 
-  async function onChooseCard(card: number) {
-    log.info(`Card chosen: ${socket.data.userId} ${card}`);
-    const matchId = socket.rooms.values().next().value;
-    await repo.chooseCard(matchId, socket.data.userId, card);
-    socket
-      .to(matchId)
-      .emit(events.PlayerSelectedCard, { playerId: socket.data.userId, card });
-  }
 
   async function onResetGame() {
     const matchId = socket.rooms.values().next().value;
@@ -71,7 +63,7 @@ export default (socket: AppSocket) => {
   socket.on(events.JoinMatchCommand, async (matchId, name, mode, callback) => joinMatch(socket, matchId, name, mode, callback));
   socket.on(events.CreateMatchCommand, (name, callback) => createMatch(socket, name, callback));
   socket.on(events.DoesMatchExist, onDoesMatchExist);
-  socket.on(events.ChooseCardCommand, onChooseCard);
+  socket.on(events.ChooseCardCommand, (card) => onChooseCard(socket, card));
   socket.on(events.ResetGameCommand, onResetGame);
   socket.on(events.RevealCardsCommand, onRevealCards);
   socket.on("disconnecting", onDisconnect);
