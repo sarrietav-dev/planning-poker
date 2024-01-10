@@ -12,6 +12,8 @@ import {
   revealCards,
   setMatch,
   setPlayerCard,
+  spectatorJoined,
+  spectatorLeft,
   toggleIsAdmin,
 } from 'src/app/store/match.actions';
 import * as events from '@planning-poker/events';
@@ -73,6 +75,32 @@ describe('MatchService', () => {
       service.playerLeft$().subscribe(() => {
         expect(store.dispatch).toHaveBeenCalledWith(
           playerLeft({ playerId: '1' })
+        );
+        done();
+      });
+    });
+  });
+
+  describe('@spectatorJoined$', () => {
+    it('should dispatch spectatorJoined', (done) => {
+      socket.fromEvent.and.returnValue(of({ id: '1', name: 'spectator 1' }));
+      store.dispatch.and.callThrough();
+      service.spectatorJoined$().subscribe(() => {
+        expect(store.dispatch).toHaveBeenCalledWith(
+          spectatorJoined({ id: '1', name: 'spectator 1' })
+        );
+        done();
+      });
+    });
+  });
+
+  describe('@spectatorLeft$', () => {
+    it('should dispatch spectatorLeft', (done) => {
+      socket.fromEvent.and.returnValue(of({ spectatorId: '1' }));
+      store.dispatch.and.callThrough();
+      service.spectatorLeft$().subscribe(() => {
+        expect(store.dispatch).toHaveBeenCalledWith(
+          spectatorLeft({ spectatorId: '1' })
         );
         done();
       });
