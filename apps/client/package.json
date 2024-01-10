@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "start": "serve dist -l 80"
+    "start": "http-server dist -p 80 --proxy http://localhost:80?"
   },
   "private": true,
   "dependencies": {
@@ -26,11 +26,12 @@
     "@ngrx/store-devtools": "^17.0.1",
     "@planning-poker/events": "workspace:*",
     "@planning-poker/models": "workspace:*",
+    "http-server": "^14.1.1",
     "immer": "^10.0.3",
     "modern-normalize": "^2.0.0",
     "ngx-socket-io": "^4.6.1",
     "rxjs": "~7.8.0",
-    "serve": "^14.2.1",
+    "socket.io-client": "^4.7.3",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"
   },

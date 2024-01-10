@@ -29,9 +29,12 @@ export class MatchService {
     private store: Store<{ match: State }>,
   ) {
     this.registerEvents();
+    this.io.ioSocket.auth = { sessionId: this.sessionId, userId: this.userId };
   }
 
   registerEvents() {
+    this.onSession$().subscribe();
+
     this.playerJoined$().subscribe();
 
     this.playerLeft$().subscribe();
@@ -45,6 +48,26 @@ export class MatchService {
     this.cardsRevealed$().subscribe();
 
     this.matchRestarted$().subscribe();
+  }
+
+  onSession$() {
+    type Payload = Parameters<events.ClientToServerEvents["session"]>[0]
+
+    return this.io.fromEvent<Payload>("session").pipe(
+      tap(({ sessionId, userId }) => {
+        this.io.ioSocket.auth = { sessionId, userId };
+        sessionStorage.setItem("sessionId", sessionId);
+        sessionStorage.setItem("userId", userId);
+      })
+    );
+  }
+
+  get sessionId() {
+    return sessionStorage.getItem("sessionId");
+  }
+
+  get userId() {
+    return sessionStorage.getItem("userId");
   }
 
   playerJoined$() {
@@ -147,7 +170,7 @@ export class MatchService {
   }
 
   createMatch(name: string) {
-    const handleMatchCreated = ({ matchId }: { matchId: string }) => {
+    const handleMatchCreated = (matchId: string) => {
       this.store.dispatch(toggleIsAdmin({ isAdmin: true }));
       this.router.navigate(['/match', matchId]);
     };
@@ -156,12 +179,6 @@ export class MatchService {
   }
 
   joinMatch(matchId: string, name: string, mode: string) {
-    const data = {
-      matchId,
-      name,
-      mode,
-    };
-
     const handleJoinMatch = (match: Match, error: { message: string }) => {
       if (error) {
         return alert(error.message);
@@ -170,7 +187,7 @@ export class MatchService {
       this.store.dispatch(setMatch({ match }));
     };
 
-    this.io.emit(events.JoinMatchCommand, data, handleJoinMatch);
+    this.io.emit(events.JoinMatchCommand, matchId, name, mode, handleJoinMatch);
   }
 
   selectCard(card: number) {

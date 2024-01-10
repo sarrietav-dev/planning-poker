@@ -11,7 +11,7 @@ export class MatchComponent implements OnInit {
   constructor(
     private matchService: MatchService,
     private route: ActivatedRoute,
-  ) {}
+  ) { }
 
   isUserChosed: boolean = false;
   match?: Match = undefined;
@@ -58,7 +58,7 @@ export class MatchComponent implements OnInit {
   }
 
   get isUserPlayer() {
-    return true;
+    return this.match?.players.some((player) => player.id === this.matchService.userId) ?? false;
   }
 
   get isCardDeckModalOpen() {
