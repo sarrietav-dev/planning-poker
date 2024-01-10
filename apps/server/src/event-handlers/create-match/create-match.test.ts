@@ -1,6 +1,6 @@
 // FILEPATH: /c:/Users/ASUS/Development/pragma-poker/apps/server/src/event-handlers/create-match/index.spec.ts
 
-import { createMatch } from './index';
+import createMatch from './index';
 import { nanoid } from 'nanoid';
 import * as repo from '../../db/repository';
 import { vi, describe, it, expect } from 'vitest';
