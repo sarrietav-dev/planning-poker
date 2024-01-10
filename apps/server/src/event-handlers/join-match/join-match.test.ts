@@ -1,8 +1,8 @@
 import joinMatch from './index';
 import * as repo from '../../db/repository';
 import * as events from '@planning-poker/events';
-import {AppSocket} from '../../types';
-import {vi, describe, beforeEach, it, expect, type Mock, Mocked} from "vitest"
+import { AppSocket } from '../../types';
+import { vi, describe, beforeEach, it, expect, type Mock } from "vitest"
 
 vi.mock('../../db/repository');
 vi.mock('../../log');
@@ -30,7 +30,7 @@ describe('joinMatch', () => {
 
         await joinMatch(socket, 'match1', 'name1', 'player', callback);
 
-        expect(callback).toHaveBeenCalledWith(undefined, {message: "Match does not exist"});
+        expect(callback).toHaveBeenCalledWith(undefined, { message: "Match does not exist" });
     });
 
     it('should not join match if user is already in match', async () => {
