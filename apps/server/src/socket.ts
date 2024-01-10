@@ -1,13 +1,12 @@
 import { nanoid } from "nanoid";
-import { Socket } from "socket.io";
 import * as repo from "./db/repository";
 import * as events from "@planning-poker/events";
 import { Match } from "@planning-poker/models";
 import log from "./lib/logger";
-import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { Awk } from "@planning-poker/events";
+import { AppSocket } from "./types";
 
-export default (socket: Socket<events.ServerToClientEvents & { connection: () => void }, events.ClientToServerEvents, DefaultEventsMap, events.SocketData>) => {
+export default (socket: AppSocket) => {
   let disconnectTimeoutFn: NodeJS.Timeout | undefined;
 
   if (disconnectTimeoutFn) {
