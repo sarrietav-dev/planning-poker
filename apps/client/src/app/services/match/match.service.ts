@@ -13,6 +13,8 @@ import {
   toggleIsAdmin,
   resetGame,
   revealCards,
+  spectatorJoined,
+  spectatorLeft,
 } from 'src/app/store/match.actions';
 import { from, tap } from 'rxjs';
 import { State, selectMatchSpectators } from 'src/app/store';
@@ -63,6 +65,26 @@ export class MatchService {
     return this.io.fromEvent<Payload>(events.PlayerLeft).pipe(
       tap(({ playerId }) => {
         this.store.dispatch(playerLeft({ playerId }));
+      }),
+    );
+  }
+
+  spectatorJoined$() {
+    type Payload = Parameters<events.ClientToServerEvents["spectator-joined"]>[0]
+
+    return this.io.fromEvent<Payload>(events.SpectatorJoined).pipe(
+      tap(({ id, name }) => {
+        this.store.dispatch(spectatorJoined({ name, id }));
+      }),
+    );
+  }
+
+  spectatorLeft$() {
+    type Payload = Parameters<events.ClientToServerEvents["spectator-left"]>[0]
+
+    return this.io.fromEvent<Payload>(events.SpectatorLeft).pipe(
+      tap(({ spectatorId }) => {
+        this.store.dispatch(spectatorLeft({ spectatorId }));
       }),
     );
   }
