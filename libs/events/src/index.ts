@@ -19,15 +19,15 @@ export const AssignAdminCommand = "assign-admin" as const;
 export const ChangeCardModeCommand = "change-card-mode" as const;
 
 export interface ClientToServerEvents {
-  [PlayerJoined]: (matchId: string, name: string, id: string) => void;
-  [PlayerLeft]: (playerId: string) => void;
-  [SpectatorJoined]: (matchId: string, name: string, id: string) => void;
-  [SpectatorLeft]: (spectatorId: string) => void;
+  [PlayerJoined]: (args: { matchId: string, name: string, id: string }) => void;
+  [PlayerLeft]: (args: { playerId: string }) => void;
+  [SpectatorJoined]: (args: { matchId: string, name: string, id: string }) => void;
+  [SpectatorLeft]: (args: { spectatorId: string }) => void;
   [MatchRestarted]: () => void;
   [CardsRevealed]: () => void;
-  [AdminAssigned]: (adminId: string) => void;
-  [CardsChanged]: (cards: number[]) => void;
-  [PlayerSelectedCard]: (playerId: string, card: number) => void;
+  [AdminAssigned]: (args: { adminId: string }) => void;
+  [CardsChanged]: (args: { cards: number[] }) => void;
+  [PlayerSelectedCard]: (args: { playerId: string, card: number }) => void;
   "session": (args: SocketData) => void
 }
 

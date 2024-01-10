@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Socket } from 'ngx-socket-io';
+import { Socket as NgxSocket, Socket } from 'ngx-socket-io';
 import * as events from '@planning-poker/events';
 import { Router } from '@angular/router';
 import { Match } from '@planning-poker/models';
@@ -46,8 +46,10 @@ export class MatchService {
   }
 
   playerJoined$() {
+    type Payload = Parameters<events.ClientToServerEvents["player-joined"]>[0]
+
     return this.io
-      .fromEvent<{ name: string; id: string }>(events.PlayerJoined)
+      .fromEvent<Payload>(events.PlayerJoined)
       .pipe(
         tap(({ id, name }) => {
           this.store.dispatch(playerJoined({ name, id }));
@@ -56,7 +58,9 @@ export class MatchService {
   }
 
   playerLeft$() {
-    return this.io.fromEvent<{ playerId: string }>(events.PlayerLeft).pipe(
+    type Payload = Parameters<events.ClientToServerEvents["player-left"]>[0]
+
+    return this.io.fromEvent<Payload>(events.PlayerLeft).pipe(
       tap(({ playerId }) => {
         this.store.dispatch(playerLeft({ playerId }));
       }),
@@ -64,8 +68,10 @@ export class MatchService {
   }
 
   playerSelectedCard$() {
+    type Payload = Parameters<events.ClientToServerEvents["player-selected-card"]>[0]
+
     return this.io
-      .fromEvent<{ playerId: string; card: number }>(events.PlayerSelectedCard)
+      .fromEvent<Payload>(events.PlayerSelectedCard)
       .pipe(
         tap(({ playerId, card }) => {
           this.store.dispatch(
@@ -95,7 +101,9 @@ export class MatchService {
   }
 
   adminAssigned$() {
-    return this.io.fromEvent<{ playerId: string }>(events.AdminAssigned).pipe(
+    type Payload = Parameters<events.ClientToServerEvents["admin-assigned"]>[0]
+
+    return this.io.fromEvent<Payload>(events.AdminAssigned).pipe(
       tap(() => {
         this.store.dispatch(toggleIsAdmin({ isAdmin: true }));
       }),
@@ -103,7 +111,9 @@ export class MatchService {
   }
 
   cardsChanged$() {
-    return this.io.fromEvent<{ cards: number[] }>(events.CardsChanged).pipe(
+    type Payload = Parameters<events.ClientToServerEvents["cards-changed"]>[0]
+
+    return this.io.fromEvent<Payload>(events.CardsChanged).pipe(
       tap((props) => {
         this.store.dispatch(changeCards({ cards: props.cards }));
       }),

@@ -28,13 +28,21 @@ export default (socket: Socket<events.ServerToClientEvents & { connection: () =>
       await repo.addPlayer(matchId, socket.id, name);
       socket
         .to(matchId)
-        .emit(events.PlayerJoined, matchId, name, socket.id);
+        .emit(events.PlayerJoined, {
+          matchId,
+          name,
+          id: socket.id,
+        });
       log.info(`Player joined: ${matchId} ${name}`);
     } else {
       await repo.addSpectator(matchId, socket.id, name);
       socket
         .to(matchId)
-        .emit(events.SpectatorJoined, matchId, name, socket.id);
+        .emit(events.SpectatorJoined, {
+          matchId,
+          name,
+          id: socket.id,
+        });
       log.info(`Spectator joined: ${matchId} ${name}`);
     }
 
@@ -56,10 +64,10 @@ export default (socket: Socket<events.ServerToClientEvents & { connection: () =>
       const mode = await repo.getPlayerMode(room, socket.id);
 
       if (mode === "player") {
-        socket.to(room).emit(events.PlayerLeft, socket.id);
+        socket.to(room).emit(events.PlayerLeft, { playerId: socket.id });
         await repo.removePlayer(room, socket.id);
       } else if (mode === "spectator") {
-        socket.to(room).emit(events.SpectatorLeft, socket.id);
+        socket.to(room).emit(events.SpectatorLeft, { spectatorId: socket.id });
         await repo.removeSpectator(room, socket.id);
       }
     }
@@ -76,7 +84,7 @@ export default (socket: Socket<events.ServerToClientEvents & { connection: () =>
     await repo.chooseCard(matchId, socket.id, card);
     socket
       .to(matchId)
-      .emit(events.PlayerSelectedCard, socket.id, card);
+      .emit(events.PlayerSelectedCard, { playerId: socket.id, card });
   }
 
   async function onResetGame() {
