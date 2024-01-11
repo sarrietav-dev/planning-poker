@@ -26,7 +26,7 @@ describe('joinMatch', () => {
     });
 
     it('should not join match if match does not exist', async () => {
-        mockedRepo.doesMatchExist.mockResolvedValue(0);
+        mockedRepo.doesMatchExist.mockResolvedValue(false);
 
         await joinMatch(socket, 'match1', 'name1', 'player', callback);
 
@@ -34,8 +34,8 @@ describe('joinMatch', () => {
     });
 
     it('should not join match if user is already in match', async () => {
-        mockedRepo.doesMatchExist.mockResolvedValue(1);
-        mockedRepo.isUserInMatch.mockResolvedValue(1);
+        mockedRepo.doesMatchExist.mockResolvedValue(true);
+        mockedRepo.isUserInMatch.mockResolvedValue(true);
 
         await joinMatch(socket, 'match1', 'name1', 'player', callback);
 
@@ -44,8 +44,8 @@ describe('joinMatch', () => {
     });
 
     it('should join match as player', async () => {
-        mockedRepo.doesMatchExist.mockResolvedValue(1);
-        mockedRepo.isUserInMatch.mockResolvedValue(0);
+        mockedRepo.doesMatchExist.mockResolvedValue(true);
+        mockedRepo.isUserInMatch.mockResolvedValue(false);
         mockedRepo.getMatch.mockResolvedValue({} as any);
 
         await joinMatch(socket, 'match1', 'name1', 'player', callback);
@@ -62,8 +62,8 @@ describe('joinMatch', () => {
     });
 
     it('should join match as spectator', async () => {
-        mockedRepo.doesMatchExist.mockResolvedValue(1);
-        mockedRepo.isUserInMatch.mockResolvedValue(0);
+        mockedRepo.doesMatchExist.mockResolvedValue(true);
+        mockedRepo.isUserInMatch.mockResolvedValue(false);
         mockedRepo.getMatch.mockResolvedValue({} as any);
 
         await joinMatch(socket, 'match1', 'name1', 'spectator', callback);

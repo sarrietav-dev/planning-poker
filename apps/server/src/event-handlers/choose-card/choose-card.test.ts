@@ -1,5 +1,3 @@
-// FILEPATH: /c:/Users/ASUS/Development/pragma-poker/apps/server/src/event-handlers/choose-card/index.spec.ts
-
 import { test, describe, expect, vi } from 'vitest'
 import onChooseCard from './index'
 import * as repo from "../../db/repository";
