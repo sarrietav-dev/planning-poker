@@ -7,13 +7,15 @@ export async function createMatch(
   name: string,
   owner: string
 ) {
+  const EXPECTED_FIELDS_ADDED = 3;
+
   const rows = await redis.hSet(`match:${matchId}`, {
     name,
     owner,
     players: 0,
   });
 
-  if (rows !== 3) {
+  if (rows !== EXPECTED_FIELDS_ADDED) {
     log.error(`Could not create match: ${matchId} ${name} ${owner}`);
   }
 }
