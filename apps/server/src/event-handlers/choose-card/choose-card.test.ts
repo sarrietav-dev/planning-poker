@@ -27,7 +27,7 @@ describe('onChooseCard', () => {
 
     mockRepo.chooseCard.mockResolvedValue()
 
-    await onChooseCard(mockSocket as any, mockCard)
+    await onChooseCard(mockSocket as any, "testMatchId", mockCard)
 
     expect(repo.chooseCard).toHaveBeenCalledWith('testMatchId', mockSocket.data.userId, mockCard)
     expect(mockSocket.to).toHaveBeenCalledWith('testMatchId')

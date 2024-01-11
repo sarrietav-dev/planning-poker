@@ -1,4 +1,4 @@
-import { Match } from "@planning-poker/models";
+import {Match} from "@planning-poker/models";
 
 export const JoinMatchCommand = "join-match" as const;
 export const CreateMatchCommand = "create-match" as const;
@@ -19,33 +19,33 @@ export const AssignAdminCommand = "assign-admin" as const;
 export const ChangeCardModeCommand = "change-card-mode" as const;
 
 export interface ClientToServerEvents {
-  [PlayerJoined]: (args: { matchId: string, name: string, id: string }) => void;
-  [PlayerLeft]: (args: { playerId: string }) => void;
-  [SpectatorJoined]: (args: { matchId: string, name: string, id: string }) => void;
-  [SpectatorLeft]: (args: { spectatorId: string }) => void;
-  [MatchRestarted]: () => void;
-  [CardsRevealed]: () => void;
-  [AdminAssigned]: (args: { adminId: string }) => void;
-  [CardsChanged]: (args: { cards: number[] }) => void;
-  [PlayerSelectedCard]: (args: { playerId: string, card: number }) => void;
-  "session": (args: SocketData) => void
+    [PlayerJoined]: (args: { matchId: string, name: string, id: string }) => void;
+    [PlayerLeft]: (args: { playerId: string }) => void;
+    [SpectatorJoined]: (args: { matchId: string, name: string, id: string }) => void;
+    [SpectatorLeft]: (args: { spectatorId: string }) => void;
+    [MatchRestarted]: () => void;
+    [CardsRevealed]: () => void;
+    [AdminAssigned]: (args: { adminId: string }) => void;
+    [CardsChanged]: (args: { cards: number[] }) => void;
+    [PlayerSelectedCard]: (args: { playerId: string, card: number }) => void;
+    "session": (args: SocketData) => void
 }
 
 export type Awk<T> = (response?: T, error?: { message: string }) => void;
 
 export interface ServerToClientEvents {
-  [JoinMatchCommand]: (matchId: string, name: string, mode: "spectator" | "player", callback: Awk<Match>) => Promise<void>;
-  [CreateMatchCommand]: (name: string, callback: Awk<string>) => Promise<void>;
-  [DoesMatchExist]: (matchId: string, callback: Awk<boolean>) => Promise<void>;
-  [ChooseCardCommand]: (card: number) => Promise<void>;
-  [ResetGameCommand]: () => Promise<void>;
-  [RevealCardsCommand]: () => Promise<void>;
-  [AssignAdminCommand]: (playerId: string) => Promise<void>;
-  [ChangeCardModeCommand]: (mode: "show" | "hide") => Promise<void>;
+    [JoinMatchCommand]: (matchId: string, name: string, mode: "spectator" | "player", callback: Awk<Match>) => Promise<void>;
+    [CreateMatchCommand]: (name: string, callback: Awk<string>) => Promise<void>;
+    [DoesMatchExist]: (matchId: string, callback: Awk<boolean>) => Promise<void>;
+    [ChooseCardCommand]: (matchId: string, card: number) => Promise<void>;
+    [ResetGameCommand]: (matchId: string) => Promise<void>;
+    [RevealCardsCommand]: (matchId: string) => Promise<void>;
+    [AssignAdminCommand]: (playerId: string) => Promise<void>;
+    [ChangeCardModeCommand]: (mode: "show" | "hide") => Promise<void>;
 }
 
 export interface SocketData {
-  sessionId: string;
-  userId: string;
-  username: string;
+    sessionId: string;
+    userId: string;
+    username: string;
 }
