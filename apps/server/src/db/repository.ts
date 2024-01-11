@@ -7,30 +7,56 @@ export async function createMatch(
   name: string,
   owner: string
 ) {
+  const EXPECTED_FIELDS_ADDED = 3;
+
   const rows = await redis.hSet(`match:${matchId}`, {
     name,
     owner,
     players: 0,
   });
 
-  if (rows !== 3) {
+  if (rows !== EXPECTED_FIELDS_ADDED) {
     log.error(`Could not create match: ${matchId} ${name} ${owner}`);
   }
 }
 
 export async function getMatch(matchId: string): Promise<Match> {
+  const [name, deck] = await _getNameAndDeck(matchId);
+
+  if (!name) {
+    log.error(`Could not find match: ${matchId}`);
+    throw new Error("Could not find match");
+  }
+
+  if (!deck) {
+    log.error(`Could not find deck: ${matchId}`);
+    throw new Error("Could not find deck");
+  }
+
+  const players = await _scanPlayers(matchId);
+  const spectators = await _scanSpectators(matchId);
+
+  const cardDeck = JSON.parse(deck) as number[];
+
+  return {
+    id: matchId,
+    name: name,
+    players,
+    spectators,
+    cardDeck,
+  };
+}
+
+async function _getNameAndDeck(matchId: string): Promise<[string | undefined, string | undefined]> {
   const [name, deck] = await Promise.all([
     redis.hGet(`match:${matchId}`, "name"),
     redis.hGet(`match:${matchId}`, "cards"),
   ]);
 
-  if (!name) {
-    log.error(`Could not find match: ${matchId}`);
-  }
-  if (!deck) {
-    log.error(`Could not find deck: ${matchId}`);
-  }
+  return [name, deck];
+}
 
+async function _scanPlayers(matchId: string): Promise<Match["players"]> {
   const players: Match["players"] = [];
   for await (const playerId of redis.scanIterator({
     MATCH: `match:${matchId}:player:*`,
@@ -42,38 +68,37 @@ export async function getMatch(matchId: string): Promise<Match> {
       card: Number(player.card),
     });
   }
-  const spectators: Match["spectators"] = [];
 
+  return players
+}
+
+async function _scanSpectators(matchId: string): Promise<Match["spectators"]> {
+  const spectators: Match["spectators"] = [];
   for await (const spectatorId of redis.scanIterator({
     MATCH: `match:${matchId}:spectator:*`,
   })) {
     const spectator = await redis.hGetAll(spectatorId);
     spectators.push({
-      id: spectatorId,
       name: spectator.name,
+      id: spectatorId,
     });
   }
 
-  const cardDeck = JSON.parse(deck!) as number[];
-
-  return {
-    id: matchId,
-    name: name!,
-    players,
-    spectators,
-    cardDeck,
-  };
+  return spectators
 }
+
 
 export async function deleteMatch(matchId: string) {
   const number = await redis.del(`match:${matchId}`);
   if (number !== 1) {
     log.error(`Could not delete match: ${matchId}`);
+    throw new Error("Could not delete match");
   }
 }
 
 export async function doesMatchExist(matchId: string) {
-  return await redis.exists(`match:${matchId}`);
+  const result = await redis.exists(`match:${matchId}`);
+  return result === 1
 }
 
 export async function addPlayer(
@@ -104,15 +129,16 @@ export async function addSpectator(
   });
 }
 
-export async function isUserInMatch(matchId: string, id: string) {
+export async function isUserInMatch(matchId: string, id: string): Promise<boolean> {
   const existsPlayer = await redis.exists(`match:${matchId}:player:${id}`);
   const existsSpectator = await redis.exists(`match:${matchId}:spectator:${id}`);
-  return existsPlayer || existsSpectator;
+
+  return existsPlayer === 1 || existsSpectator === 1;
 }
 
 export async function setCardDeck(matchId: string, cards: number[]) {
   await redis.hSet(`match:${matchId}`, {
-    cards: JSON.stringify(cards),
+    cardDeck: JSON.stringify(cards),
   });
 }
 
