@@ -4,6 +4,7 @@ import * as events from "@planning-poker/events";
 import onResetGame from './index';
 
 vi.mock("../../db/repository");
+vi.mock("../../lib/logger");
 
 const mockRepo = vi.mocked(repo);
 

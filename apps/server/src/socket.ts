@@ -29,8 +29,6 @@ export default (socket: AppSocket) => {
     }, 3000)
   }
 
-
-
   socket.on(events.JoinMatchCommand, async (matchId, name, mode, callback) => joinMatch(socket, matchId, name, mode, callback));
   socket.on(events.CreateMatchCommand, (name, callback) => createMatch(socket, name, callback));
   socket.on(events.DoesMatchExist, onDoesMatchExist);
