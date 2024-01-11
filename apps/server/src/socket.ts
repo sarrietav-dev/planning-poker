@@ -3,7 +3,7 @@ import * as events from "@planning-poker/events";
 import log from "./lib/logger";
 import { AppSocket } from "./types";
 import { createMatch, joinMatch, onChooseCard, onDoesMatchExist } from "./event-handlers";
-import onResetGame from "./event-handlers/reveal-cards";
+import onResetGame from "./event-handlers/reset-game";
 
 export default (socket: AppSocket) => {
   let disconnectTimeoutFn: NodeJS.Timeout | undefined;

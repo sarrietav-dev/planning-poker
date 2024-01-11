@@ -1,4 +1,4 @@
-import {Match} from "@planning-poker/models";
+import { Match } from "@planning-poker/models";
 
 export const JoinMatchCommand = "join-match" as const;
 export const CreateMatchCommand = "create-match" as const;
@@ -41,7 +41,7 @@ export interface ServerToClientEvents {
     [ResetGameCommand]: (matchId: string) => Promise<void>;
     [RevealCardsCommand]: (matchId: string) => Promise<void>;
     [AssignAdminCommand]: (playerId: string) => Promise<void>;
-    [ChangeCardModeCommand]: (mode: "show" | "hide") => Promise<void>;
+    [ChangeCardModeCommand]: (matchId: string, mode: "show" | "hide") => Promise<void>;
 }
 
 export interface SocketData {
