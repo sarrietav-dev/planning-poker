@@ -2,7 +2,6 @@ import {test, describe, expect, vi, beforeEach} from 'vitest'
 import * as repo from "../../db/repository";
 import * as events from "@planning-poker/events";
 import onResetGame from './index';
-import {afterEach, mock} from "node:test";
 
 vi.mock("../../db/repository");
 
