@@ -65,7 +65,7 @@ describe('DeskComponent', () => {
     expect(service.resetGame).toHaveBeenCalled();
   });
 
-  describe('@ngOnInit', () => {
+  describe('ngOnInit', () => {
     it('should set areCardsRevealed to true when the cards are revealed', () => {
       service.getAreCardsRevealed.and.returnValue(of(true));
       component.ngOnInit();
@@ -79,14 +79,14 @@ describe('DeskComponent', () => {
     });
   });
 
-  describe('@getSeatClass', () => {
+  describe('getSeatClass', () => {
     it('should return the correct class', () => {
       const seatClass = component.getSeatClass(1);
       expect(seatClass).toBe('seat seat--2');
     });
   });
 
-  describe('@getCardValue', () => {
+  describe('getCardValue', () => {
     it('should return an empty string when getCardValue is called with null', () => {
       expect(component.getCardValue(null)).toBe('');
     });
@@ -100,7 +100,7 @@ describe('DeskComponent', () => {
     });
   });
 
-  describe('@didPlayerSelectCard', () => {
+  describe('didPlayerSelectCard', () => {
     it('should return false when a player does not have a card', () => {
       expect(
         component.didPlayerSelectCard({ id: '', name: '', card: undefined })
@@ -114,7 +114,7 @@ describe('DeskComponent', () => {
     });
   });
 
-  describe('@canShowResetGameButton', () => {
+  describe('canShowResetGameButton', () => {
     it('should return false when the user is not an admin', (done) => {
       component.isAdmin$ = of(false);
 

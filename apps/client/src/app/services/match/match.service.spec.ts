@@ -55,7 +55,7 @@ describe('MatchService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('@playerJoined$', () => {
+  describe('playerJoined$', () => {
     it('should dispatch playerJoined', (done) => {
       socket.fromEvent.and.returnValue(of({ id: '1', name: 'Player 1' }));
       store.dispatch.and.callThrough();
@@ -68,7 +68,7 @@ describe('MatchService', () => {
     });
   });
 
-  describe('@playerLeft$', () => {
+  describe('playerLeft$', () => {
     it('should dispatch playerLeft', (done) => {
       socket.fromEvent.and.returnValue(of({ playerId: '1' }));
       store.dispatch.and.callThrough();
@@ -81,7 +81,7 @@ describe('MatchService', () => {
     });
   });
 
-  describe('@spectatorJoined$', () => {
+  describe('spectatorJoined$', () => {
     it('should dispatch spectatorJoined', (done) => {
       socket.fromEvent.and.returnValue(of({ id: '1', name: 'spectator 1' }));
       store.dispatch.and.callThrough();
@@ -94,7 +94,7 @@ describe('MatchService', () => {
     });
   });
 
-  describe('@spectatorLeft$', () => {
+  describe('spectatorLeft$', () => {
     it('should dispatch spectatorLeft', (done) => {
       socket.fromEvent.and.returnValue(of({ spectatorId: '1' }));
       store.dispatch.and.callThrough();
@@ -107,7 +107,7 @@ describe('MatchService', () => {
     });
   });
 
-  describe('@playerSelectedCard$', () => {
+  describe('playerSelectedCard$', () => {
     it('should dispatch playerSelectedCard', (done) => {
       socket.fromEvent.and.returnValue(of({ playerId: '1', card: 2 }));
       store.dispatch.and.callThrough();
@@ -120,7 +120,7 @@ describe('MatchService', () => {
     });
   });
 
-  describe('@matchRestarted$', () => {
+  describe('matchRestarted$', () => {
     it('should dispatch resetGame', (done) => {
       socket.fromEvent.and.returnValue(of({}));
       store.dispatch.and.callThrough();
@@ -131,7 +131,7 @@ describe('MatchService', () => {
     });
   });
 
-  describe('@cardsRevealed$', () => {
+  describe('cardsRevealed$', () => {
     it('should dispatch revealCards', (done) => {
       socket.fromEvent.and.returnValue(of({}));
       store.dispatch.and.callThrough();
@@ -142,7 +142,7 @@ describe('MatchService', () => {
     });
   });
 
-  describe('@adminAssigned$', () => {
+  describe('adminAssigned$', () => {
     it('should dispatch toggleIsAdmin', (done) => {
       socket.fromEvent.and.returnValue(of({ playerId: '' }));
       store.dispatch.and.callThrough();
@@ -155,7 +155,7 @@ describe('MatchService', () => {
     });
   });
 
-  describe('@cardsChanged$', () => {
+  describe('cardsChanged$', () => {
     it('should dispatch changeCards', (done) => {
       socket.fromEvent.and.returnValue(of({ cards: [1, 2] }));
       store.dispatch.and.callThrough();
@@ -168,7 +168,7 @@ describe('MatchService', () => {
     });
   });
 
-  describe('@createMatch', () => {
+  describe('createMatch', () => {
     it('should emit createMatch', () => {
       service.createMatch('hi');
       expect(socket.emit).toHaveBeenCalledWith(
@@ -192,7 +192,7 @@ describe('MatchService', () => {
 
     it('should navigate to match after creation', () => {
       socket.emit.and.callFake((_event, _data, cb) => {
-        cb({ matchId: '1' });
+        cb('1');
       });
 
       service.createMatch('hi');
@@ -201,16 +201,12 @@ describe('MatchService', () => {
     });
   });
 
-  describe('@joinMatch', () => {
+  describe('joinMatch', () => {
     it('should emit joinMatch', () => {
       service.joinMatch('2', 'hi', '2');
       expect(socket.emit).toHaveBeenCalledWith(
         events.JoinMatchCommand,
-        {
-          matchId: '2',
-          name: 'hi',
-          mode: '2',
-        },
+        '2', 'hi', '2',
         jasmine.any(Function)
       );
     });
@@ -224,7 +220,7 @@ describe('MatchService', () => {
         spectators: [],
       };
 
-      socket.emit.and.callFake((event, data, cb) => {
+      socket.emit.and.callFake((event, matchId, name, mode, cb) => {
         cb(match);
       });
 
@@ -234,7 +230,7 @@ describe('MatchService', () => {
     });
 
     it('should alert if match does not exist', () => {
-      socket.emit.and.callFake((_event, _data, cb) => {
+      socket.emit.and.callFake((event, matchId, name, mode, cb) => {
         cb(null, { message: 'error' });
       });
 
@@ -246,14 +242,14 @@ describe('MatchService', () => {
     });
   });
 
-  describe('@selectCard', () => {
+  describe('selectCard', () => {
     it('should emit selectCard', () => {
       service.selectCard(2);
       expect(socket.emit).toHaveBeenCalledWith(events.ChooseCardCommand, 2);
     });
   });
 
-  describe('@doesMatchExist', () => {
+  describe('doesMatchExist', () => {
     it('should return true if match exists', () => {
       socket.emit.and.callFake((_event, _data, cb) => {
         cb(true);
@@ -274,14 +270,14 @@ describe('MatchService', () => {
     });
   });
 
-  describe('@resetGame', () => {
+  describe('resetGame', () => {
     it('should dispatch resetGame', () => {
       service.resetGame();
       expect(store.dispatch).toHaveBeenCalledWith(resetGame());
     });
   });
 
-  describe('@revealCards', () => {
+  describe('revealCards', () => {
     it('should emit revealCards', () => {
       service.revealCards();
       expect(store.dispatch).toHaveBeenCalledWith(revealCards());

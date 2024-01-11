@@ -29,7 +29,6 @@ export class MatchService {
     private store: Store<{ match: State }>,
   ) {
     this.registerEvents();
-    this.io.ioSocket.auth = { sessionId: this.sessionId, userId: this.userId };
   }
 
   registerEvents() {
