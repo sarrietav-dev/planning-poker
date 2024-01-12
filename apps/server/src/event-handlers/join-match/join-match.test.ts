@@ -3,6 +3,7 @@ import * as repo from '../../db/repository';
 import * as events from '@planning-poker/events';
 import { AppSocket } from '../../types';
 import { vi, describe, beforeEach, it, expect, type Mock } from "vitest"
+import { afterEach } from 'node:test';
 
 vi.mock('../../db/repository');
 vi.mock('../../log');
@@ -23,6 +24,10 @@ describe('joinMatch', () => {
             join: vi.fn(),
         } as unknown as AppSocket;
         callback = vi.fn();
+    });
+
+    afterEach(() => {
+        vi.clearAllMocks();
     });
 
     it('should not join match if match does not exist', async () => {
@@ -77,5 +82,17 @@ describe('joinMatch', () => {
         });
         expect(socket.join).toHaveBeenCalledWith('match1');
         expect(callback).toHaveBeenCalledWith({} as any);
+    });
+
+    it('should not crash if getMatch throws', async () => {
+        mockedRepo.doesMatchExist.mockResolvedValue(true);
+        mockedRepo.isUserInMatch.mockResolvedValue(false);
+        mockedRepo.getMatch.mockImplementation(() => {
+            return Promise.reject(new Error('test'));
+        });
+
+        await joinMatch(socket, 'match1', 'name1', 'spectator', callback);
+
+        expect(callback).toHaveBeenCalledWith(undefined, { message: expect.any(String) });
     });
 });

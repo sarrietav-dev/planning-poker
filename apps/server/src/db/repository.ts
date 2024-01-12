@@ -20,6 +20,12 @@ export async function createMatch(
   }
 }
 
+/**
+ * Retrieves a match by its ID.
+ * @param matchId The ID of the match to retrieve.
+ * @returns A Promise that resolves to the Match object.
+ * @throws Error if the match or deck cannot be found.
+ */
 export async function getMatch(matchId: string): Promise<Match> {
   const [name, deck] = await _getNameAndDeck(matchId);
 

@@ -14,7 +14,7 @@ describe('doesMatchExist', () => {
   });
 
   it('should return true if the match exists', async () => {
-    mockRepo.doesMatchExist.mockResolvedValue(1);
+    mockRepo.doesMatchExist.mockResolvedValue(true);
 
     const callback = vi.fn();
 
@@ -24,7 +24,7 @@ describe('doesMatchExist', () => {
   });
 
   it('should return false if the match does not exist', async () => {
-    mockRepo.doesMatchExist.mockResolvedValue(0);
+    mockRepo.doesMatchExist.mockResolvedValue(false);
 
     const callback = vi.fn();
 

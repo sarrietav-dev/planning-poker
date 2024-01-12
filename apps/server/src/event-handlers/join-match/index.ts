@@ -1,4 +1,4 @@
-import events from "@planning-poker/events";
+import * as events from "@planning-poker/events";
 import { Match } from "@planning-poker/models";
 import log from "../../lib/logger";
 import * as repo from "../../db/repository";
@@ -45,7 +45,16 @@ export default async function joinMatch(
     log.info(`Spectator joined: ${matchId} ${name}`);
   }
 
-  socket.join(matchId);
-  const match = await repo.getMatch(matchId);
-  callback(match);
+  try {
+    const match = await repo.getMatch(matchId);
+    socket.join(matchId);
+    callback(match);
+  } catch (err) {
+    if (!(err instanceof Error)) return
+
+    log.error(err);
+    callback(undefined, {
+      message: err.message,
+    });
+  }
 }
