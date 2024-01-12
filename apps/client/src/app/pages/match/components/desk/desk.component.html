@@ -22,10 +22,7 @@
     </div>
   </div>
 
-  <div
-    *ngFor="let player of players$ | async; let i = index"
-    [class]="getSeatClass(i)"
-  >
+  <div *ngFor="let player of players; let i = index" [class]="getSeatClass(i)">
     <app-avatar
       *ngIf="player.id === currentUserId; else normalCard"
       [name]="player.name"

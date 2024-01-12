@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { map } from 'rxjs';
+import { Match } from '@planning-poker/models';
+import { map, tap } from 'rxjs';
 import { MatchService } from 'src/app/services/match/match.service';
 import { State, selectIsAdmin, selectPlayers } from 'src/app/store';
 
@@ -15,17 +16,21 @@ export class DeskComponent implements OnInit {
       match: State;
     }>,
     private service: MatchService
-  ) {}
+  ) { }
 
   areCardsRevealed?: boolean = false;
 
   ngOnInit(): void {
+    this.service.getPlayers().pipe(tap((x) => console.log(x))).subscribe((players) => {
+      this.players = players
+    })
+
     this.service.getAreCardsRevealed().subscribe((areCardsRevealed) => {
       this.areCardsRevealed = areCardsRevealed;
     });
   }
 
-  players$ = this.store.select(selectPlayers);
+  players: Match['players'] = []
 
   currentUserId = this.service.getCurrentPlayerId();
   isAdmin$ = this.store.select(selectIsAdmin);
@@ -43,7 +48,7 @@ export class DeskComponent implements OnInit {
   }
 
   didPlayerSelectCard(player: { name: string; card?: number; id: string }) {
-    return player.card !== undefined;
+    return player.card !== null;
   }
 
   getCardValue(card: number | undefined | null) {

@@ -224,4 +224,8 @@ export class MatchService {
   getCurrentPlayerId() {
     return sessionStorage.getItem("userId")
   }
+
+  getPlayers() {
+    return this.store.select((state) => state.match.match.players);
+  }
 }
