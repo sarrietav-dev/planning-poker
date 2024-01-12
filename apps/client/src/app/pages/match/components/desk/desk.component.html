@@ -27,8 +27,8 @@
     [class]="getSeatClass(i)"
   >
     <app-avatar
-      *ngIf="i === currentUserIndex; else normalCard"
-      name="David"
+      *ngIf="player.id === currentUserId; else normalCard"
+      [name]="player.name"
     ></app-avatar>
     <ng-template #normalCard>
       <app-card

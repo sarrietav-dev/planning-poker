@@ -220,4 +220,8 @@ export class MatchService {
   getAreCardsRevealed() {
     return this.store.select((state) => state.match.areCardsRevealed);
   }
+
+  getCurrentPlayerId() {
+    return sessionStorage.getItem("userId")
+  }
 }

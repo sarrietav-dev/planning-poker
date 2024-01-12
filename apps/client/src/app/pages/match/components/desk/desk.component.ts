@@ -27,7 +27,7 @@ export class DeskComponent implements OnInit {
 
   players$ = this.store.select(selectPlayers);
 
-  currentUserIndex: number = 0;
+  currentUserId = this.service.getCurrentPlayerId();
   isAdmin$ = this.store.select(selectIsAdmin);
 
   getSeatClass(index: number) {
