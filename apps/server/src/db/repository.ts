@@ -94,6 +94,11 @@ async function _scanSpectators(matchId: string): Promise<Match["spectators"]> {
 }
 
 
+/**
+ * Deletes a match from the database.
+ * @param matchId The ID of the match to delete.
+ * @throws Error if the match could not be deleted.
+ */
 export async function deleteMatch(matchId: string) {
   const number = await redis.del(`match:${matchId}`);
   if (number !== 1) {
