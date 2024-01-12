@@ -140,6 +140,12 @@ export async function addPlayer(
     name,
     card: -1
   });
+
+  return {
+    name,
+    id: playerId,
+    card: -1,
+  }
 }
 
 /**
@@ -157,6 +163,11 @@ export async function addSpectator(
   await redis.hSet(`match:${matchId}:spectator:${spectatorId}`, {
     name: name,
   });
+
+  return {
+    name,
+    id: spectatorId,
+  }
 }
 
 export async function isUserInMatch(matchId: string, id: string): Promise<boolean> {

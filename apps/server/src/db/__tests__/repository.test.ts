@@ -161,10 +161,17 @@ describe("Repository tests", () => {
       redisMock.hGet.mockResolvedValueOnce("1");
       redisMock.hSet.mockResolvedValueOnce(1);
 
-      await repo.addPlayer(matchId, playerId, playerName);
+      const newPlayer = await repo.addPlayer(matchId, playerId, playerName);
+
+      expect(newPlayer).toEqual({
+        id: playerId,
+        name: playerName,
+        card: -1,
+      });
 
       expect(redisMock.hSet).toHaveBeenCalledWith(`match:${matchId}:player:${playerId}`, {
         name: playerName,
+        card: -1,
       });
       expect(redisMock.hIncrBy).toHaveBeenCalledWith(`match:${matchId}`,
         "players", 1
@@ -190,7 +197,12 @@ describe("Repository tests", () => {
 
       redisMock.hSet.mockResolvedValueOnce(1);
 
-      await repo.addSpectator(matchId, spectatorId, spectatorName);
+      const newSpectator = await repo.addSpectator(matchId, spectatorId, spectatorName);
+
+      expect(newSpectator).toEqual({
+        id: spectatorId,
+        name: spectatorName,
+      });
 
       expect(redisMock.hSet).toHaveBeenCalledWith(`match:${matchId}:spectator:${spectatorId}`, {
         name: spectatorName,

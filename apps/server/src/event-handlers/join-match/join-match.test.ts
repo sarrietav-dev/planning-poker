@@ -60,6 +60,7 @@ describe('joinMatch', () => {
         expect(socket.emit).toHaveBeenCalledWith(events.PlayerJoined, {
             matchId: 'match1',
             name: 'name1',
+            card: -1,
             id: expect.any(String)
         });
         expect(socket.join).toHaveBeenCalledWith('match1');
