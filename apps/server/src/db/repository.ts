@@ -138,6 +138,7 @@ export async function addPlayer(
   await redis.hIncrBy(`match:${matchId}`, "players", 1);
   await redis.hSet(`match:${matchId}:player:${playerId}`, {
     name,
+    card: -1
   });
 }
 

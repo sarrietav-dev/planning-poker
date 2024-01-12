@@ -48,7 +48,7 @@ export class DeskComponent implements OnInit {
   }
 
   didPlayerSelectCard(player: { name: string; card?: number; id: string }) {
-    return player.card !== null;
+    return player.card !== -1;
   }
 
   getCardValue(card: number | undefined | null) {

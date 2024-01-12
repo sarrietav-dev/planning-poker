@@ -10,7 +10,7 @@ import { toArray } from 'rxjs';
 export class CardDeckModalComponent {
   constructor(private service: MatchService) {}
 
-  @Input() selectedCard: number = -1;
+  @Input() selectedCard: number | null = null;
   @Output() cardSelect = new EventEmitter<number>();
 
   cards: number[] = [];

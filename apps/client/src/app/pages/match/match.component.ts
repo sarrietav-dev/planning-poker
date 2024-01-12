@@ -16,7 +16,7 @@ export class MatchComponent implements OnInit {
   isUserChosed: boolean = false;
   match?: Match = undefined;
   isInviteModalOpen = false;
-  selectedCard = -1;
+  selectedCard: number | null = null;
   areCardsRevealed = false;
 
   ngOnInit(): void {

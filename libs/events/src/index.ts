@@ -19,7 +19,7 @@ export const AssignAdminCommand = "assign-admin" as const;
 export const ChangeCardModeCommand = "change-card-mode" as const;
 
 export interface ClientToServerEvents {
-    [PlayerJoined]: (args: { matchId: string, name: string, id: string }) => void;
+    [PlayerJoined]: (args: { matchId: string, name: string, id: string, card: number }) => void;
     [PlayerLeft]: (args: { playerId: string }) => void;
     [SpectatorJoined]: (args: { matchId: string, name: string, id: string }) => void;
     [SpectatorLeft]: (args: { spectatorId: string }) => void;

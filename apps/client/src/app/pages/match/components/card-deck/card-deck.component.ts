@@ -12,7 +12,7 @@ export class CardDeckComponent {
 
   @Output() cardSelect = new EventEmitter<number>();
 
-  @Input() selectedCard = -1;
+  @Input() selectedCard: number | null = null;
 
   get cardDeck$() {
     return this.service.cardDeck$().pipe(

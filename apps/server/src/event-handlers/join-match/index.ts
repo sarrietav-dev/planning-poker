@@ -32,6 +32,7 @@ export default async function joinMatch(
           matchId,
           name,
           id: socket.data.userId,
+          card: -1,
         });
       log.info(`Player joined: ${matchId} ${name}`);
     } else {
