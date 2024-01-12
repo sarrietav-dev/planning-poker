@@ -84,7 +84,7 @@ describe('joinMatch', () => {
         expect(callback).toHaveBeenCalledWith({} as any);
     });
 
-    it('should not crash if getMatch throws', async () => {
+    it('should call callback if getMatch throws', async () => {
         mockedRepo.doesMatchExist.mockResolvedValue(true);
         mockedRepo.isUserInMatch.mockResolvedValue(false);
         mockedRepo.getMatch.mockImplementation(() => {
@@ -92,6 +92,18 @@ describe('joinMatch', () => {
         });
 
         await joinMatch(socket, 'match1', 'name1', 'spectator', callback);
+
+        expect(callback).toHaveBeenCalledWith(undefined, { message: expect.any(String) });
+    });
+
+    it('should call callback if addPlayer throws', async () => {
+        mockedRepo.doesMatchExist.mockResolvedValue(true);
+        mockedRepo.isUserInMatch.mockResolvedValue(false);
+        mockedRepo.addPlayer.mockImplementation(() => {
+            return Promise.reject(new Error('test'));
+        });
+
+        await joinMatch(socket, 'match1', 'name1', 'player', callback);
 
         expect(callback).toHaveBeenCalledWith(undefined, { message: expect.any(String) });
     });

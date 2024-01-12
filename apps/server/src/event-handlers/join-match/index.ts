@@ -23,29 +23,29 @@ export default async function joinMatch(
     return;
   }
 
-  if (mode === "player") {
-    await repo.addPlayer(matchId, socket.data.userId, name);
-    socket
-      .to(matchId)
-      .emit(events.PlayerJoined, {
-        matchId,
-        name,
-        id: socket.data.userId,
-      });
-    log.info(`Player joined: ${matchId} ${name}`);
-  } else {
-    await repo.addSpectator(matchId, socket.data.userId, name);
-    socket
-      .to(matchId)
-      .emit(events.SpectatorJoined, {
-        matchId,
-        name,
-        id: socket.data.userId,
-      });
-    log.info(`Spectator joined: ${matchId} ${name}`);
-  }
-
   try {
+    if (mode === "player") {
+      await repo.addPlayer(matchId, socket.data.userId, name);
+      socket
+        .to(matchId)
+        .emit(events.PlayerJoined, {
+          matchId,
+          name,
+          id: socket.data.userId,
+        });
+      log.info(`Player joined: ${matchId} ${name}`);
+    } else {
+      await repo.addSpectator(matchId, socket.data.userId, name);
+      socket
+        .to(matchId)
+        .emit(events.SpectatorJoined, {
+          matchId,
+          name,
+          id: socket.data.userId,
+        });
+      log.info(`Spectator joined: ${matchId} ${name}`);
+    }
+
     const match = await repo.getMatch(matchId);
     socket.join(matchId);
     callback(match);

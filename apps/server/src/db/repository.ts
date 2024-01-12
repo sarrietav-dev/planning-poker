@@ -107,6 +107,13 @@ export async function doesMatchExist(matchId: string) {
   return result === 1
 }
 
+/**
+ * Adds a player to a match.
+ * @param matchId - The ID of the match.
+ * @param playerId - The ID of the player.
+ * @param name - The name of the player.
+ * @throws Error if the match is already full.
+ */
 export async function addPlayer(
   matchId: string,
   playerId: string,
@@ -125,6 +132,13 @@ export async function addPlayer(
   });
 }
 
+/**
+ * Adds a spectator to a match.
+ * 
+ * @param matchId - The ID of the match.
+ * @param spectatorId - The ID of the spectator.
+ * @param name - The name of the spectator.
+ */
 export async function addSpectator(
   matchId: string,
   spectatorId: string,
