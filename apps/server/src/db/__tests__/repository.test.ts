@@ -1,6 +1,7 @@
 import { describe, expect, vi, it, beforeEach } from "vitest";
 import redis from "../redis";
 import * as repo from "../repository";
+import cardDeckFactory from "../../lib/card-deck-factory";
 
 vi.mock("../redis");
 vi.mock("../../lib/logger");
@@ -13,6 +14,8 @@ describe("Repository tests", () => {
   })
 
   describe('createMatch', () => {
+    const fibCardDeck = cardDeckFactory('fibonacci')
+
     it('should create a match', async () => {
       redisMock.hSet.mockResolvedValueOnce(3);
 
@@ -22,6 +25,20 @@ describe("Repository tests", () => {
         name: "test",
         owner: "test",
         players: 0,
+        cardDeck: JSON.stringify(fibCardDeck),
+      });
+    })
+
+    it('should create a match with a custom deck', async () => {
+      redisMock.hSet.mockResolvedValueOnce(3);
+
+      await repo.createMatch("1", "test", "test");
+
+      expect(redisMock.hSet).toHaveBeenCalledWith("match:1", {
+        name: "test",
+        owner: "test",
+        players: 0,
+        cardDeck: JSON.stringify(fibCardDeck),
       });
     })
 
@@ -34,6 +51,7 @@ describe("Repository tests", () => {
         name: "test",
         owner: "test",
         players: 0,
+        cardDeck: JSON.stringify(fibCardDeck),
       });
     })
   })

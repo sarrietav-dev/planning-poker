@@ -1,6 +1,7 @@
 import { Match } from "@planning-poker/models";
 import redis from "./redis";
 import log from "../lib/logger";
+import cardDeckFactory from "../lib/card-deck-factory";
 
 export async function createMatch(
   matchId: string,
@@ -9,10 +10,13 @@ export async function createMatch(
 ) {
   const EXPECTED_FIELDS_ADDED = 3;
 
+  const deck = cardDeckFactory("fibonacci")
+
   const rows = await redis.hSet(`match:${matchId}`, {
     name,
     owner,
     players: 0,
+    cardDeck: JSON.stringify(deck),
   });
 
   if (rows !== EXPECTED_FIELDS_ADDED) {
