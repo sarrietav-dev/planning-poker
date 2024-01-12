@@ -8,7 +8,7 @@ import { reduce } from 'rxjs';
   styleUrl: './card-deck.component.scss',
 })
 export class CardDeckComponent {
-  constructor(private service: MatchService) {}
+  constructor(private service: MatchService) { }
 
   @Output() cardSelect = new EventEmitter<number>();
 
@@ -23,7 +23,8 @@ export class CardDeckComponent {
   }
 
   onSelectedCard(card: number) {
-    if (this.selectedCard === -1) {
+    if (this.selectedCard === null) {
+      this.selectedCard = card;
       this.cardSelect.emit(card);
     }
   }

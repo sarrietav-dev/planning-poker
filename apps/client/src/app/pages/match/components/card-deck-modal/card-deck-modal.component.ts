@@ -8,7 +8,7 @@ import { toArray } from 'rxjs';
   styleUrl: './card-deck-modal.component.scss',
 })
 export class CardDeckModalComponent {
-  constructor(private service: MatchService) {}
+  constructor(private service: MatchService) { }
 
   @Input() selectedCard: number | null = null;
   @Output() cardSelect = new EventEmitter<number>();
@@ -25,10 +25,12 @@ export class CardDeckModalComponent {
   }
 
   selectCard(card: number) {
-    this.selectedCard = card;
-    setTimeout(() => {
-      this.cardSelect.emit(card);
-    }, 1000);
+    if (this.selectedCard === null) {
+      this.selectedCard = card;
+      setTimeout(() => {
+        this.cardSelect.emit(card);
+      }, 1000);
+    }
   }
 
   cardValue(card: number) {

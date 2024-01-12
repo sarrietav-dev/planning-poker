@@ -38,8 +38,8 @@ describe('CardDeckComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have default selectedCard value as -1', () => {
-    expect(component.selectedCard).toBe(-1);
+  it('should have default selectedCard value as null', () => {
+    expect(component.selectedCard).toBe(null);
   });
 
   it('should populate cardDeck$ from service', (done) => {
@@ -49,13 +49,13 @@ describe('CardDeckComponent', () => {
     });
   });
 
-  it('should not change selectedCard when onSelectedCard is called and selectedCard is not -1', () => {
+  it('should not change selectedCard when onSelectedCard is called and selectedCard is not null', () => {
     component.selectedCard = 3;
     component.onSelectedCard(5);
     expect(component.selectedCard).toBe(3);
   });
 
-  it('should emit selectCard event when onSelectedCard is called and selectedCard is -1', () => {
+  it('should emit selectCard event when onSelectedCard is called and selectedCard is null', () => {
     const eventEmitterSpy = jasmine.createSpyObj('EventEmitter', [
       'emit',
     ]) as jasmine.SpyObj<EventEmitter<number>>;
