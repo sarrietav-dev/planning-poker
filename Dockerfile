@@ -9,7 +9,8 @@ ARG SERVICE_PORT
 RUN --mount=type=cache,id=pnpm-store,target=/root/.pnpm-store \
     npm i --global --no-update-notifier --no-fund pnpm@${PNPM_VERSION}
 
-RUN npm i -g typescript
+RUN --mount=type=cache,id=pnpm-store,target=/root/.pnpm-store \
+    npm i -g typescript
 
 USER node
 
