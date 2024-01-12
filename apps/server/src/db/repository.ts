@@ -8,7 +8,7 @@ export async function createMatch(
   name: string,
   owner: string
 ) {
-  const EXPECTED_FIELDS_ADDED = 3;
+  const EXPECTED_FIELDS_ADDED = 4;
 
   const deck = cardDeckFactory("fibonacci")
 
@@ -60,7 +60,7 @@ export async function getMatch(matchId: string): Promise<Match> {
 async function _getNameAndDeck(matchId: string): Promise<[string | undefined, string | undefined]> {
   const [name, deck] = await Promise.all([
     redis.hGet(`match:${matchId}`, "name"),
-    redis.hGet(`match:${matchId}`, "cards"),
+    redis.hGet(`match:${matchId}`, "cardDeck"),
   ]);
 
   return [name, deck];
