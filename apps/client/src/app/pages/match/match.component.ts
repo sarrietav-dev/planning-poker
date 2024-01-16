@@ -33,7 +33,7 @@ export class MatchComponent implements OnInit {
     return this.match?.name;
   }
 
-  handleUserChoose(data: { name: string; mode: string }) {
+  handleUserChoose(data: { name: string; mode: "player" | "spectator" }) {
     this.isUserChosed = true;
     this.matchService.joinMatch(
       this.route.snapshot.paramMap.get('id')!,
