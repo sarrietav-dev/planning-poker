@@ -6,8 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CreateMatchFormComponent } from './pages/create/create-match-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { SocketIoModule } from 'ngx-socket-io';
-import { environment } from 'src/environments/environment';
 import { StoreModule } from '@ngrx/store';
 import { matchReducer } from './store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -22,7 +20,6 @@ import { EffectsModule } from '@ngrx/effects';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    SocketIoModule.forRoot({ url: environment.baseUrl }),
     StoreModule.forRoot({ match: matchReducer }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     BrowserAnimationsModule,
@@ -32,4 +29,4 @@ import { EffectsModule } from '@ngrx/effects';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

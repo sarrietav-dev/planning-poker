@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
 import { MatchService } from './match.service';
-import { Socket } from 'ngx-socket-io';
 import { Store } from '@ngrx/store';
 import { EMPTY, of } from 'rxjs';
 import {
@@ -18,18 +17,19 @@ import {
 } from 'src/app/store/match.actions';
 import * as events from '@planning-poker/events';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SocketIoClientService } from '../socket.io-client/socket.io-client.service';
 
 describe('MatchService', () => {
   let service: MatchService;
   let store: jasmine.SpyObj<Store>;
-  let socket: jasmine.SpyObj<Socket>;
+  let socket: jasmine.SpyObj<SocketIoClientService>;
   let router: jasmine.SpyObj<Router>;
 
   beforeEach(() => {
-    const socketSpy = jasmine.createSpyObj('Socket', [
+    const socketSpy = jasmine.createSpyObj('SocketIoClientService', [
       'emit',
       'fromEvent',
-    ]) as jasmine.SpyObj<Socket>;
+    ]) as jasmine.SpyObj<SocketIoClientService>;
 
     socketSpy.fromEvent.and.returnValue(EMPTY);
 
@@ -40,7 +40,7 @@ describe('MatchService', () => {
 
     TestBed.configureTestingModule({
       providers: [
-        { provide: Socket, useValue: socketSpy },
+        { provide: SocketIoClientService, useValue: socketSpy },
         { provide: Store, useValue: storeSpy },
         { provide: Router, useValue: routerSpy },
         {
@@ -56,7 +56,7 @@ describe('MatchService', () => {
     });
     service = TestBed.inject(MatchService);
     store = TestBed.inject(Store) as jasmine.SpyObj<Store>;
-    socket = TestBed.inject(Socket) as jasmine.SpyObj<Socket>;
+    socket = TestBed.inject(SocketIoClientService) as jasmine.SpyObj<SocketIoClientService>;
     router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
   });
 
@@ -200,9 +200,7 @@ describe('MatchService', () => {
     });
 
     it('should navigate to match after creation', () => {
-      socket.emit.and.callFake((_event, _data, cb) => {
-        cb('1');
-      });
+      socket.emit.and.callFake((_event, _data, cb) => {})
 
       service.createMatch('hi');
 
