@@ -18,12 +18,12 @@ export class SocketIoClientService {
     });
   }
 
-  fromEvent(event: keyof ClientToServerEvents): Observable<ClientToServerEvents[typeof event]> {
-    return new Observable<ClientToServerEvents[typeof event]>(subscriber => {
-      const listener = (data: ClientToServerEvents[typeof event]) => {
-        subscriber.next(data);
-      };
 
+  fromEvent<T extends keyof ClientToServerEvents>(event: T): Observable<Parameters<ClientToServerEvents[T]>[0]> {
+    return new Observable<Parameters<ClientToServerEvents[T]>[0]>(subscriber => {
+      const listener = (...args: Parameters<ClientToServerEvents[T]>) => {
+        subscriber.next(args[0]);
+      }
       // I use any here because this.socket.on expects some events that are not in ClientToServerEvents
       // The important thing is that from event has autocomplete and type checking
       const newEvent: any = event;
@@ -32,7 +32,7 @@ export class SocketIoClientService {
     });
   }
 
-  emit(event: keyof ServerToClientEvents, ...args: Parameters<ServerToClientEvents[typeof event]>): void {
+  emit<T extends keyof ServerToClientEvents>(event: T, ...args: Parameters<ServerToClientEvents[T]>): void {
     this.socket.emit(event, ...args);
   }
 }
