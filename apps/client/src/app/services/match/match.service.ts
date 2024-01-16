@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import * as events from '@planning-poker/events';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Match } from '@planning-poker/models';
 import { Store } from '@ngrx/store';
 import {
@@ -27,6 +27,7 @@ export class MatchService {
     private io: Socket,
     private router: Router,
     private store: Store<{ match: State }>,
+    private route: ActivatedRoute,
   ) {
     this.registerEvents();
   }
@@ -69,14 +70,18 @@ export class MatchService {
     return sessionStorage.getItem("userId");
   }
 
+  get matchId() {
+    return this.route.snapshot.paramMap.get('id')!;
+  }
+
   playerJoined$() {
     type Payload = Parameters<events.ClientToServerEvents["player-joined"]>[0]
 
     return this.io
       .fromEvent<Payload>(events.PlayerJoined)
       .pipe(
-        tap(({ id, name }) => {
-          this.store.dispatch(playerJoined({ name, id }));
+        tap(({ id, name, card }) => {
+          this.store.dispatch(playerJoined({ name, id, card }));
         }),
       );
   }
@@ -165,7 +170,7 @@ export class MatchService {
   }
 
   cardDeck$() {
-    return from([1, 2, 3, 5, 8, 13, 21, 34, 55, 89]);
+    return this.store.select((state) => state.match.match.cardDeck);
   }
 
   createMatch(name: string) {
@@ -190,7 +195,7 @@ export class MatchService {
   }
 
   selectCard(card: number) {
-    this.io.emit(events.ChooseCardCommand, card);
+    this.io.emit(events.ChooseCardCommand, this.matchId, card);
   }
 
   async doesMatchExist(matchId: string) {
@@ -210,7 +215,7 @@ export class MatchService {
   }
 
   getSpectators() {
-    return this.store.select(selectMatchSpectators);
+    return this.store.select((state) => state.match.match.spectators);
   }
 
   getMatch() {

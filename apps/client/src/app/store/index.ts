@@ -28,9 +28,9 @@ export const matchReducer = createReducer(
       draft.match = match;
     })
   ),
-  on(MatchActions.playerJoined, (state, { name, id }) =>
+  on(MatchActions.playerJoined, (state, { name, id, card }) =>
     produce(state, (draft) => {
-      draft.match.players.push({ name, id });
+      draft.match.players.push({ name, id, card });
     })
   ),
   on(MatchActions.playerLeft, (state, { playerId }) =>
@@ -61,7 +61,7 @@ export const matchReducer = createReducer(
     produce(state, (draft) => {
       draft.match.players = draft.match.players.map((p) => ({
         ...p,
-        card: undefined,
+        card: null,
       }));
       draft.areCardsRevealed = false;
     })

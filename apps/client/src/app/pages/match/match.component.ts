@@ -51,7 +51,7 @@ export class MatchComponent implements OnInit {
   }
 
   onSelectedCard(card: number) {
-    if (this.selectedCard === -1) {
+    if (this.selectedCard === null) {
       this.selectedCard = card;
       this.matchService.selectCard(card);
     }

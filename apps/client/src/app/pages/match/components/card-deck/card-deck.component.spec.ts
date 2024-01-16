@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CardDeckComponent } from './card-deck.component';
 import { MatchService } from 'src/app/services/match/match.service';
-import { from } from 'rxjs';
+import { from, of } from 'rxjs';
 import { CardComponent } from 'src/app/components/atoms/card/card.component';
 import { EventEmitter } from '@angular/core';
 
@@ -16,7 +16,7 @@ describe('CardDeckComponent', () => {
       'selectCard',
     ]) as jasmine.SpyObj<MatchService>;
 
-    serviceSpy.cardDeck$.and.returnValue(from([1, 2, 3]));
+    serviceSpy.cardDeck$.and.returnValue(of([1, 2, 3]));
 
     await TestBed.configureTestingModule({
       declarations: [CardDeckComponent],

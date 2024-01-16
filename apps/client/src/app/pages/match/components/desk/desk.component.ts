@@ -21,7 +21,7 @@ export class DeskComponent implements OnInit {
   areCardsRevealed?: boolean = false;
 
   ngOnInit(): void {
-    this.service.getPlayers().pipe(tap((x) => console.log(x))).subscribe((players) => {
+    this.service.getPlayers().subscribe((players) => {
       this.players = players
     })
 
@@ -47,7 +47,7 @@ export class DeskComponent implements OnInit {
     this.service.resetGame();
   }
 
-  didPlayerSelectCard(player: { name: string; card?: number; id: string }) {
+  didPlayerSelectCard(player: Match['players'][0]) {
     return player.card !== -1;
   }
 

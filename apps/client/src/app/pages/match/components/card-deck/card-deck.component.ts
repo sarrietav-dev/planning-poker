@@ -15,11 +15,7 @@ export class CardDeckComponent {
   @Input() selectedCard: number | null = null;
 
   get cardDeck$() {
-    return this.service.cardDeck$().pipe(
-      reduce((acc, curr) => {
-        return [...acc, curr];
-      }, [] as number[])
-    );
+    return this.service.cardDeck$()
   }
 
   onSelectedCard(card: number) {

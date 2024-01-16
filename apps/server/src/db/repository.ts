@@ -74,7 +74,7 @@ async function _scanPlayers(matchId: string): Promise<Match["players"]> {
     const player = await redis.hGetAll(playerId);
     players.push({
       name: player.name,
-      id: playerId,
+      id: player.id,
       card: Number(player.card),
     });
   }
@@ -90,7 +90,7 @@ async function _scanSpectators(matchId: string): Promise<Match["spectators"]> {
     const spectator = await redis.hGetAll(spectatorId);
     spectators.push({
       name: spectator.name,
-      id: spectatorId,
+      id: spectator.id,
     });
   }
 
@@ -138,7 +138,8 @@ export async function addPlayer(
   await redis.hIncrBy(`match:${matchId}`, "players", 1);
   await redis.hSet(`match:${matchId}:player:${playerId}`, {
     name,
-    card: -1
+    card: -1,
+    id: playerId,
   });
 
   return {
@@ -162,6 +163,7 @@ export async function addSpectator(
 ) {
   await redis.hSet(`match:${matchId}:spectator:${spectatorId}`, {
     name: name,
+    id: spectatorId,
   });
 
   return {

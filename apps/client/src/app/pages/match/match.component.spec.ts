@@ -4,7 +4,7 @@ import { MatchComponent } from './match.component';
 import { MatchService } from 'src/app/services/match/match.service';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { EMPTY, last, of } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import { ButtonComponent } from 'src/app/components/atoms/button/button.component';
 import { CardDeckComponent } from './components/card-deck/card-deck.component';
 import { DeskComponent } from './components/desk/desk.component';
@@ -34,7 +34,9 @@ describe('MatchComponent', () => {
       'getSpectators',
       'getAreCardsRevealed',
       'getMatch',
-      'selectCard'
+      'selectCard',
+      'getCurrentPlayerId',
+      "getPlayers"
     ]) as jasmine.SpyObj<MatchService>;
 
     serviceSpy.getSpectators.and.returnValue(
@@ -45,6 +47,9 @@ describe('MatchComponent', () => {
         { name: 'bro', id: '' },
       ]),
     );
+
+    serviceSpy.getCurrentPlayerId.and.returnValue("");
+    serviceSpy.getPlayers.and.returnValue(of([]));
 
     serviceSpy.getMatch.and.returnValue(
       of({
@@ -131,7 +136,7 @@ describe('MatchComponent', () => {
 
   describe('#onSelectCard', () => {
     it('should call select card on the service if a card has not been selected', () => {
-      component.selectedCard = -1;
+      component.selectedCard = null;
       component.onSelectedCard(2);
       expect(matchService.selectCard).toHaveBeenCalled();
       expect(matchService.selectCard).toHaveBeenCalledWith(2);

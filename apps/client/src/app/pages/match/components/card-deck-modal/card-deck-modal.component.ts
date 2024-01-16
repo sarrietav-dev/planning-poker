@@ -18,7 +18,6 @@ export class CardDeckModalComponent {
   ngOnInit() {
     this.service
       .cardDeck$()
-      .pipe(toArray())
       .subscribe((cards) => {
         this.cards = cards;
       });

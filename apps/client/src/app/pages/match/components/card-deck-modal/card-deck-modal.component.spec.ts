@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testin
 import { CardDeckModalComponent } from './card-deck-modal.component';
 import { MatchService } from 'src/app/services/match/match.service';
 import { DialogComponent } from 'src/app/components/atoms/dialog/dialog.component';
-import { from } from 'rxjs';
+import { from, of } from 'rxjs';
 import { CardComponent } from 'src/app/components/atoms/card/card.component';
 
 describe('CardDeckModalComponent', () => {
@@ -15,7 +15,7 @@ describe('CardDeckModalComponent', () => {
       'cardDeck$',
     ]) as jasmine.SpyObj<MatchService>;
 
-    serviceSpy.cardDeck$.and.returnValue(from([1, 2, 3]));
+    serviceSpy.cardDeck$.and.returnValue(of([1, 2, 3]));
 
     await TestBed.configureTestingModule({
       imports: [DialogComponent, CardComponent],

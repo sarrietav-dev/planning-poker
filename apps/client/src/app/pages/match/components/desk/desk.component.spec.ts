@@ -21,9 +21,13 @@ describe('DeskComponent', () => {
       'revealCards',
       'resetGame',
       'getAreCardsRevealed',
-    ]);
+      'getCurrentPlayerId',
+      "getPlayers"
+    ]) as jasmine.SpyObj<MatchService>;
 
     serviceSpy.getAreCardsRevealed.and.returnValue(of(false));
+    serviceSpy.getCurrentPlayerId.and.returnValue("");
+    serviceSpy.getPlayers.and.returnValue(of([]));
 
     await TestBed.configureTestingModule({
       declarations: [DeskComponent],
@@ -103,7 +107,7 @@ describe('DeskComponent', () => {
   describe('didPlayerSelectCard', () => {
     it('should return false when a player does not have a card', () => {
       expect(
-        component.didPlayerSelectCard({ id: '', name: '', card: undefined })
+        component.didPlayerSelectCard({ id: '', name: '', card: -1 })
       ).toBe(false);
     });
 

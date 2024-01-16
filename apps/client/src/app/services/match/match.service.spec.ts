@@ -17,7 +17,7 @@ import {
   toggleIsAdmin,
 } from 'src/app/store/match.actions';
 import * as events from '@planning-poker/events';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 describe('MatchService', () => {
   let service: MatchService;
@@ -43,6 +43,15 @@ describe('MatchService', () => {
         { provide: Socket, useValue: socketSpy },
         { provide: Store, useValue: storeSpy },
         { provide: Router, useValue: routerSpy },
+        {
+          provide: ActivatedRoute, useValue: {
+            snapshot: {
+              paramMap: {
+                get: () => '1'
+              }
+            }
+          }
+        },
       ],
     });
     service = TestBed.inject(MatchService);
@@ -57,11 +66,11 @@ describe('MatchService', () => {
 
   describe('playerJoined$', () => {
     it('should dispatch playerJoined', (done) => {
-      socket.fromEvent.and.returnValue(of({ id: '1', name: 'Player 1' }));
+      socket.fromEvent.and.returnValue(of({ id: '1', name: 'Player 1', card: -1 }));
       store.dispatch.and.callThrough();
       service.playerJoined$().subscribe(() => {
         expect(store.dispatch).toHaveBeenCalledWith(
-          playerJoined({ id: '1', name: 'Player 1' })
+          playerJoined({ id: '1', name: 'Player 1', card: -1 })
         );
         done();
       });
@@ -245,7 +254,7 @@ describe('MatchService', () => {
   describe('selectCard', () => {
     it('should emit selectCard', () => {
       service.selectCard(2);
-      expect(socket.emit).toHaveBeenCalledWith(events.ChooseCardCommand, 2);
+      expect(socket.emit).toHaveBeenCalledWith(events.ChooseCardCommand, jasmine.any(String), 2);
     });
   });
 
