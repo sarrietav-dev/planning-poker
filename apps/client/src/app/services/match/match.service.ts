@@ -51,7 +51,6 @@ export class MatchService {
   }
 
   onSession$() {
-
     return this.io.fromEvent("session").pipe(
       tap(({ sessionId, userId }) => {
         sessionStorage.setItem("sessionId", sessionId);
@@ -73,7 +72,6 @@ export class MatchService {
   }
 
   playerJoined$() {
-
     return this.io
       .fromEvent(events.PlayerJoined)
       .pipe(
@@ -84,7 +82,6 @@ export class MatchService {
   }
 
   playerLeft$() {
-
     return this.io.fromEvent(events.PlayerLeft).pipe(
       tap(({ playerId }) => {
         this.store.dispatch(playerLeft({ playerId }));
@@ -93,7 +90,6 @@ export class MatchService {
   }
 
   spectatorJoined$() {
-
     return this.io.fromEvent(events.SpectatorJoined).pipe(
       tap(({ id, name }) => {
         this.store.dispatch(spectatorJoined({ name, id }));
@@ -102,7 +98,6 @@ export class MatchService {
   }
 
   spectatorLeft$() {
-
     return this.io.fromEvent(events.SpectatorLeft).pipe(
       tap(({ spectatorId }) => {
         this.store.dispatch(spectatorLeft({ spectatorId }));
@@ -111,7 +106,6 @@ export class MatchService {
   }
 
   playerSelectedCard$() {
-
     return this.io
       .fromEvent(events.PlayerSelectedCard)
       .pipe(
