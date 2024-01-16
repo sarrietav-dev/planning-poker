@@ -69,7 +69,7 @@ export class MatchService {
   }
 
   get matchId() {
-    return this.route.snapshot.paramMap.get('id')!;
+    return new URL(window.location.href).pathname.split('/')[2];
   }
 
   playerJoined$() {
