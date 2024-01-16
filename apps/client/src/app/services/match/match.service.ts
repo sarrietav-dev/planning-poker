@@ -16,15 +16,16 @@ import {
   spectatorJoined,
   spectatorLeft,
 } from 'src/app/store/match.actions';
-import { from, tap } from 'rxjs';
-import { State, selectMatchSpectators } from 'src/app/store';
+import { tap } from 'rxjs';
+import { State } from 'src/app/store';
+import { SocketIoClientService } from '../socket.io-client/socket.io-client.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MatchService {
   constructor(
-    private io: Socket,
+    private io: SocketIoClientService,
     private router: Router,
     private store: Store<{ match: State }>,
     private route: ActivatedRoute,
@@ -51,11 +52,9 @@ export class MatchService {
   }
 
   onSession$() {
-    type Payload = Parameters<events.ClientToServerEvents["session"]>[0]
 
-    return this.io.fromEvent<Payload>("session").pipe(
+    return this.io.fromEvent("session").pipe(
       tap(({ sessionId, userId }) => {
-        this.io.ioSocket.auth = { sessionId, userId };
         sessionStorage.setItem("sessionId", sessionId);
         sessionStorage.setItem("userId", userId);
       })
@@ -75,10 +74,9 @@ export class MatchService {
   }
 
   playerJoined$() {
-    type Payload = Parameters<events.ClientToServerEvents["player-joined"]>[0]
 
     return this.io
-      .fromEvent<Payload>(events.PlayerJoined)
+      .fromEvent(events.PlayerJoined)
       .pipe(
         tap(({ id, name, card }) => {
           this.store.dispatch(playerJoined({ name, id, card }));
@@ -87,9 +85,8 @@ export class MatchService {
   }
 
   playerLeft$() {
-    type Payload = Parameters<events.ClientToServerEvents["player-left"]>[0]
 
-    return this.io.fromEvent<Payload>(events.PlayerLeft).pipe(
+    return this.io.fromEvent(events.PlayerLeft).pipe(
       tap(({ playerId }) => {
         this.store.dispatch(playerLeft({ playerId }));
       }),
@@ -97,9 +94,8 @@ export class MatchService {
   }
 
   spectatorJoined$() {
-    type Payload = Parameters<events.ClientToServerEvents["spectator-joined"]>[0]
 
-    return this.io.fromEvent<Payload>(events.SpectatorJoined).pipe(
+    return this.io.fromEvent(events.SpectatorJoined).pipe(
       tap(({ id, name }) => {
         this.store.dispatch(spectatorJoined({ name, id }));
       }),
@@ -107,9 +103,8 @@ export class MatchService {
   }
 
   spectatorLeft$() {
-    type Payload = Parameters<events.ClientToServerEvents["spectator-left"]>[0]
 
-    return this.io.fromEvent<Payload>(events.SpectatorLeft).pipe(
+    return this.io.fromEvent(events.SpectatorLeft).pipe(
       tap(({ spectatorId }) => {
         this.store.dispatch(spectatorLeft({ spectatorId }));
       }),
@@ -117,10 +112,9 @@ export class MatchService {
   }
 
   playerSelectedCard$() {
-    type Payload = Parameters<events.ClientToServerEvents["player-selected-card"]>[0]
 
     return this.io
-      .fromEvent<Payload>(events.PlayerSelectedCard)
+      .fromEvent(events.PlayerSelectedCard)
       .pipe(
         tap(({ playerId, card }) => {
           this.store.dispatch(
@@ -150,9 +144,8 @@ export class MatchService {
   }
 
   adminAssigned$() {
-    type Payload = Parameters<events.ClientToServerEvents["admin-assigned"]>[0]
 
-    return this.io.fromEvent<Payload>(events.AdminAssigned).pipe(
+    return this.io.fromEvent(events.AdminAssigned).pipe(
       tap(() => {
         this.store.dispatch(toggleIsAdmin({ isAdmin: true }));
       }),
@@ -160,9 +153,8 @@ export class MatchService {
   }
 
   cardsChanged$() {
-    type Payload = Parameters<events.ClientToServerEvents["cards-changed"]>[0]
 
-    return this.io.fromEvent<Payload>(events.CardsChanged).pipe(
+    return this.io.fromEvent(events.CardsChanged).pipe(
       tap((props) => {
         this.store.dispatch(changeCards({ cards: props.cards }));
       }),
@@ -174,7 +166,11 @@ export class MatchService {
   }
 
   createMatch(name: string) {
-    const handleMatchCreated = (matchId: string) => {
+    const handleMatchCreated: events.Awk<string> = (matchId, error) => {
+      if (error) {
+        return alert(error.message);
+      }
+
       this.store.dispatch(toggleIsAdmin({ isAdmin: true }));
       this.router.navigate(['/match', matchId]);
     };
@@ -182,10 +178,14 @@ export class MatchService {
     this.io.emit(events.CreateMatchCommand, name, handleMatchCreated);
   }
 
-  joinMatch(matchId: string, name: string, mode: string) {
-    const handleJoinMatch = (match: Match, error: { message: string }) => {
+  joinMatch(matchId: string, name: string, mode: "spectator" | "player") {
+    const handleJoinMatch: events.Awk<Match> = (match, error) => {
       if (error) {
         return alert(error.message);
+      }
+
+      if (!match) {
+        return alert('Match not found');
       }
 
       this.store.dispatch(setMatch({ match }));
@@ -199,8 +199,16 @@ export class MatchService {
   }
 
   async doesMatchExist(matchId: string) {
-    return new Promise<boolean>((resolve) => {
-      this.io.emit(events.DoesMatchExist, matchId, (exists: boolean) => {
+    return new Promise<boolean>((resolve, reject) => {
+      this.io.emit(events.DoesMatchExist, matchId, (exists, error) => {
+        if (error) {
+          return reject(error);
+        }
+
+        if (!exists) {
+          return resolve(false);
+        }
+
         resolve(exists);
       });
     });
