@@ -10,9 +10,9 @@ import {
   styleUrls: ['./join-dialog.component.scss'],
 })
 export class JoinDialogComponent {
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) { }
 
-  @Output() onSubmit = new EventEmitter<{ name: string; mode: string }>();
+  @Output() onSubmit = new EventEmitter<{ name: string; mode: "player" | "spectator" }>();
 
   form = this.fb.group({
     name: this.fb.control('', {
@@ -27,7 +27,7 @@ export class JoinDialogComponent {
       ],
     }),
     mode: this.fb.control<string>('', {
-      validators: [Validators.required],
+      validators: [Validators.required, Validators.pattern(/^(player|spectator)$/)],
     }),
   });
 
@@ -37,7 +37,7 @@ export class JoinDialogComponent {
 
   handleSubmit() {
     if (this.form.valid) {
-      this.onSubmit.emit(this.form.value as { name: string; mode: string });
+      this.onSubmit.emit(this.form.value as { name: string; mode: "player" | "spectator" });
     }
 
     this.form.markAllAsTouched();

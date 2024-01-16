@@ -1,9 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 
-import { Socket } from 'ngx-socket-io';
 import { Router, RouterStateSnapshot } from '@angular/router';
 import { MatchService } from 'src/app/services/match/match.service';
 import { MatchGuard } from './match.guard';
+import { SocketIoClientService } from 'src/app/services/socket.io-client/socket.io-client.service';
+import { EMPTY } from 'rxjs';
 
 describe('MatchGuard', () => {
   let guard: typeof MatchGuard;
@@ -11,9 +12,12 @@ describe('MatchGuard', () => {
   let service: jasmine.SpyObj<MatchService>;
 
   beforeEach(() => {
-    const socketSpy = jasmine.createSpyObj('Socket', [
+    const socketSpy = jasmine.createSpyObj('SocketIoClientService', [
       'emit',
-    ]) as jasmine.SpyObj<Socket>;
+      'fromEvent',
+    ]) as jasmine.SpyObj<SocketIoClientService>;
+
+    socketSpy.fromEvent.and.returnValue(EMPTY);
 
     const routerSpy = jasmine.createSpyObj('Router', [
       'navigate',
@@ -25,7 +29,7 @@ describe('MatchGuard', () => {
 
     TestBed.configureTestingModule({
       providers: [
-        { provide: Socket, useValue: socketSpy },
+        { provide: SocketIoClientService, useValue: socketSpy },
         { provide: Router, useValue: routerSpy },
         { provide: MatchService, useValue: serviceSpy },
       ],
