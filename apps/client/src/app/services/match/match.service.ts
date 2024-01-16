@@ -208,10 +208,12 @@ export class MatchService {
   }
 
   resetGame() {
+    this.io.emit(events.ResetGameCommand, this.matchId)
     this.store.dispatch(resetGame());
   }
 
   revealCards() {
+    this.io.emit(events.RevealCardsCommand, this.matchId)
     this.store.dispatch(revealCards());
   }
 
