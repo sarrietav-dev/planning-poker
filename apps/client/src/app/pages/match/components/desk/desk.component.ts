@@ -48,7 +48,7 @@ export class DeskComponent implements OnInit {
   }
 
   didPlayerSelectCard(player: Match['players'][0]) {
-    return player.card !== -1;
+    return player.card !== -1 && player.card !== null;
   }
 
   getCardValue(card: number | undefined | null) {

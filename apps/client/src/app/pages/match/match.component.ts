@@ -27,6 +27,10 @@ export class MatchComponent implements OnInit {
     this.matchService.getAreCardsRevealed().subscribe((areCardsRevealed) => {
       this.areCardsRevealed = areCardsRevealed ?? false;
     });
+
+    this.matchService.getSelectedCard().subscribe((selectedCard) => {
+      this.selectedCard = selectedCard;
+    });
   }
 
   get name() {
@@ -62,7 +66,7 @@ export class MatchComponent implements OnInit {
   }
 
   get isCardDeckModalOpen() {
-    return this.selectedCard === -1 && this.isUserChosed && this.isUserPlayer;
+    return this.selectedCard === null && this.isUserChosed && this.isUserPlayer;
   }
 
   get results(): { card: number; votes: number }[] {

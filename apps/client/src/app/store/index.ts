@@ -7,6 +7,7 @@ export interface State {
   match: Match;
   isAdmin: boolean;
   areCardsRevealed?: boolean;
+  selectedCard: number | null;
 }
 
 export const initialState: State = {
@@ -19,6 +20,7 @@ export const initialState: State = {
   },
   isAdmin: false,
   areCardsRevealed: false,
+  selectedCard: null,
 };
 
 export const matchReducer = createReducer(
@@ -61,9 +63,10 @@ export const matchReducer = createReducer(
     produce(state, (draft) => {
       draft.match.players = draft.match.players.map((p) => ({
         ...p,
-        card: null,
+        card: -1,
       }));
       draft.areCardsRevealed = false;
+      draft.selectedCard = null;
     })
   ),
   on(MatchActions.setPlayerCard, (state, { playerId, card }) =>
@@ -82,6 +85,11 @@ export const matchReducer = createReducer(
   on(MatchActions.changeCards, (state, { cards }) =>
     produce(state, (draft) => {
       draft.match.cardDeck = cards;
+    })
+  ),
+  on(MatchActions.selectCard, (state, { card }) =>
+    produce(state, (draft) => {
+      draft.selectedCard = card;
     })
   )
 )

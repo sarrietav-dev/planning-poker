@@ -44,3 +44,8 @@ export const changeCards = createAction(
   '[Match] Change Cards',
   props<{ cards: number[] }>()
 );
+
+export const selectCard = createAction(
+  '[Match] Select Card',
+  props<{ card: number }>()
+);

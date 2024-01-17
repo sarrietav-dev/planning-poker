@@ -14,6 +14,7 @@ import {
   revealCards,
   spectatorJoined,
   spectatorLeft,
+  selectCard,
 } from 'src/app/store/match.actions';
 import { tap } from 'rxjs';
 import { State } from 'src/app/store';
@@ -188,6 +189,7 @@ export class MatchService {
   }
 
   selectCard(card: number) {
+    this.store.dispatch(selectCard({ card }));
     this.io.emit(events.ChooseCardCommand, this.matchId, card);
   }
 
@@ -235,5 +237,9 @@ export class MatchService {
 
   getPlayers() {
     return this.store.select((state) => state.match.match.players);
+  }
+
+  getSelectedCard() {
+    return this.store.select((state) => state.match.selectedCard);
   }
 }
