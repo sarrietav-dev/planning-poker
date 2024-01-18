@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Match } from '@planning-poker/models';
-import { map, tap } from 'rxjs';
+import { map } from 'rxjs';
 import { MatchService } from 'src/app/services/match/match.service';
-import { State, selectIsAdmin, selectPlayers } from 'src/app/store';
+import { State, selectIsAdmin } from 'src/app/store';
 
 @Component({
   selector: 'match-desk',
