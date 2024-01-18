@@ -40,7 +40,7 @@ export interface ServerToClientEvents {
     [ChooseCardCommand]: (matchId: string, card: number) => Promise<void>;
     [ResetGameCommand]: (matchId: string) => Promise<void>;
     [RevealCardsCommand]: (matchId: string) => Promise<void>;
-    [AssignAdminCommand]: (playerId: string) => Promise<void>;
+    [AssignAdminCommand]: (matchId: string, playerId: string) => Promise<void>;
     [ChangeCardModeCommand]: (matchId: string, mode: "show" | "hide") => Promise<void>;
 }
 

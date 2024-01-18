@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class SocketIoClientService {
-  public readonly socket: Socket<ClientToServerEvents, ServerToClientEvents>
+  public socket: Socket<ClientToServerEvents, ServerToClientEvents>
 
   constructor() {
     const sessionId = sessionStorage.getItem('sessionId');

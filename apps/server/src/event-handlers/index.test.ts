@@ -25,4 +25,8 @@ describe("Event-handlers index barrel file", () => {
   it('onResetGame is defined', () => {
     expect(index.onResetGame).toBeDefined()
   })
+
+  it('onAssignAdmin is defined', () => {
+    expect(index.onAssignAdmin).toBeDefined()
+  })
 })

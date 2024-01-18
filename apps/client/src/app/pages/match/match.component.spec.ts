@@ -36,7 +36,8 @@ describe('MatchComponent', () => {
       'getMatch',
       'selectCard',
       'getCurrentPlayerId',
-      "getPlayers"
+      "getPlayers",
+      "getSelectedCard"
     ]) as jasmine.SpyObj<MatchService>;
 
     serviceSpy.getSpectators.and.returnValue(
@@ -50,7 +51,7 @@ describe('MatchComponent', () => {
 
     serviceSpy.getCurrentPlayerId.and.returnValue("");
     serviceSpy.getPlayers.and.returnValue(of([]));
-
+    serviceSpy.getSelectedCard.and.returnValue(of(0));
     serviceSpy.getMatch.and.returnValue(
       of({
         cardDeck: [],
@@ -114,7 +115,7 @@ describe('MatchComponent', () => {
   });
 
   it('should handle user choose', () => {
-    component.handleUserChoose({ name: 'hey', mode: 'single' });
+    component.handleUserChoose({ name: 'hey', mode: 'player' });
     expect(component.isUserChosed).toBeTrue();
     expect(matchService.joinMatch).toHaveBeenCalled();
   });
@@ -139,7 +140,7 @@ describe('MatchComponent', () => {
       component.selectedCard = null;
       component.onSelectedCard(2);
       expect(matchService.selectCard).toHaveBeenCalled();
-      expect(matchService.selectCard).toHaveBeenCalledWith(2);
+      expect(matchService.selectCard).toHaveBeenCalledWith(2, '1');
     });
 
     it('should not call select card on the service if a card has been selected', () => {

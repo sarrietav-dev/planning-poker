@@ -68,13 +68,13 @@ describe("Repository tests", () => {
       redisMock.scanIterator.mockImplementationOnce(async function* () {
         yield "1"
       });
-      redisMock.hGetAll.mockResolvedValueOnce({ id: "test", name: "test_player", cards: "" });
+      redisMock.hGetAll.mockResolvedValueOnce({ id: "1", name: "test_player", cards: "" });
 
       // Mock the calls in _scanSpectators
       redisMock.scanIterator.mockImplementationOnce(async function* () {
         yield "2"
       });
-      redisMock.hGetAll.mockResolvedValueOnce({ id: "test", name: "test_spectator" });
+      redisMock.hGetAll.mockResolvedValueOnce({ id: "2", name: "test_spectator" });
 
       // Mock the call to JSON.parse
       vi.spyOn(JSON, "parse").mockReturnValueOnce([1, 2, 3]);
@@ -171,6 +171,7 @@ describe("Repository tests", () => {
 
       expect(redisMock.hSet).toHaveBeenCalledWith(`match:${matchId}:player:${playerId}`, {
         name: playerName,
+        id: playerId,
         card: -1,
       });
       expect(redisMock.hIncrBy).toHaveBeenCalledWith(`match:${matchId}`,
@@ -206,6 +207,7 @@ describe("Repository tests", () => {
 
       expect(redisMock.hSet).toHaveBeenCalledWith(`match:${matchId}:spectator:${spectatorId}`, {
         name: spectatorName,
+        id: spectatorId,
       });
     })
   })

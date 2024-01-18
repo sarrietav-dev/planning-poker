@@ -2,7 +2,7 @@ import * as repo from "./db/repository";
 import * as events from "@planning-poker/events";
 import log from "./lib/logger";
 import { AppSocket } from "./types";
-import { createMatch, joinMatch, onChooseCard, onDoesMatchExist, onRevealCards, onResetGame } from "./event-handlers";
+import { createMatch, joinMatch, onChooseCard, onDoesMatchExist, onRevealCards, onResetGame, onAssignAdmin } from "./event-handlers";
 
 export default (socket: AppSocket) => {
   let disconnectTimeoutFn: NodeJS.Timeout | undefined;
@@ -35,5 +35,6 @@ export default (socket: AppSocket) => {
   socket.on(events.ChooseCardCommand, (matchId, card) => onChooseCard(socket, matchId, card));
   socket.on(events.ResetGameCommand, (matchId) => onResetGame(socket, matchId));
   socket.on(events.RevealCardsCommand, (matchId) => onRevealCards(socket, matchId));
+  socket.on(events.AssignAdminCommand, (matchId, playerId) => onAssignAdmin(socket, matchId, playerId))
   socket.on("disconnecting", onDisconnect);
 };
