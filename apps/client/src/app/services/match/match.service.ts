@@ -189,9 +189,9 @@ export class MatchService {
     this.io.emit(events.JoinMatchCommand, matchId, name, mode, handleJoinMatch);
   }
 
-  selectCard(card: number) {
+  selectCard(card: number, matchId: string) {
     this.store.dispatch(selectCard({ card }));
-    this.io.emit(events.ChooseCardCommand, this.matchId, card);
+    this.io.emit(events.ChooseCardCommand, matchId, card);
   }
 
   async doesMatchExist(matchId: string) {
@@ -210,13 +210,13 @@ export class MatchService {
     });
   }
 
-  resetGame() {
-    this.io.emit(events.ResetGameCommand, this.matchId)
+  resetGame(matchId: string) {
+    this.io.emit(events.ResetGameCommand, matchId)
     this.store.dispatch(resetGame());
   }
 
-  revealCards() {
-    this.io.emit(events.RevealCardsCommand, this.matchId)
+  revealCards(matchId: string) {
+    this.io.emit(events.RevealCardsCommand, matchId)
     this.store.dispatch(revealCards());
   }
 

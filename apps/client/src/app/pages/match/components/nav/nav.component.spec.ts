@@ -97,6 +97,7 @@ describe('NavComponent', () => {
       },
       isAdmin: true,
       areCardsRevealed: true,
+      selectedCard: null,
     } satisfies State;
     component.match$ = of(expectedMatch);
 

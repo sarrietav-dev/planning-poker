@@ -3,6 +3,7 @@ import { DeskComponent } from './desk.component';
 import { MatchService } from 'src/app/services/match/match.service';
 import { Store } from '@ngrx/store';
 import { EMPTY, of } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 describe('DeskComponent', () => {
   let component: DeskComponent;
@@ -29,6 +30,14 @@ describe('DeskComponent', () => {
     serviceSpy.getCurrentPlayerId.and.returnValue("");
     serviceSpy.getPlayers.and.returnValue(of([]));
 
+    const routeSpy = jasmine.createSpyObj('ActivatedRoute', ['snapshot']);
+
+    routeSpy.snapshot = {
+      paramMap: {
+        get: () => '1',
+      },
+    };
+
     await TestBed.configureTestingModule({
       declarations: [DeskComponent],
       providers: [
@@ -40,6 +49,7 @@ describe('DeskComponent', () => {
           provide: Store,
           useValue: storeSpy,
         },
+        { provide: ActivatedRoute, useValue: routeSpy },
       ],
     }).compileComponents();
   });
@@ -87,20 +97,6 @@ describe('DeskComponent', () => {
     it('should return the correct class', () => {
       const seatClass = component.getSeatClass(1);
       expect(seatClass).toBe('seat seat--2');
-    });
-  });
-
-  describe('getCardValue', () => {
-    it('should return an empty string when getCardValue is called with null', () => {
-      expect(component.getCardValue(null)).toBe('');
-    });
-
-    it('should return an empty string when getCardValue is called with undefined', () => {
-      expect(component.getCardValue(undefined)).toBe('');
-    });
-
-    it('should return the card number as a string when the card is not null or undefined', () => {
-      expect(component.getCardValue(2)).toBe('2');
     });
   });
 

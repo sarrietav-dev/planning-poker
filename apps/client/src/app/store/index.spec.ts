@@ -26,10 +26,10 @@ describe('matchReducer', () => {
   it('should add player', () => {
     const name = 'Player 1';
     const id = '1';
-    const action = MatchActions.playerJoined({ name, id });
+    const action = MatchActions.playerJoined({ name, id, card: 5 });
     const state = matchReducer(initialState, action);
 
-    expect(state.match.players).toEqual([{ name, id }]);
+    expect(state.match.players).toEqual([{ name, id, card: 5 }]);
   });
 
   it('should remove player', () => {
@@ -40,7 +40,7 @@ describe('matchReducer', () => {
         ...initialState,
         match: {
           ...initialState.match,
-          players: [{ name: 'Player 1', id: playerId }],
+          players: [{ name: 'Player 1', id: playerId, card: 5 }],
         },
       },
       action,
@@ -97,7 +97,7 @@ describe('matchReducer', () => {
       action,
     );
 
-    expect(state.match.players[0].card).toBeUndefined();
+    expect(state.match.players[0].card).toBe(-1);
     expect(state.areCardsRevealed).toEqual(false);
   });
 
@@ -110,7 +110,7 @@ describe('matchReducer', () => {
         ...initialState,
         match: {
           ...initialState.match,
-          players: [{ name: 'Player 1', id: playerId }],
+          players: [{ name: 'Player 1', id: playerId, card: null }],
         },
       },
       action,

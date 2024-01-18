@@ -57,7 +57,7 @@ export class MatchComponent implements OnInit {
   onSelectedCard(card: number) {
     if (this.selectedCard === null) {
       this.selectedCard = card;
-      this.matchService.selectCard(card);
+      this.matchService.selectCard(card, this.route.snapshot.paramMap.get('id')!);
     }
   }
 

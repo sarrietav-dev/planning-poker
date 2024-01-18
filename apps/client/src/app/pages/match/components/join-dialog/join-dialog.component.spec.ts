@@ -39,11 +39,11 @@ describe('JoinDialogComponent', () => {
   it('should emit onSubmit event with form value if form is valid', () => {
     spyOn(component.onSubmit, 'emit');
     component.form.get('name')?.setValue('testuser');
-    component.form.get('mode')?.setValue('testmode');
+    component.form.get('mode')?.setValue('player');
     component.handleSubmit();
     expect(component.onSubmit.emit).toHaveBeenCalledWith({
       name: 'testuser',
-      mode: 'testmode',
+      mode: 'player',
     });
   });
 
@@ -60,7 +60,7 @@ describe('JoinDialogComponent', () => {
 
   describe('Form valid cases', () => {
     beforeEach(() => {
-      component.form.get('mode')?.setValue('testmode');
+      component.form.get('mode')?.setValue('player');
     });
 
     it('should be valid if name is between 5 and 20 characters', () => {
@@ -81,7 +81,7 @@ describe('JoinDialogComponent', () => {
 
   describe('Form invalid cases', () => {
     beforeEach(() => {
-      component.form.get('mode')?.setValue('testmode');
+      component.form.get('mode')?.setValue('player');
     });
 
     it('should be invalid if name is null', () => {

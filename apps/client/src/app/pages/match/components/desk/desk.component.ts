@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Match } from '@planning-poker/models';
 import { map } from 'rxjs';
@@ -15,7 +16,8 @@ export class DeskComponent implements OnInit {
     private store: Store<{
       match: State;
     }>,
-    private service: MatchService
+    private service: MatchService,
+    private route: ActivatedRoute,
   ) { }
 
   areCardsRevealed?: boolean = false;
@@ -40,11 +42,11 @@ export class DeskComponent implements OnInit {
   }
 
   onRevealCardsClick() {
-    this.service.revealCards();
+    this.service.revealCards(this.route.snapshot.paramMap.get('id')!);
   }
 
   onResetGameClick() {
-    this.service.resetGame();
+    this.service.resetGame(this.route.snapshot.paramMap.get('id')!);
   }
 
   didPlayerSelectCard(player: Match['players'][0]) {
