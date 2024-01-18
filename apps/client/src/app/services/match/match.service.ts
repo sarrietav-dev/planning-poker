@@ -247,4 +247,8 @@ export class MatchService {
   clearState() {
     this.store.dispatch(clearState())
   }
+
+  giveAdminRole(playerId: string) {
+    this.io.emit(events.AssignAdminCommand, playerId)
+  }
 }

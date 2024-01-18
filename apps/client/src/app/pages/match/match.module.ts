@@ -1,24 +1,25 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { MatchRoutingModule } from './match-routing.module';
-import { JoinDialogComponent } from './components/join-dialog/join-dialog.component';
-import { MatchComponent } from './match.component';
+import { NgModule } from '@angular/core';
+import { MatMenuModule } from '@angular/material/menu';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DeskComponent } from './components/desk/desk.component';
-import { CardComponent } from '../../components/atoms/card/card.component';
-import { AvatarComponent } from '../../components/atoms/avatar/avatar.component';
-import { DialogComponent } from '../../components/atoms/dialog/dialog.component';
-import { InviteDialogComponent } from './components/invite-dialog/invite-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
-import { CardDeckComponent } from './components/card-deck/card-deck.component';
+
 import { ButtonComponent } from 'src/app/components/atoms/button/button.component';
+import { AvatarComponent } from '../../components/atoms/avatar/avatar.component';
+import { CardComponent } from '../../components/atoms/card/card.component';
+import { DialogComponent } from '../../components/atoms/dialog/dialog.component';
 import { CardDeckModalComponent } from './components/card-deck-modal/card-deck-modal.component';
-import { NavComponent } from './components/nav/nav.component';
-import { MatchResultsComponent } from './components/match-results/match-results.component';
-import { FormatVotePipe } from './pipes/format-vote.pipe';
+import { CardDeckComponent } from './components/card-deck/card-deck.component';
+import { DeskComponent } from './components/desk/desk.component';
+import { InviteDialogComponent } from './components/invite-dialog/invite-dialog.component';
+import { JoinDialogComponent } from './components/join-dialog/join-dialog.component';
 import { MatchResultsDialogComponent } from './components/match-results-dialog/match-results-dialog.component';
+import { MatchResultsComponent } from './components/match-results/match-results.component';
+import { NavComponent } from './components/nav/nav.component';
+import { MatchRoutingModule } from './match-routing.module';
+import { MatchComponent } from './match.component';
 import { FormatCardValuePipe } from './pipes/format-card-value.pipe';
+import { FormatVotePipe } from './pipes/format-vote.pipe';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { FormatCardValuePipe } from './pipes/format-card-value.pipe';
     AvatarComponent,
     DialogComponent,
     ButtonComponent,
+    MatMenuModule
   ],
 })
 export class MatchModule {}

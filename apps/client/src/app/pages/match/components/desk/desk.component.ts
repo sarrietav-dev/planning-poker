@@ -62,4 +62,8 @@ export class DeskComponent implements OnInit {
       map((isAdmin) => isAdmin && !this.areCardsRevealed)
     );
   }
+
+  giveAdminRole(playerId: string) {
+    this.service.giveAdminRole(playerId);
+  }
 }

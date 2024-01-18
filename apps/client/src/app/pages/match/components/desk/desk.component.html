@@ -30,13 +30,29 @@
       [name]="player.name"
     ></app-avatar>
     <ng-template #normalCard>
-      <app-card
-        [selected]="didPlayerSelectCard(player)"
-        [value]="player.card | formatCardValue"
-        [show]="areCardsRevealed ?? false"
-      >
-        {{ player.name }}
-      </app-card>
+      @if (isAdmin$ | async) {
+        <app-card
+          [selected]="didPlayerSelectCard(player)"
+          [value]="player.card | formatCardValue"
+          [show]="areCardsRevealed ?? false"
+          [matMenuTriggerFor]="menu"
+        >
+          {{ player.name }}
+        </app-card>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="giveAdminRole(player.id)">
+            Give admin role
+          </button>
+        </mat-menu>
+      } @else {
+        <app-card
+          [selected]="didPlayerSelectCard(player)"
+          [value]="player.card | formatCardValue"
+          [show]="areCardsRevealed ?? false"
+        >
+          {{ player.name }}
+        </app-card>
+      }
     </ng-template>
   </div>
 </div>
