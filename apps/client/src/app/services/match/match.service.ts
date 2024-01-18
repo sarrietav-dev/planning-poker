@@ -139,7 +139,6 @@ export class MatchService {
   }
 
   adminAssigned$() {
-
     return this.io.fromEvent(events.AdminAssigned).pipe(
       tap(({ adminId }) => {
         this.store.dispatch(toggleIsAdmin({ isAdmin: adminId === this.userId }));

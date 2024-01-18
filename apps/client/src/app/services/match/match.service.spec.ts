@@ -153,7 +153,8 @@ describe('MatchService', () => {
 
   describe('adminAssigned$', () => {
     it('should dispatch toggleIsAdmin', (done) => {
-      socket.fromEvent.and.returnValue(of({ playerId: '' }));
+      socket.fromEvent.and.returnValue(of({ adminId: '1' }));
+      spyOnProperty(service, 'userId').and.returnValue('1');
       store.dispatch.and.callThrough();
       service.adminAssigned$().subscribe(() => {
         expect(store.dispatch).toHaveBeenCalledWith(
