@@ -32,7 +32,7 @@
     <ng-template #normalCard>
       <app-card
         [selected]="didPlayerSelectCard(player)"
-        [value]="getCardValue(player.card)"
+        [value]="player.card | formatCardValue"
         [show]="areCardsRevealed ?? false"
       >
         {{ player.name }}

@@ -51,13 +51,6 @@ export class DeskComponent implements OnInit {
     return player.card !== -1 && player.card !== null;
   }
 
-  getCardValue(card: number | undefined | null) {
-    if (card) {
-      return card.toString();
-    }
-    return '';
-  }
-
   get canShowResetGameButton() {
     return this.isAdmin$.pipe(
       map((isAdmin) => isAdmin && this.areCardsRevealed)
