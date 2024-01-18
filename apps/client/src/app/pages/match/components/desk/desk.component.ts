@@ -66,6 +66,6 @@ export class DeskComponent implements OnInit {
   }
 
   giveAdminRole(playerId: string) {
-    this.service.giveAdminRole(playerId);
+    this.service.giveAdminRole(this.route.snapshot.paramMap.get('id')!, playerId)
   }
 }

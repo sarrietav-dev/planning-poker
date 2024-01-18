@@ -141,8 +141,8 @@ export class MatchService {
   adminAssigned$() {
 
     return this.io.fromEvent(events.AdminAssigned).pipe(
-      tap(() => {
-        this.store.dispatch(toggleIsAdmin({ isAdmin: true }));
+      tap(({ adminId }) => {
+        this.store.dispatch(toggleIsAdmin({ isAdmin: adminId === this.userId }));
       }),
     );
   }
@@ -248,7 +248,7 @@ export class MatchService {
     this.store.dispatch(clearState())
   }
 
-  giveAdminRole(playerId: string) {
-    this.io.emit(events.AssignAdminCommand, playerId)
+  giveAdminRole(matchId: string, playerId: string) {
+    this.io.emit(events.AssignAdminCommand, matchId, playerId)
   }
 }
