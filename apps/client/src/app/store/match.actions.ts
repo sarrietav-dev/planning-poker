@@ -49,3 +49,5 @@ export const selectCard = createAction(
   '[Match] Select Card',
   props<{ card: number }>()
 );
+
+export const clearState = createAction('[Match] Clear State');

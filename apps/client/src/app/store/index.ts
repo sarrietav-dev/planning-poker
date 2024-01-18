@@ -91,7 +91,8 @@ export const matchReducer = createReducer(
     produce(state, (draft) => {
       draft.selectedCard = card;
     })
-  )
+  ),
+  on(MatchActions.clearState, () => initialState)
 )
 
 export const selectMatch = (state: { match: State }) => state.match;

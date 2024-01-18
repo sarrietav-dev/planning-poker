@@ -15,6 +15,7 @@ import {
   spectatorJoined,
   spectatorLeft,
   selectCard,
+  clearState,
 } from 'src/app/store/match.actions';
 import { tap } from 'rxjs';
 import { State } from 'src/app/store';
@@ -241,5 +242,9 @@ export class MatchService {
 
   getSelectedCard() {
     return this.store.select((state) => state.match.selectedCard);
+  }
+
+  clearState() {
+    this.store.dispatch(clearState())
   }
 }

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CreateMatchFormComponent } from './pages/create/create-match-form.component';
 import { MatchGuard } from './guards/match/match.guard';
+import { matchLeaveGuard } from './guards/match-leave/match-leave.guard';
 
 const routes: Routes = [
   {
@@ -18,6 +19,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/match/match.module').then((m) => m.MatchModule),
     canActivate: [MatchGuard],
+    canDeactivate: [matchLeaveGuard]
   },
 ];
 
@@ -25,4 +27,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
