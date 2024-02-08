@@ -21,6 +21,11 @@ const routes: Routes = [
     canActivate: [MatchGuard],
     canDeactivate: [matchLeaveGuard]
   },
+  {
+    path: 'auth',
+    loadChildren: () =>
+      import('./pages/auth/auth.module').then((m) => m.AuthModule),
+  }
 ];
 
 @NgModule({

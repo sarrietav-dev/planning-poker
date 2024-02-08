@@ -1,0 +1,55 @@
+<form class="create-match-form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <div class="inputs">
+    <div class="input">
+      <label class="label" for="email">Email</label>
+      <input
+        class="text-input"
+        type="email"
+        id="email"
+        name="email"
+        formControlName="email"
+      />
+      <div
+        *ngIf="email.invalid && (email.dirty || email.touched)"
+        class="error"
+      >
+        <div *ngIf="email.errors?.['required']">El email es requerido</div>
+        <div *ngIf="email.errors?.['minlength']">
+          El email debe tener al menos 5 caracteres
+        </div>
+        <div *ngIf="email.errors?.['maxlength']">
+          El email debe tener menos de 20 caracteres
+        </div>
+        <div *ngIf="email.errors?.['pattern']">
+          El email solo puede contener letras y números
+        </div>
+      </div>
+    </div>
+    <div class="input">
+      <label class="label" for="match-name">Password</label>
+      <input
+        class="text-input"
+        type="password"
+        id="password"
+        name="password"
+        formControlName="password"
+      />
+      <div
+        *ngIf="password.invalid && (password.dirty || password.touched)"
+        class="error"
+      >
+        <div *ngIf="password.errors?.['required']">El nombre es requerido</div>
+        <div *ngIf="password.errors?.['minlength']">
+          El nombre debe tener al menos 5 caracteres
+        </div>
+        <div *ngIf="password.errors?.['maxlength']">
+          El nombre debe tener menos de 20 caracteres
+        </div>
+        <div *ngIf="password.errors?.['pattern']">
+          El nombre solo puede contener letras y números
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-button [disabled]="formGroup.invalid" type="submit">Submit</app-button>
+</form>

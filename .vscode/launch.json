@@ -5,11 +5,11 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "msedge",
+      "type": "firefox",
       "request": "launch",
       "name": "Launch Angular app",
       "url": "http://localhost:4200",
-      "webRoot": "${workspaceFolder}/apps/client"
+      "webRoot": "${workspaceFolder}/apps/client",
     },
     {
       "name": "Attach",
