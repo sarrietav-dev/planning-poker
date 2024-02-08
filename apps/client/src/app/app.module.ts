@@ -12,9 +12,15 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonComponent } from './components/atoms/button/button.component';
 import { EffectsModule } from '@ngrx/effects';
+import { AmplifyAuthenticatorModule } from '@aws-amplify/ui-angular';
+import { Amplify } from 'aws-amplify';
+import awsconfig from '../aws-exports';
+import { AuthComponent } from './pages/auth/auth.component';
+
+Amplify.configure(awsconfig)
 
 @NgModule({
-  declarations: [AppComponent, CreateMatchFormComponent],
+  declarations: [AppComponent, CreateMatchFormComponent, AuthComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -25,6 +31,7 @@ import { EffectsModule } from '@ngrx/effects';
     BrowserAnimationsModule,
     ButtonComponent,
     EffectsModule.forRoot([]),
+    AmplifyAuthenticatorModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

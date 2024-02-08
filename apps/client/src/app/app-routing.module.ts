@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CreateMatchFormComponent } from './pages/create/create-match-form.component';
 import { MatchGuard } from './guards/match/match.guard';
 import { matchLeaveGuard } from './guards/match-leave/match-leave.guard';
+import { AuthComponent } from './pages/auth/auth.component';
 
 const routes: Routes = [
   {
@@ -22,9 +23,8 @@ const routes: Routes = [
     canDeactivate: [matchLeaveGuard]
   },
   {
-    path: 'auth',
-    loadChildren: () =>
-      import('./pages/auth/auth.module').then((m) => m.AuthModule),
+    path: "auth",
+    component: AuthComponent
   }
 ];
 
